@@ -96,5 +96,12 @@ export async function createBusiness(page: Page, { name, type, location, city }:
   await page.locator('input[name="locationName"]').fill(location);
   if (city) await page.locator('input[name="locationCity"]').fill(city);
   await page.locator('button[type="submit"]').click();
+  // Onboarding continues with the first survey; tests that don't need one skip it.
+  await expect(page).toHaveURL(/\/onboarding\/survey$/);
+  await page.getByRole("link", { name: /^(Skip for now|تخطَّ الآن)$/ }).click();
   await expect(page).toHaveURL(/\/dashboard$/);
 }
+
+/** The business shown in the header switcher. */
+export const currentBusiness = (page: Page, name: string) =>
+  page.getByRole("button", { name: new RegExp(`(Current business|النشاط التجاري الحالي): ${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });

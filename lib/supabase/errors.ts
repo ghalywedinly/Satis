@@ -12,6 +12,8 @@ const DB_ERRORS: Record<string, ErrorKey> = {
   already_used: "inviteUsed",
   email_mismatch: "emailMismatch",
   not_authenticated: "sessionExpired",
+  invalid_survey: "invalidSurvey",
+  survey_unavailable: "surveyUnavailable",
 };
 
 /** Translates a PostgREST/Postgres error into a user-facing message key. RLS denials read as "forbidden". */

@@ -1,6 +1,7 @@
 import { expect, test, type Browser } from "@playwright/test";
 import {
   createBusiness,
+  currentBusiness,
   formAlert,
   formStatus,
   latestAuthLink,
@@ -23,7 +24,7 @@ async function newOwner(browser: Browser, label: string, localePrefix: "" | "/en
 test.describe("businesses and teams", () => {
   test("onboarding in Arabic validates each step and creates the business", async ({ page }) => {
     await signUpAndVerify(page, { email: uniqueEmail("onboard-ar"), name: "سارة", localePrefix: "" });
-    await expect(page.getByText("الخطوة 1 من 4")).toBeVisible();
+    await expect(page.getByText("الخطوة 1 من 7")).toBeVisible();
     await page.getByRole("button", { name: "ابدأ الإعداد" }).click();
 
     // Each step must be completed before moving on.
@@ -35,14 +36,16 @@ test.describe("businesses and teams", () => {
     await expect(page.getByText("اختر نوع نشاطك.")).toBeVisible();
     await page.getByText("مقهى", { exact: true }).click();
     await page.getByRole("button", { name: "التالي" }).click();
-    await expect(page.getByText("الخطوة 4 من 4")).toBeVisible();
+    await expect(page.getByText("الخطوة 4 من 7")).toBeVisible();
 
     await page.locator('input[name="locationName"]').fill("الرياض - العليا");
     await page.locator('input[name="locationCity"]').fill("الرياض");
     await page.getByRole("button", { name: "أنشئ نشاطي التجاري" }).click();
 
-    await expect(page).toHaveURL(/localhost:\d+\/dashboard$/);
-    await expect(page.getByText("مقهى سارة جاهز")).toBeVisible();
+    await expect(page).toHaveURL(/localhost:\d+\/onboarding\/survey$/);
+    await expect(page.getByText("الخطوة 5 من 7")).toBeVisible();
+    await page.getByRole("link", { name: "تخطَّ الآن" }).click();
+    await expect(currentBusiness(page, "مقهى سارة")).toBeVisible();
     await page.getByRole("navigation").getByRole("link", { name: "الفروع", exact: true }).click();
     await expect(page.getByText("الرياض - العليا")).toBeVisible();
   });
@@ -97,7 +100,7 @@ test.describe("businesses and teams", () => {
     await expect(page.getByRole("heading", { name: "Join Faisal Gym" })).toBeVisible();
     await page.getByRole("button", { name: "Accept invitation" }).click();
     await expect(page).toHaveURL(/\/en\/dashboard$/);
-    await expect(page.getByText("Faisal Gym is ready")).toBeVisible();
+    await expect(currentBusiness(page, "Faisal Gym")).toBeVisible();
 
     // Managers can't manage the team or settings.
     await expect(page.getByRole("link", { name: "Settings" })).toBeHidden();
@@ -169,18 +172,19 @@ test.describe("businesses and teams", () => {
     await page.getByRole("button", { name: /Current business/ }).click();
     await page.getByRole("menuitem", { name: "Create a new business" }).click();
     await expect(page).toHaveURL(/\/en\/onboarding\?new=1$/);
-    await expect(page.getByText("Step 2 of 4")).toBeVisible();
+    await expect(page.getByText("Step 2 of 7")).toBeVisible();
     await page.locator('input[name="name"]').fill("Second Gym");
     await page.getByRole("button", { name: "Next" }).click();
     await page.getByText("Gym", { exact: true }).click();
     await page.getByRole("button", { name: "Next" }).click();
     await page.locator('input[name="locationName"]').fill("Dammam");
     await page.getByRole("button", { name: "Create my business" }).click();
-    await expect(page.getByText("Second Gym is ready")).toBeVisible();
+    await page.getByRole("link", { name: "Skip for now" }).click();
+    await expect(currentBusiness(page, "Second Gym")).toBeVisible();
 
     await page.getByRole("button", { name: /Current business: Second Gym/ }).click();
     await page.getByRole("menuitem", { name: "First Café & Bakery" }).click();
-    await expect(page.getByText("First Café & Bakery is ready")).toBeVisible();
+    await expect(currentBusiness(page, "First Café & Bakery")).toBeVisible();
     await context.close();
   });
 
@@ -191,7 +195,7 @@ test.describe("businesses and teams", () => {
     await expect(page).toHaveURL(/localhost:\d+\/$/);
     await logInWith(page, email);
     await expect(page).toHaveURL(/localhost:\d+\/dashboard$/);
-    await expect(page.getByText("مطعم الريم جاهز")).toBeVisible();
+    await expect(currentBusiness(page, "مطعم الريم")).toBeVisible();
     await page.goto("/onboarding");
     await expect(page).toHaveURL(/localhost:\d+\/dashboard$/);
     await context.close();

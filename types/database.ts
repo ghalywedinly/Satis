@@ -181,6 +181,147 @@ export type Database = {
         };
         Relationships: [];
       };
+      surveys: {
+        Row: Timestamps & {
+          id: string;
+          organization_id: string;
+          name: string;
+          status: Database["public"]["Enums"]["survey_status"];
+          default_locale: Database["public"]["Enums"]["app_locale"];
+          locales: Database["public"]["Enums"]["app_locale"][];
+          questions: Json;
+          thank_you: Json;
+          current_version_id: string | null;
+          has_unpublished_changes: boolean;
+          created_by: string | null;
+        };
+        Insert: OptionalTimestamps & {
+          id?: string;
+          organization_id: string;
+          name: string;
+          status?: Database["public"]["Enums"]["survey_status"];
+          default_locale?: Database["public"]["Enums"]["app_locale"];
+          locales?: Database["public"]["Enums"]["app_locale"][];
+          questions?: Json;
+          thank_you?: Json;
+          current_version_id?: string | null;
+          has_unpublished_changes?: boolean;
+          created_by?: string | null;
+        };
+        Update: OptionalTimestamps & {
+          id?: string;
+          organization_id?: string;
+          name?: string;
+          status?: Database["public"]["Enums"]["survey_status"];
+          default_locale?: Database["public"]["Enums"]["app_locale"];
+          locales?: Database["public"]["Enums"]["app_locale"][];
+          questions?: Json;
+          thank_you?: Json;
+          current_version_id?: string | null;
+          has_unpublished_changes?: boolean;
+          created_by?: string | null;
+        };
+        Relationships: [];
+      };
+      survey_versions: {
+        Row: {
+          id: string;
+          organization_id: string;
+          survey_id: string;
+          version: number;
+          definition: Json;
+          published_by: string | null;
+          published_at: string;
+        };
+        Insert: {
+          id?: string;
+          organization_id: string;
+          survey_id: string;
+          version: number;
+          definition: Json;
+          published_by?: string | null;
+          published_at?: string;
+        };
+        Update: {
+          id?: string;
+          organization_id?: string;
+          survey_id?: string;
+          version?: number;
+          definition?: Json;
+          published_by?: string | null;
+          published_at?: string;
+        };
+        Relationships: [];
+      };
+      survey_links: {
+        Row: Timestamps & {
+          id: string;
+          organization_id: string;
+          survey_id: string;
+          location_id: string;
+          public_code: string;
+          is_active: boolean;
+        };
+        Insert: OptionalTimestamps & {
+          id?: string;
+          organization_id: string;
+          survey_id: string;
+          location_id: string;
+          public_code: string;
+          is_active?: boolean;
+        };
+        Update: OptionalTimestamps & {
+          id?: string;
+          organization_id?: string;
+          survey_id?: string;
+          location_id?: string;
+          public_code?: string;
+          is_active?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "survey_links_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
+            referencedRelation: "locations";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      survey_responses: {
+        Row: {
+          id: string;
+          organization_id: string;
+          survey_id: string;
+          survey_version_id: string;
+          location_id: string;
+          link_id: string | null;
+          submission_id: string;
+          locale: Database["public"]["Enums"]["app_locale"];
+          device_type: string | null;
+          csat_score: number | null;
+          nps_score: number | null;
+          has_comment: boolean;
+          submitted_at: string;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
+      survey_answers: {
+        Row: {
+          id: string;
+          organization_id: string;
+          response_id: string;
+          question_id: string;
+          value_number: number | null;
+          value_text: string | null;
+          value_option_ids: string[] | null;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
     };
     Views: { [_ in never]: never };
     Functions: {
@@ -235,10 +376,28 @@ export type Database = {
         }[];
       };
       accept_invitation: { Args: { p_token_hash: string }; Returns: string };
+      publish_survey: { Args: { p_survey_id: string }; Returns: string };
+      set_survey_status: {
+        Args: { p_survey_id: string; p_status: Database["public"]["Enums"]["survey_status"] };
+        Returns: undefined;
+      };
+      get_public_survey: { Args: { p_code: string }; Returns: Json };
+      submit_survey_response: {
+        Args: {
+          p_code: string;
+          p_version_id: string;
+          p_submission_id: string;
+          p_locale: Database["public"]["Enums"]["app_locale"];
+          p_answers: Json;
+          p_device_type: string;
+        };
+        Returns: string;
+      };
     };
     Enums: {
       app_locale: "ar" | "en";
       org_role: "owner" | "admin" | "manager" | "staff" | "viewer";
+      survey_status: "draft" | "published" | "paused" | "archived";
       business_type: "restaurant" | "cafe" | "retail" | "clinic" | "beauty" | "hotel" | "gym" | "entertainment" | "other";
     };
     CompositeTypes: { [_ in never]: never };
@@ -247,3 +406,4 @@ export type Database = {
 
 export type OrgRole = Database["public"]["Enums"]["org_role"];
 export type BusinessType = Database["public"]["Enums"]["business_type"];
+export type SurveyStatus = Database["public"]["Enums"]["survey_status"];

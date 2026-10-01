@@ -25,6 +25,7 @@ import { trackClient } from "@/lib/observability/client";
 import { cn } from "@/lib/utils";
 import type { BusinessType } from "@/types/database";
 import { createOrganization, type CreateOrganizationField } from "../actions";
+import { ONBOARDING_STEPS, OnboardingProgress } from "./onboarding-progress";
 import { BUSINESS_TYPES } from "../schemas";
 
 const ICONS: Record<BusinessType, LucideIcon> = {
@@ -97,20 +98,10 @@ export function OnboardingWizard({ skipWelcome }: { skipWelcome: boolean }) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-3">
-        <p className="text-sm font-medium text-muted-foreground">{t("progress", { current: formatCount(locale, step + 1), total: formatCount(locale, STEPS.length) })}</p>
-        <div className="flex gap-1.5" aria-hidden>
-          {STEPS.map((s, i) => (
-            <span
-              key={s}
-              className={cn(
-                "slice-sm h-2 flex-1 transition-colors duration-[320ms] ease-[var(--ease-standard)]",
-                i <= step ? "bg-ultramarine" : "bg-ink-100",
-              )}
-            />
-          ))}
-        </div>
-      </div>
+      <OnboardingProgress
+        current={step + 1}
+        label={t("progress", { current: formatCount(locale, step + 1), total: formatCount(locale, ONBOARDING_STEPS) })}
+      />
 
       <form action={action} noValidate className="flex flex-col gap-8">
         {state.formError && <FormAlert tone="error">{te(state.formError)}</FormAlert>}

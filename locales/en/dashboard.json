@@ -2,8 +2,11 @@
   "metaTitle": "Dashboard",
   "welcome": "Welcome, {name}",
   "welcomeNoName": "Welcome",
-  "readyTitle": "{organization} is ready",
-  "readyBody": "Next up: your first survey and QR codes for your locations. Coming soon.",
   "manageLocations": "Manage locations",
-  "inviteTeam": "Invite your team"
+  "inviteTeam": "Invite your team",
+  "surveysCount": "Surveys",
+  "responsesWeek": "Responses in the last 7 days",
+  "createSurvey": "Create your first survey",
+  "createSurveyBody": "Create a survey from a ready-made template and publish it in a minute.",
+  "viewSurveys": "View surveys"
 }

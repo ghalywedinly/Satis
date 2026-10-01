@@ -27,5 +27,26 @@
     "cityLabel": "City",
     "cityPlaceholder": "For example: Jeddah",
     "submit": "Create my business"
+  },
+  "survey": {
+    "title": "Create your first survey",
+    "body": "We've prepared a short survey customers can answer in under a minute. You can edit it any time.",
+    "create": "Create and publish survey",
+    "skip": "Skip for now"
+  },
+  "qr": {
+    "title": "Your QR code is ready",
+    "body": "This is the code for {location}. Download or print it.",
+    "next": "Next"
+  },
+  "done": {
+    "title": "Put your QR code where it's easy to see",
+    "body": "Place this QR code where your customers can easily see it.",
+    "tips": {
+      "counter": "Next to the cashier or payment point",
+      "tables": "On tables or menus",
+      "exit": "Near the exit or on the receipt"
+    },
+    "finish": "Go to dashboard"
   }
 }

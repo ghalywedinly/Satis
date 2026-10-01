@@ -1,5 +1,5 @@
 /** Paths (without locale prefix) that require a signed-in user. Add new app areas here. */
-export const PROTECTED_PREFIXES = ["/dashboard", "/onboarding", "/locations", "/team", "/settings"] as const;
+export const PROTECTED_PREFIXES = ["/dashboard", "/onboarding", "/surveys", "/locations", "/team", "/settings"] as const;
 
 /** Paths only for signed-out visitors; signed-in users are sent to the dashboard. */
 export const GUEST_ONLY_PATHS = ["/login", "/signup", "/forgot-password"] as const;

@@ -4,7 +4,10 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 
-export type NavItem = { href: "/dashboard" | "/locations" | "/team" | "/settings"; label: "dashboard" | "locations" | "team" | "settings" };
+export type NavItem = {
+  href: "/dashboard" | "/surveys" | "/locations" | "/team" | "/settings";
+  label: "dashboard" | "surveys" | "locations" | "team" | "settings";
+};
 
 /** Primary navigation. Scrolls horizontally on small screens instead of hiding. */
 export function MainNav({ items }: { items: NavItem[] }) {

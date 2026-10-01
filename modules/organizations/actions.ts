@@ -51,8 +51,8 @@ export async function createOrganization(
   await setActiveOrganizationCookie(organizationId);
   captureServerEvent("organization_created", user.id, { business_type: parsed.data.businessType, organization_id: organizationId });
   captureServerEvent("location_created", user.id, { organization_id: organizationId, source: "onboarding" });
-  captureServerEvent("onboarding_completed", user.id, { organization_id: organizationId });
-  redirect(getPathname({ locale, href: "/dashboard" }));
+  // Onboarding continues with the first survey (steps 5–7); completion is tracked at the end.
+  redirect(getPathname({ locale, href: "/onboarding/survey" }));
 }
 
 /** Switches the business the user is working in (only to one they belong to). */

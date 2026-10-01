@@ -11,7 +11,8 @@
     "mainNavigation": "Main navigation",
     "locations": "Locations",
     "team": "Team",
-    "settings": "Settings"
+    "settings": "Settings",
+    "surveys": "Surveys"
   },
   "actions": {
     "logIn": "Log in",

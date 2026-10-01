@@ -29,6 +29,7 @@ export function RatingSlices({
   max = 5,
   size = "md",
   onDark = false,
+  label,
   onChange,
   className,
 }: {
@@ -36,13 +37,15 @@ export function RatingSlices({
   max?: number;
   size?: "sm" | "md" | "lg";
   onDark?: boolean;
+  /** Accessible name for the scale, e.g. the question text (translated by the caller). */
+  label: string;
   onChange?: (v: number) => void;
   className?: string;
 }) {
   const h = { sm: "h-2.5", md: "h-3.5", lg: "h-[18px]" }[size];
   const clip = { sm: "slice-sm", md: "slice-md", lg: "slice-lg" }[size];
   return (
-    <div role={onChange ? "radiogroup" : "img"} aria-label={`Rating ${value} of ${max}`} className={cn("flex gap-1", className)}>
+    <div role={onChange ? "radiogroup" : "img"} aria-label={label} className={cn("flex gap-1", className)}>
       {Array.from({ length: max }, (_, i) => {
         const n = i + 1;
         const color = n === value ? "bg-zest" : n < value ? "bg-ultramarine" : onDark ? "bg-ink-700" : "bg-ink-100";

@@ -25,5 +25,7 @@
   "limitReached": "You've reached the maximum allowed.",
   "inviteExpired": "This invitation has expired.",
   "inviteUsed": "This invitation has already been used.",
-  "emailMismatch": "This invitation was sent to a different email."
+  "emailMismatch": "This invitation was sent to a different email.",
+  "invalidSurvey": "Finish the survey before publishing it.",
+  "surveyUnavailable": "This survey isn't available right now."
 }

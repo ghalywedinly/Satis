@@ -29,7 +29,7 @@ describe("translations", async () => {
   });
 
   it("Arabic messages are actually Arabic", () => {
-    const latinOnly = Object.entries(ar).filter(([key, value]) => !/[؀-ۿ]/.test(value) && !key.startsWith("common.language."));
+    const latinOnly = Object.entries(ar).filter(([key, value]) => !/[؀-ۿ]/.test(value) && !key.startsWith("common.language.") && key !== "publicSurvey.otherLanguage");
     expect(latinOnly).toEqual([]);
   });
 });

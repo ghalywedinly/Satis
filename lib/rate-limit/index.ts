@@ -12,6 +12,8 @@ export const RATE_LIMITS = {
   signup: { limit: 5, windowSeconds: 3600 },
   passwordReset: { limit: 5, windowSeconds: 3600 },
   resendVerification: { limit: 5, windowSeconds: 3600 },
+  // Generous: a café's customers often share one Wi-Fi address.
+  surveySubmit: { limit: 30, windowSeconds: 600 },
 } satisfies Record<string, RateLimitRule>;
 
 /**

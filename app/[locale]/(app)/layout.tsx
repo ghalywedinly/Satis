@@ -26,6 +26,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "dashboard" },
+    { href: "/surveys", label: "surveys" },
     { href: "/locations", label: "locations" },
     { href: "/team", label: "team" },
     ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings" } as const] : []),
@@ -36,11 +37,11 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
       <AnalyticsIdentity userId={user.id} />
       <a
         href="#content"
-        className="sr-only z-50 rounded-control bg-white px-3 py-2 focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:shadow-focus"
+        className="sr-only z-50 rounded-control print:hidden bg-white px-3 py-2 focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:shadow-focus"
       >
         {t("skipToContent")}
       </a>
-      <header className="border-b border-border bg-white">
+      <header className="border-b border-border bg-white print:hidden">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-3 sm:px-6">
           <div className="flex items-center justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
@@ -63,7 +64,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
           <MainNav items={nav} />
         </div>
       </header>
-      <main id="content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
+      <main id="content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10 print:p-0">
         {children}
       </main>
     </div>

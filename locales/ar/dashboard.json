@@ -2,8 +2,11 @@
   "metaTitle": "لوحة التحكم",
   "welcome": "أهلًا {name}",
   "welcomeNoName": "أهلًا بك",
-  "readyTitle": "{organization} جاهز",
-  "readyBody": "الخطوة التالية: إنشاء أول استبيان ورمز QR لفروعك. سيتوفر ذلك قريبًا.",
   "manageLocations": "أدِر الفروع",
-  "inviteTeam": "ادعُ فريقك"
+  "inviteTeam": "ادعُ فريقك",
+  "surveysCount": "الاستبيانات",
+  "responsesWeek": "الإجابات خلال 7 أيام",
+  "createSurvey": "أنشئ أول استبيان",
+  "createSurveyBody": "أنشئ استبيانًا من قالب جاهز وانشره خلال دقيقة.",
+  "viewSurveys": "عرض الاستبيانات"
 }

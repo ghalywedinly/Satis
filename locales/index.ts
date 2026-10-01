@@ -10,7 +10,6 @@ const load = {
     errors: (await import("./ar/errors.json")).default,
     validation: (await import("./ar/validation.json")).default,
     dashboard: (await import("./ar/dashboard.json")).default,
-    survey: (await import("./ar/survey.json")).default,
     emails: (await import("./ar/emails.json")).default,
     organization: (await import("./ar/organization.json")).default,
     onboarding: (await import("./ar/onboarding.json")).default,
@@ -18,6 +17,9 @@ const load = {
     team: (await import("./ar/team.json")).default,
     invite: (await import("./ar/invite.json")).default,
     settings: (await import("./ar/settings.json")).default,
+    surveys: (await import("./ar/surveys.json")).default,
+    publicSurvey: (await import("./ar/publicSurvey.json")).default,
+    surveyTemplate: (await import("./ar/surveyTemplate.json")).default,
   }),
   en: async () => ({
     common: (await import("./en/common.json")).default,
@@ -27,7 +29,6 @@ const load = {
     errors: (await import("./en/errors.json")).default,
     validation: (await import("./en/validation.json")).default,
     dashboard: (await import("./en/dashboard.json")).default,
-    survey: (await import("./en/survey.json")).default,
     emails: (await import("./en/emails.json")).default,
     organization: (await import("./en/organization.json")).default,
     onboarding: (await import("./en/onboarding.json")).default,
@@ -35,6 +36,9 @@ const load = {
     team: (await import("./en/team.json")).default,
     invite: (await import("./en/invite.json")).default,
     settings: (await import("./en/settings.json")).default,
+    surveys: (await import("./en/surveys.json")).default,
+    publicSurvey: (await import("./en/publicSurvey.json")).default,
+    surveyTemplate: (await import("./en/surveyTemplate.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;
 

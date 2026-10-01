@@ -1,0 +1,22 @@
+{
+  "poor": "Poor",
+  "excellent": "Excellent",
+  "notLikely": "Not likely",
+  "veryLikely": "Very likely",
+  "optional": "Optional",
+  "chooseAll": "Choose all that apply",
+  "commentPlaceholder": "Write your thoughts here",
+  "answerRequired": "Answer this question to continue.",
+  "submit": "Send feedback",
+  "thanksTitle": "Thanks for your feedback",
+  "thanksBody": "Your answers go straight to the store team.",
+  "previewThanks": "This is how the thank-you message looks to your customers.",
+  "startOver": "Start over",
+  "poweredBy": "Powered by",
+  "otherLanguage": "العربية",
+  "errorGeneric": "We couldn't send your answers. Please try again.",
+  "errorChanged": "This survey was just updated. Reload the page to continue.",
+  "errorRateLimited": "Too many attempts from this device. Wait a moment and try again.",
+  "unavailableTitle": "This survey isn't available right now",
+  "unavailableBody": "The business may have paused it. Thanks for your interest."
+}
