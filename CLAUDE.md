@@ -1,10 +1,10 @@
+@AGENTS.md
+
 # Satis — brand rules for Claude Code
 
 Satis is a **customer satisfaction platform** (feedback surveys, CSAT, NPS, sentiment) for consumer brands, embedded across app, POS and web. Tagline: **"Satisfaction, measured."** / **"رضا عملائك، بالأرقام."**
 
 Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual reference: `Satis Branding/design_handoff_satis_brand/reference/Satis Brand Identity v4.dc.html`.
-
-Until the Next.js app exists, the source files referenced below (`app/globals.css`, `app/fonts.ts`, `components/brand/*`, `public/brand/*`) live in `Satis Branding/design_handoff_satis_brand/`; copy them into the app per the README install steps.
 
 ## Always
 - Stack: Next.js App Router, TypeScript, Tailwind v4, shadcn/ui. Tokens live in `app/globals.css` (`@theme`) — use token classes (`bg-ink`, `text-ultramarine`, `bg-zest`, `font-display`, `rounded-card`), never raw hex in components.

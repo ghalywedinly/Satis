@@ -1,0 +1,222 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ───────── Satis brand tokens (Tailwind v4) ───────── */
+@theme {
+  --color-ink-50: #F6F7F9;
+  --color-ink-100: #ECEEF2;
+  --color-ink-200: #DCE0E8;
+  --color-ink-300: #AEB6C4;
+  --color-ink-400: #8A94A6;
+  --color-ink-500: #5B6882;
+  --color-ink-600: #3C4658;
+  --color-ink-700: #232A36;
+  --color-ink-800: #151922;
+  --color-ink-900: #0B0D12;
+  --color-sand-50: #FAF8F4;
+  --color-sand-100: #F2EEE7;
+  --color-sand-200: #E5DFD5;
+  --color-sand-300: #CFC7B9;
+  --color-ultra-50: #EEF0FE;
+  --color-ultra-100: #DCE0FD;
+  --color-ultra-200: #B6BEFB;
+  --color-ultra-300: #8B95F8;
+  --color-ultra-400: #5C69F6;
+  --color-ultra-500: #2B3AF3;
+  --color-ultra-600: #1D28C9;
+  --color-ultra-700: #161F9E;
+  --color-ultra-800: #111876;
+  --color-ultra-900: #0C1252;
+  --color-zest-50: #FFF8E0;
+  --color-zest-100: #FFEFB8;
+  --color-zest-200: #FFE383;
+  --color-zest-300: #FFD84F;
+  --color-zest-400: #FFCF28;
+  --color-zest-500: #F5B800;
+  --color-zest-600: #C99400;
+  --color-zest-700: #9A7100;
+  --color-ember-50: #FFF0EC;
+  --color-ember-200: #FFC6B8;
+  --color-ember-500: #FF6B4A;
+  --color-ember-600: #D2492F;
+  --color-ember-700: #A8321F;
+  --color-mint-50: #E6F7EF;
+  --color-mint-200: #A8E5C9;
+  --color-mint-500: #0FA968;
+  --color-mint-600: #0D8B57;
+  --color-mint-700: #0A6F45;
+  --color-grape-50: #F5EFFB;
+  --color-grape-200: #DDC9F0;
+  --color-grape-500: #8B57C4;
+  --color-grape-600: #6B3FA0;
+  --color-ink: #0B0D12;
+  --color-sand: #FAF8F4;
+  --color-ultramarine: #2B3AF3;
+  --color-zest: #FFCF28;
+  --color-ember: #FF6B4A;
+  --color-mint: #0FA968;
+  --color-grape: #8B57C4;
+  --color-midnight: #0C1252;
+  --color-linen: #E5DFD5;
+
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
+  --font-arabic: var(--font-readex), "Readex Pro", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-control: 10px;
+  --radius-tile: 14px;
+  --radius-card: 20px;
+  --radius-dialog: 28px;
+  --radius-hero: 40px;
+
+  --shadow-xs: 0 1px 2px rgba(11,13,18,.06);
+  --shadow-sm: 0 1px 2px rgba(11,13,18,.05), 0 2px 6px rgba(11,13,18,.05);
+  --shadow-md: 0 2px 4px rgba(11,13,18,.04), 0 8px 20px rgba(11,13,18,.07);
+  --shadow-lg: 0 4px 8px rgba(11,13,18,.04), 0 18px 44px rgba(11,13,18,.10);
+  --shadow-xl: 0 8px 16px rgba(11,13,18,.05), 0 32px 72px rgba(11,13,18,.14);
+  --shadow-pressed: inset 0 2px 4px rgba(11,13,18,.18);
+  --shadow-focus: 0 0 0 3px #B6BEFB;
+  --shadow-focus-zest: 0 0 0 3px #FFE383;
+
+  --ease-standard: cubic-bezier(.2,.8,.2,1);
+  --ease-entrance: cubic-bezier(.16,1,.3,1);
+  --ease-exit: cubic-bezier(.4,0,1,1);
+  --ease-pop: cubic-bezier(.34,1.56,.64,1);
+
+  --tracking-display: -0.045em;
+  --tracking-heading: -0.03em;
+  --tracking-logo: -0.04em;
+  --tracking-eyebrow: 0.10em;
+}
+
+/* ───────── shadcn/ui semantic variables mapped to Satis ───────── */
+:root {
+  --radius: 0.625rem; /* 10px controls */
+  --background: #FAF8F4;          /* Sand */
+  --foreground: #0B0D12;          /* Ink */
+  --card: #FFFFFF;
+  --card-foreground: #0B0D12;
+  --popover: #FFFFFF;
+  --popover-foreground: #0B0D12;
+  --primary: #2B3AF3;             /* Ultramarine */
+  --primary-foreground: #FFFFFF;
+  --secondary: #F2EEE7;           /* Sand 100 */
+  --secondary-foreground: #0B0D12;
+  --muted: #F2EEE7;
+  --muted-foreground: #5A606E;
+  --accent: #FFCF28;              /* Zest — delight / top scores only */
+  --accent-foreground: #0B0D12;
+  --destructive: #D2492F;         /* Ember 600 */
+  --border: #E6E2DA;
+  --input: #DCE0E8;
+  --ring: #B6BEFB;
+  --chart-1: #2B3AF3;
+  --chart-2: #FFCF28;
+  --chart-3: #0FA968;
+  --chart-4: #FF6B4A;
+  --chart-5: #8B57C4;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0B0D12;
+  --sidebar-primary: #2B3AF3;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEF0FE;
+  --sidebar-accent-foreground: #0B0D12;
+  --sidebar-border: #E6E2DA;
+  --sidebar-ring: #B6BEFB;
+}
+
+.dark {
+  --background: #0B0D12;
+  --foreground: #FAF8F4;
+  --card: #151922;
+  --card-foreground: #FAF8F4;
+  --popover: #151922;
+  --popover-foreground: #FAF8F4;
+  --primary: #5C69F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #232A36;
+  --secondary-foreground: #FAF8F4;
+  --muted: #232A36;
+  --muted-foreground: #B8BCC6;
+  --accent: #FFCF28;
+  --accent-foreground: #0B0D12;
+  --destructive: #FF6B4A;
+  --border: #232A36;
+  --input: #3C4658;
+  --ring: #5C69F6;
+  --sidebar: #0B0D12;
+  --sidebar-foreground: #FAF8F4;
+  --sidebar-primary: #5C69F6;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #151922;
+  --sidebar-accent-foreground: #FAF8F4;
+  --sidebar-border: #232A36;
+  --sidebar-ring: #5C69F6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground font-sans antialiased; }
+  h1, h2, h3, h4 { @apply font-display font-bold; letter-spacing: var(--tracking-heading); }
+  [dir="rtl"], :lang(ar) { font-family: var(--font-arabic); }
+  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, :lang(ar) h1, :lang(ar) h2, :lang(ar) h3 { letter-spacing: 0; }
+  .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/* Slice: the parallelogram from the mark. Use on chips, highlights, rating bars. */
+@utility slice {
+  clip-path: polygon(0.3em 0, 100% 0, calc(100% - 0.3em) 100%, 0 100%);
+}
+@utility slice-sm { clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); }
+@utility slice-md { clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); }
+@utility slice-lg { clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%); }
+@utility eyebrow {
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; }
+}
