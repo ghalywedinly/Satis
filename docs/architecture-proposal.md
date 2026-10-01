@@ -1,6 +1,6 @@
 # Satis — architecture proposal
 
-Status: **approved** (all recommendations in §2 accepted). Phases 1–4 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox).
+Status: **approved** (all recommendations in §2 accepted). Phases 1–5 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox; analytics dashboard).
 
 This answers "First task" of the master build specification: the current state of the repository, the proposed architecture, database schema, folder structure, environment variables, external services, security requirements and risks. Each section separates **MVP** from **Future**.
 

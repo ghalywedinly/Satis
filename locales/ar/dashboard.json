@@ -2,13 +2,84 @@
   "metaTitle": "لوحة التحكم",
   "welcome": "أهلًا {name}",
   "welcomeNoName": "أهلًا بك",
-  "manageLocations": "أدِر الفروع",
-  "inviteTeam": "ادعُ فريقك",
-  "surveysCount": "الاستبيانات",
-  "responsesWeek": "الإجابات خلال 7 أيام",
   "createSurvey": "أنشئ أول استبيان",
   "createSurveyBody": "أنشئ استبيانًا من قالب جاهز وانشره خلال دقيقة.",
-  "viewSurveys": "عرض الاستبيانات",
-  "unreadFeedback": "آراء غير مقروءة",
-  "viewFeedback": "اعرض الآراء"
+  "subtitle": "شعور عملائك، بنظرة واحدة.",
+  "filters": {
+    "label": "تصفية لوحة التحكم",
+    "period": "الفترة",
+    "periods": {
+      "today": "اليوم",
+      "7": "آخر 7 أيام",
+      "30": "آخر 30 يومًا",
+      "90": "آخر 90 يومًا",
+      "custom": "فترة مخصصة"
+    },
+    "from": "من",
+    "to": "إلى",
+    "apply": "طبّق",
+    "location": "الفرع",
+    "allLocations": "كل الفروع",
+    "survey": "الاستبيان",
+    "allSurveys": "كل الاستبيانات"
+  },
+  "kpi": {
+    "responses": "الإجابات",
+    "csat": "رضا العملاء (CSAT)",
+    "csatHint": "نسبة التقييمات 4 أو 5",
+    "csatAverage": "المتوسط {score} من 5",
+    "nps": "صافي نقاط الترويج (NPS)",
+    "npsHint": "المروّجون ناقص المنتقدين، من −100 إلى 100",
+    "npsBase": "من {count} إجابة",
+    "comments": "إجابات فيها تعليقات",
+    "commentsShare": "{percent} من الإجابات",
+    "noData": "لا توجد بيانات بعد",
+    "vsPrevious": "مقارنة بالفترة السابقة",
+    "noPrevious": "لا توجد فترة سابقة للمقارنة",
+    "up": "ارتفاع {value}",
+    "down": "انخفاض {value}",
+    "same": "بدون تغيير",
+    "points": "{value} نقطة"
+  },
+  "empty": {
+    "title": "لا توجد إجابات في هذه الفترة",
+    "body": "جرّب فترة أطول، أو شارك رموز QR لتبدأ في جمع الآراء.",
+    "action": "شارك رموز QR"
+  },
+  "charts": {
+    "responsesPerDay": "الإجابات يوميًا",
+    "csatPerDay": "رضا العملاء يوميًا",
+    "csatPerDayHint": "الأيام التي ليس فيها تقييمات تظهر فارغة",
+    "npsBreakdown": "توزيع NPS",
+    "detractors": "المنتقدون (0–6)",
+    "passives": "المحايدون (7–8)",
+    "promoters": "المروّجون (9–10)",
+    "noNps": "لم يُجب أحد عن سؤال التوصية في هذه الفترة.",
+    "csatDistribution": "التقييمات",
+    "ratingLabel": "{score} من 5",
+    "noCsat": "لا توجد تقييمات في هذه الفترة.",
+    "tableCaption": "القيم المعروضة في الرسم",
+    "day": "اليوم",
+    "value": "القيمة",
+    "responsesValue": "{count} إجابة",
+    "csatValue": "{percent} راضون",
+    "noRatings": "لا توجد تقييمات"
+  },
+  "locations": {
+    "title": "الفروع",
+    "location": "الفرع",
+    "responses": "الإجابات",
+    "csat": "الرضا (CSAT)",
+    "nps": "الترويج (NPS)",
+    "empty": "لا توجد فروع بعد."
+  },
+  "questions": {
+    "title": "النتائج حسب السؤال",
+    "chooseSurvey": "اختر استبيانًا من الأعلى لترى نتائج كل سؤال.",
+    "answers": "عدد الإجابات: {count}",
+    "noAnswers": "لا توجد إجابات في هذه الفترة.",
+    "average": "المتوسط {score} من 5",
+    "nps": "صافي الترويج {score}",
+    "readComments": "اقرأ التعليقات"
+  }
 }

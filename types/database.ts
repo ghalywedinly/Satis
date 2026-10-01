@@ -452,6 +452,14 @@ export type Database = {
         Returns: string;
       };
       add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
+      get_analytics: {
+        Args: { p_organization_id: string; p_from: string; p_to: string; p_location_id?: string | null; p_survey_id?: string | null };
+        Returns: Json;
+      };
+      get_question_stats: {
+        Args: { p_organization_id: string; p_survey_id: string; p_from: string; p_to: string; p_location_id?: string | null };
+        Returns: Json;
+      };
     };
     Enums: {
       app_locale: "ar" | "en";

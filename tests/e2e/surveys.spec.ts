@@ -37,8 +37,9 @@ test.describe("surveys", () => {
 
     // The response reaches the business.
     await page.reload();
-    await expect(page.getByText("الإجابات خلال 7 أيام")).toBeVisible();
-    await expect(page.locator("p.font-display").nth(1)).toHaveText("1");
+    const kpis = page.locator("main section").first();
+    await expect(kpis.getByText("الإجابات", { exact: true })).toBeVisible();
+    await expect(kpis.locator("p.font-display").first()).toHaveText("1");
     await c.context.close();
   });
 
