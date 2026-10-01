@@ -17,7 +17,7 @@ trap cleanup EXIT
 "${RUN[@]}" "$PG_BIN/pg_ctl" -D "$WORK/data" -o "-p $PORT -k $WORK" -l "$WORK/log" start -w >/dev/null
 
 PSQL=(psql -h "$WORK" -p "$PORT" -U postgres -d postgres -v ON_ERROR_STOP=1 -q)
-"${PSQL[@]}" -f "$ROOT/supabase/tests/stub/supabase-stub.sql"
+"${PSQL[@]}" -f "$ROOT/scripts/db/supabase-stub.sql"
 for migration in "$ROOT"/supabase/migrations/*.sql; do
   echo "migrate  $(basename "$migration")"
   "${PSQL[@]}" -f "$migration"

@@ -1,4 +1,5 @@
 -- Minimal stand-in for the parts of a Supabase database that migrations and tests rely on.
+-- Kept outside supabase/tests so `supabase test db` never runs it.
 -- Used ONLY by scripts/db/test-local.sh when Docker (and so `supabase start`) is unavailable.
 -- CI runs the same migrations and tests against the real Supabase stack.
 
