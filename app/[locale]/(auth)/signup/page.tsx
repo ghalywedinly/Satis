@@ -11,8 +11,9 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/signup">
   return { title: t("metaTitle") };
 }
 
-export default async function SignupPage({ params }: PageProps<"/[locale]/signup">) {
+export default async function SignupPage({ params, searchParams }: PageProps<"/[locale]/signup">) {
   const locale = await resolveLocale(params);
+  const { next } = await searchParams;
   const t = await getTranslations({ locale, namespace: "auth.signup" });
   return (
     <AuthCard
@@ -21,13 +22,16 @@ export default async function SignupPage({ params }: PageProps<"/[locale]/signup
       footer={
         <>
           {t("haveAccount")}{" "}
-          <Link href="/login" className="font-semibold text-ultramarine hover:underline">
+          <Link
+            href={typeof next === "string" ? `/login?next=${encodeURIComponent(next)}` : "/login"}
+            className="font-semibold text-ultramarine hover:underline"
+          >
             {t("logIn")}
           </Link>
         </>
       }
     >
-      <SignupForm />
+      <SignupForm next={typeof next === "string" ? next : undefined} />
     </AuthCard>
   );
 }

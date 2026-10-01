@@ -2,5 +2,8 @@
   "metaTitle": "لوحة التحكم",
   "welcome": "أهلًا {name}",
   "welcomeNoName": "أهلًا بك",
-  "setupNext": "الخطوة التالية: إعداد نشاطك التجاري وفرعك الأول."
+  "readyTitle": "{organization} جاهز",
+  "readyBody": "الخطوة التالية: إنشاء أول استبيان ورمز QR لفروعك. سيتوفر ذلك قريبًا.",
+  "manageLocations": "أدِر الفروع",
+  "inviteTeam": "ادعُ فريقك"
 }

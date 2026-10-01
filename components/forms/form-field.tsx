@@ -4,7 +4,7 @@ import { useId } from "react";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { ValidationKey } from "@/modules/auth/schemas";
+import type { ValidationKey } from "@/lib/forms";
 
 type FormFieldProps = Omit<React.ComponentProps<typeof Input>, "id"> & {
   label: string;

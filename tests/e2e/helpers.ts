@@ -7,35 +7,50 @@ export const uniqueEmail = (label: string) =>
 
 export const PASSWORD = "Satis-e2e-2026";
 
-/** Latest /auth/confirm link sent to `to`, read from the dev outbox or Mailpit. Polls for up to 15s. */
-export async function latestAuthLink(to: string): Promise<string> {
+/** Latest /auth/confirm link sent to `to` (verification, password reset). */
+export const latestAuthLink = (to: string) => latestEmailLink(to, /https?:\/\/[^\s"'<>]+\/auth\/confirm\?[^\s"'<>]+/);
+
+/** Latest team invitation link sent to `to`. */
+export const latestInviteLink = (to: string) => latestEmailLink(to, /https?:\/\/[^\s"'<>]+\/invite\/[A-Za-z0-9_-]{43}/);
+
+/**
+ * Polls for up to 15s for an email to `to` containing a link matching `pattern`. Emails sent by the
+ * app are read from its dev outbox (E2E_EMAIL_OUTBOX); emails sent by Supabase from Mailpit (MAILPIT_URL).
+ */
+async function latestEmailLink(to: string, pattern: RegExp): Promise<string> {
   for (let attempt = 0; attempt < 30; attempt++) {
-    const link = process.env.E2E_EMAIL_OUTBOX ? await fromOutbox(to) : await fromMailpit(to);
-    if (link) return link;
+    const texts = [...(await fromOutbox(to)), ...(await fromMailpit(to))];
+    for (const text of texts) {
+      const link = text.match(pattern)?.[0]?.replaceAll("&amp;", "&");
+      if (link) return link;
+    }
     await new Promise((r) => setTimeout(r, 500));
   }
-  throw new Error(`No auth email for ${to}`);
+  throw new Error(`No email for ${to} matching ${pattern}`);
 }
 
-const extractLink = (text: string) => text.match(/https?:\/\/[^\s"'<>]+\/auth\/confirm\?[^\s"'<>]+/)?.[0]?.replaceAll("&amp;", "&") ?? null;
-
-async function fromOutbox(to: string) {
-  const dir = process.env.E2E_EMAIL_OUTBOX!;
+async function fromOutbox(to: string): Promise<string[]> {
+  const dir = process.env.E2E_EMAIL_OUTBOX;
+  if (!dir) return [];
   const files = (await readdir(dir).catch(() => [])).filter((f) => f.endsWith(".json")).sort().reverse();
+  const texts: string[] = [];
   for (const file of files) {
     const message = JSON.parse(await readFile(path.join(dir, file), "utf8"));
-    if (message.to === to) return extractLink(message.text);
+    if (message.to === to) texts.push(message.text);
   }
-  return null;
+  return texts;
 }
 
-async function fromMailpit(to: string) {
-  const base = process.env.MAILPIT_URL ?? "http://127.0.0.1:54324";
-  const search = await fetch(`${base}/api/v1/search?query=${encodeURIComponent(`to:"${to}"`)}&limit=1`).then((r) => r.json());
-  const id = search.messages?.[0]?.ID;
-  if (!id) return null;
-  const message = await fetch(`${base}/api/v1/message/${id}`).then((r) => r.json());
-  return extractLink(message.HTML ?? message.Text ?? "");
+async function fromMailpit(to: string): Promise<string[]> {
+  const base = process.env.MAILPIT_URL;
+  if (!base) return [];
+  const search = await fetch(`${base}/api/v1/search?query=${encodeURIComponent(`to:"${to}"`)}&limit=5`).then((r) => r.json());
+  const texts: string[] = [];
+  for (const summary of search.messages ?? []) {
+    const message = await fetch(`${base}/api/v1/message/${summary.ID}`).then((r) => r.json());
+    texts.push(message.HTML ?? message.Text ?? "");
+  }
+  return texts;
 }
 
 export async function signUpAndVerify(page: Page, { email, name, localePrefix }: { email: string; name: string; localePrefix: "" | "/en" }) {
@@ -46,7 +61,8 @@ export async function signUpAndVerify(page: Page, { email, name, localePrefix }:
   await page.locator('button[type="submit"]').click();
   await expect(page).toHaveURL(new RegExp(`${localePrefix}/verify-email$`));
   await page.goto(await latestAuthLink(email));
-  await expect(page).toHaveURL(new RegExp(`${localePrefix}/dashboard$`));
+  // New accounts have no business yet, so they land on onboarding.
+  await expect(page).toHaveURL(new RegExp(`${localePrefix}/onboarding$`));
 }
 
 export async function logInWith(page: Page, email: string, password = PASSWORD, localePrefix: "" | "/en" = "") {
@@ -57,7 +73,8 @@ export async function logInWith(page: Page, email: string, password = PASSWORD, 
 }
 
 export async function logOut(page: Page) {
-  await page.locator("header button[aria-haspopup='menu']").click();
+  // The user menu is the last menu in the header (the business switcher comes first).
+  await page.locator("header button[aria-haspopup='menu']").last().click();
   await page.getByRole("menuitem").last().click();
   // Logging out lands on the home page in the current language.
   await expect(page).toHaveURL(/localhost:\d+\/(en)?$/);
@@ -66,3 +83,18 @@ export async function logOut(page: Page) {
 /** The form-level message inside the page (Next.js also renders a route announcer with role="alert"). */
 export const formAlert = (page: Page) => page.locator("main [role=alert]");
 export const formStatus = (page: Page) => page.locator("main [role=status]");
+
+/** Onboarding: creates a business with its first location and lands on the dashboard. */
+export async function createBusiness(page: Page, { name, type, location, city }: { name: string; type: string; location: string; city?: string }) {
+  await page.goto(page.url().includes("/en/") ? "/en/onboarding?new=1" : "/onboarding?new=1");
+  const start = page.locator("form section:not([hidden]) button", { hasText: /Start setup|ابدأ الإعداد/ });
+  if (await start.isVisible()) await start.click();
+  await page.locator('input[name="name"]').fill(name);
+  await page.getByRole("button", { name: /^(Next|التالي)$/ }).click();
+  await page.locator(`label:has(input[name="businessType"][value="${type}"])`).click();
+  await page.getByRole("button", { name: /^(Next|التالي)$/ }).click();
+  await page.locator('input[name="locationName"]').fill(location);
+  if (city) await page.locator('input[name="locationCity"]').fill(city);
+  await page.locator('button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/dashboard$/);
+}

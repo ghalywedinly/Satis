@@ -2,10 +2,10 @@ import { expect, test } from "@playwright/test";
 import { formAlert, formStatus, latestAuthLink, logInWith, logOut, PASSWORD, signUpAndVerify, uniqueEmail } from "./helpers";
 
 test.describe("authentication", () => {
-  test("sign up in Arabic, verify email, land on the dashboard, log out", async ({ page }) => {
+  test("sign up in Arabic, verify email, start onboarding, log out", async ({ page }) => {
     const email = uniqueEmail("signup-ar");
     await signUpAndVerify(page, { email, name: "نورة الحربي", localePrefix: "" });
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("أهلًا نورة");
+    await expect(page.getByRole("heading", { level: 1, name: "أهلًا بك في ساتيس" })).toBeVisible();
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
 
     await logOut(page);
@@ -55,7 +55,7 @@ test.describe("authentication", () => {
     await page.locator('input[name="email"]').fill(email);
     await page.locator('input[name="password"]').fill(PASSWORD);
     await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL(/\/en\/dashboard$/);
+    await expect(page).toHaveURL(/\/en\/(dashboard|onboarding)$/);
   });
 
   test("reset a forgotten password", async ({ page }) => {
@@ -73,11 +73,11 @@ test.describe("authentication", () => {
     await page.locator('input[name="password"]').fill("New-password-2026");
     await page.locator('input[name="confirmPassword"]').fill("New-password-2026");
     await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL(/\/en\/dashboard$/);
+    await expect(page).toHaveURL(/\/en\/(dashboard|onboarding)$/);
 
     await logOut(page);
     await logInWith(page, email, "New-password-2026", "/en");
-    await expect(page).toHaveURL(/\/en\/dashboard$/);
+    await expect(page).toHaveURL(/\/en\/(dashboard|onboarding)$/);
   });
 
   test("an invalid email link is rejected gracefully", async ({ page }) => {
@@ -94,19 +94,19 @@ test.describe("authentication", () => {
     await page.locator('input[name="email"]').fill(email);
     await page.locator('input[name="password"]').fill(PASSWORD);
     await page.locator('button[type="submit"]').click();
-    await expect(page).toHaveURL(/localhost:\d+\/dashboard$/);
+    await expect(page).toHaveURL(/localhost:\d+\/(dashboard|onboarding)$/);
   });
 
   test("the chosen language is saved to the account", async ({ page }) => {
     const email = uniqueEmail("locale");
     await signUpAndVerify(page, { email, name: "Reem", localePrefix: "" });
     await page.getByRole("button", { name: /English/ }).click();
-    await expect(page).toHaveURL(/\/en\/dashboard$/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Welcome, Reem");
+    await expect(page).toHaveURL(/\/en\/onboarding$/);
+    await expect(page.getByRole("heading", { level: 1, name: "Welcome to Satis" })).toBeVisible();
 
     await logOut(page);
     // Logging in from the Arabic page still opens the dashboard in the saved language.
     await logInWith(page, email, PASSWORD, "");
-    await expect(page).toHaveURL(/\/en\/dashboard$/);
+    await expect(page).toHaveURL(/\/en\/(dashboard|onboarding)$/);
   });
 });

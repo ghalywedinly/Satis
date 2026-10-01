@@ -29,5 +29,11 @@
     "subject": "رمز التحقق في ساتيس",
     "heading": "رمز التحقق",
     "body": "استخدم هذا الرمز لتأكيد العملية:"
+  },
+  "invitation": {
+    "subject": "دعوة للانضمام إلى {organization} على ساتيس",
+    "heading": "انضم إلى {organization}",
+    "body": "دعاك {inviter} للانضمام إلى {organization} على ساتيس بصلاحية {role}. تنتهي الدعوة خلال 7 أيام.",
+    "button": "اقبل الدعوة"
   }
 }

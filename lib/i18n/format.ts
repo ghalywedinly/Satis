@@ -1,10 +1,11 @@
 import type { Locale } from "./routing";
 
 /**
- * Intl locale tags. Arabic uses Western digits (0-9) by default, which is common in
- * Saudi software; switch to "ar-SA" to get Arabic-Indic digits if that becomes a setting.
+ * Intl locale tags. Western digits (nu-latn) and the Gregorian calendar (ca-gregory) in both
+ * languages: "ar-SA" alone would give Arabic-Indic digits and the Hijri (Umm al-Qura) calendar.
+ * Either can become an organization setting later.
  */
-export const intlLocale = (locale: Locale) => (locale === "ar" ? "ar-SA-u-nu-latn" : "en-SA");
+export const intlLocale = (locale: Locale) => (locale === "ar" ? "ar-SA-u-ca-gregory-nu-latn" : "en-SA-u-ca-gregory");
 
 export function formatNumber(locale: Locale, value: number, options?: Intl.NumberFormatOptions) {
   return new Intl.NumberFormat(intlLocale(locale), options).format(value);
@@ -26,3 +27,11 @@ export function formatSar(locale: Locale, halalas: number) {
   });
   return locale === "ar" ? `${amount} ر.س` : `SAR ${amount}`;
 }
+
+/** Dates in the product's numbering convention (Western digits), Gregorian calendar. */
+export function formatDate(locale: Locale, date: Date | string, options: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" }) {
+  return new Intl.DateTimeFormat(intlLocale(locale), options).format(typeof date === "string" ? new Date(date) : date);
+}
+
+/** Integers for use inside translated messages. Pass the result as a string so ICU doesn't reformat it. */
+export const formatCount = (locale: Locale, value: number) => formatNumber(locale, value, { maximumFractionDigits: 0 });

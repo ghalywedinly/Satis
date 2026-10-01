@@ -1,18 +1,35 @@
 import { getTranslations } from "next-intl/server";
 import { AnalyticsIdentity } from "@/components/app-shell/analytics-identity";
-import { SatisLogo } from "@/components/brand/satis-mark";
+import { MainNav, type NavItem } from "@/components/app-shell/main-nav";
+import { OrgSwitcher } from "@/components/app-shell/org-switcher";
 import { UserMenu } from "@/components/app-shell/user-menu";
+import { SatisMark } from "@/components/brand/satis-mark";
 import { LanguageSwitcher } from "@/components/language-switcher";
-import { getProfile, requireUser } from "@/lib/auth/session";
+import { getProfile } from "@/lib/auth/session";
 import { Link } from "@/lib/i18n/navigation";
 import { resolveLocale } from "@/lib/i18n/server";
+import { getMemberships, requireMembership } from "@/lib/org/context";
+import { can } from "@/lib/permissions";
 
-/** Shell for every signed-in page. The proxy already redirects signed-out visitors; this re-checks on the server. */
+/**
+ * Shell for every page inside a business. The proxy already redirects signed-out visitors;
+ * this re-checks on the server and sends people without a business to onboarding.
+ */
 export default async function AppLayout({ children, params }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
-  const user = await requireUser(locale);
-  const profile = await getProfile(user.id);
-  const t = await getTranslations({ locale, namespace: "common" });
+  const { user, membership } = await requireMembership(locale);
+  const [profile, memberships, t] = await Promise.all([
+    getProfile(user.id),
+    getMemberships(),
+    getTranslations({ locale, namespace: "common" }),
+  ]);
+
+  const nav: NavItem[] = [
+    { href: "/dashboard", label: "dashboard" },
+    { href: "/locations", label: "locations" },
+    { href: "/team", label: "team" },
+    ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings" } as const] : []),
+  ];
 
   return (
     <div className="flex min-h-dvh flex-col bg-sand">
@@ -24,21 +41,26 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
         {t("skipToContent")}
       </a>
       <header className="border-b border-border bg-white">
-        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-          <div className="flex items-center gap-8">
-            <Link href="/dashboard" aria-label={t("appName")} className="rounded-control outline-none focus-visible:shadow-focus">
-              <SatisLogo size={22} tone="ink-ultra" locale={locale} />
-            </Link>
-            <nav aria-label={t("nav.mainNavigation")} className="hidden sm:block">
-              <Link href="/dashboard" className="text-sm font-semibold text-ink">
-                {t("nav.dashboard")}
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-3 sm:px-6">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <Link href="/dashboard" aria-label={t("appName")} className="shrink-0 rounded-control p-1 outline-none focus-visible:shadow-focus">
+                <SatisMark tone="ink-ultra" className="h-6" />
               </Link>
-            </nav>
+              <span aria-hidden className="text-ink-200">
+                /
+              </span>
+              <OrgSwitcher
+                current={{ id: membership.organization.id, name: membership.organization.name }}
+                organizations={memberships.map((m) => ({ id: m.organization.id, name: m.organization.name }))}
+              />
+            </div>
+            <div className="flex shrink-0 items-center gap-1">
+              <LanguageSwitcher persist />
+              <UserMenu name={profile?.full_name ?? null} email={user.email} />
+            </div>
           </div>
-          <div className="flex items-center gap-1">
-            <LanguageSwitcher persist />
-            <UserMenu name={profile?.full_name ?? null} email={user.email} />
-          </div>
+          <MainNav items={nav} />
         </div>
       </header>
       <main id="content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">

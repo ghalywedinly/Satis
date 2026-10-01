@@ -9,6 +9,7 @@ Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual referen
 ## Engineering rules (see `docs/architecture-proposal.md`)
 - **Text:** never hardcode UI text. Every string lives in `locales/ar/*.json` and `locales/en/*.json` (same keys, enforced by `npm test` and the `react/jsx-no-literals` lint rule). Arabic is primary, not a translation afterthought.
 - **Direction:** logical classes only (`ms-/me-/ps-/pe-/start-/end-/text-start/text-end`); lint rejects `ml-/mr-/pl-/pr-/left-/right-/text-left/text-right`. Directional icons get `rtl:-scale-x-100`. Emails, codes and URLs inside Arabic text use `<bdi dir="ltr">`.
+- **Numbers and dates:** Western digits in both languages. Format with `lib/i18n/format` (`formatNumber`, `formatPercent`, `formatSar`, `formatDate`, `formatCount`) and pass the formatted **string** into `t()`; never pass raw numbers, which ICU would render as Arabic-Indic digits.
 - **Routing:** Arabic at `/…`, English at `/en/…` (next-intl, `lib/i18n`). Use `Link`/`redirect` from `@/lib/i18n/navigation`, and `resolveLocale(params)` at the top of every page and layout.
 - **Data access:** `createSupabaseServerClient()` (acts as the user, RLS applies). The admin client bypasses RLS: only for webhooks, jobs and rate limiting after the request is authorized.
 - **Authorization:** check on the server **and** enforce with RLS. Never rely on the client.

@@ -8,13 +8,22 @@
   },
   "nav": {
     "dashboard": "لوحة التحكم",
-    "mainNavigation": "التنقل الرئيسي"
+    "mainNavigation": "التنقل الرئيسي",
+    "locations": "الفروع",
+    "team": "الفريق",
+    "settings": "الإعدادات"
   },
   "actions": {
     "logIn": "تسجيل الدخول",
     "logOut": "تسجيل الخروج",
     "signUp": "إنشاء حساب",
     "backHome": "العودة إلى الرئيسية",
-    "tryAgain": "حاول مرة أخرى"
+    "tryAgain": "حاول مرة أخرى",
+    "close": "إغلاق"
+  },
+  "orgSwitcher": {
+    "label": "النشاط التجاري الحالي",
+    "switchTo": "بدّل إلى",
+    "create": "أنشئ نشاطًا تجاريًا جديدًا"
   }
 }

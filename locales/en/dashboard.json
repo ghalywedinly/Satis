@@ -2,5 +2,8 @@
   "metaTitle": "Dashboard",
   "welcome": "Welcome, {name}",
   "welcomeNoName": "Welcome",
-  "setupNext": "Next step: set up your business and its first location."
+  "readyTitle": "{organization} is ready",
+  "readyBody": "Next up: your first survey and QR codes for your locations. Coming soon.",
+  "manageLocations": "Manage locations",
+  "inviteTeam": "Invite your team"
 }

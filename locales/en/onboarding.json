@@ -1,0 +1,31 @@
+{
+  "metaTitle": "Set up your business",
+  "progress": "Step {current} of {total}",
+  "back": "Back",
+  "next": "Next",
+  "welcome": {
+    "title": "Welcome to Satis",
+    "body": "In about a minute we'll set up your business and first location, so you can start hearing from your customers.",
+    "start": "Start setup"
+  },
+  "name": {
+    "title": "What's your business called?",
+    "hint": "The name your customers know it by.",
+    "label": "Business name",
+    "placeholder": "For example: Nora Café"
+  },
+  "type": {
+    "title": "What kind of business is it?",
+    "hint": "We use this to suggest questions that suit your customers.",
+    "required": "Choose your business type."
+  },
+  "location": {
+    "title": "Where is your first location?",
+    "hint": "You can add more locations later.",
+    "nameLabel": "Location name",
+    "namePlaceholder": "For example: Jeddah - Tahlia",
+    "cityLabel": "City",
+    "cityPlaceholder": "For example: Jeddah",
+    "submit": "Create my business"
+  }
+}

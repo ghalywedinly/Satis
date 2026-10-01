@@ -1,9 +1,8 @@
 import { z } from "zod";
-import type { Messages } from "@/locales";
+import type { ErrorKey, ValidationKey } from "@/lib/forms";
 
-/** Validation messages are translation keys under `validation.*`, translated where they're shown. */
-export type ValidationKey = keyof Messages["validation"];
-export type AuthErrorKey = Exclude<keyof Messages["errors"], "notFound" | "page">;
+export { fieldErrorsFrom, type FormState, type ValidationKey } from "@/lib/forms";
+export type AuthErrorKey = ErrorKey;
 
 const msg = (key: ValidationKey) => key;
 
@@ -40,23 +39,6 @@ export const forgotPasswordSchema = z.object({ email: emailSchema });
 export const resetPasswordSchema = z
   .object({ password: newPasswordSchema, confirmPassword: z.string() })
   .refine((v) => v.password === v.confirmPassword, { message: msg("passwordMismatch"), path: ["confirmPassword"] });
-
-export type FormState<Field extends string> = {
-  status: "idle" | "error" | "success";
-  fieldErrors?: Partial<Record<Field, ValidationKey>>;
-  formError?: AuthErrorKey;
-  /** Non-secret values echoed back so the form keeps them after a failed submit. */
-  values?: Partial<Record<Field, string>>;
-};
-
-export function fieldErrorsFrom<Field extends string>(error: z.ZodError): Partial<Record<Field, ValidationKey>> {
-  const out: Partial<Record<Field, ValidationKey>> = {};
-  for (const issue of error.issues) {
-    const field = issue.path[0] as Field;
-    if (field && !out[field]) out[field] = issue.message as ValidationKey;
-  }
-  return out;
-}
 
 /** Maps Supabase Auth error codes to our translated messages. */
 export function authErrorKey(code: string | undefined): AuthErrorKey {

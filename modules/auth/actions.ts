@@ -73,7 +73,8 @@ export async function signUp(locale: Locale, _prev: FormState<SignupField>, form
     options: {
       // Read by the database trigger that creates the profile, and by the auth email hook.
       data: { full_name: parsed.data.fullName, locale },
-      emailRedirectTo: absolute(locale, HOME_PATH),
+      // After verifying, continue where they were going (e.g. an invitation), else the dashboard.
+      emailRedirectTo: new URL(safeRedirectPath(text(formData, "next"), siteUrl()) ?? path(locale, HOME_PATH), siteUrl()).toString(),
     },
   });
   if (error) {

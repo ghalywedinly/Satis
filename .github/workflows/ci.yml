@@ -72,6 +72,8 @@ jobs:
             echo "SUPABASE_SECRET_KEY=$SERVICE_ROLE_KEY"
             echo "RATE_LIMIT_SALT=ci-only-salt-not-a-secret-0123456789"
             echo "RATE_LIMIT_DISABLED=true"
+            # Emails sent by the app (team invitations) go to a local outbox the tests read.
+            echo "EMAIL_OUTBOX_DIR=$RUNNER_TEMP/outbox"
             # The local stack sends auth emails itself (Mailpit); this only lets the hook endpoint's own tests run.
             echo "AUTH_EMAIL_HOOK_SECRET=v1,whsec_$(openssl rand -base64 32)"
           } > .env.local
@@ -79,6 +81,7 @@ jobs:
       - run: npm run test:e2e
         env:
           MAILPIT_URL: http://127.0.0.1:54324
+          E2E_EMAIL_OUTBOX: ${{ runner.temp }}/outbox
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

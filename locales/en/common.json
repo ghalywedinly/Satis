@@ -8,13 +8,22 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "mainNavigation": "Main navigation"
+    "mainNavigation": "Main navigation",
+    "locations": "Locations",
+    "team": "Team",
+    "settings": "Settings"
   },
   "actions": {
     "logIn": "Log in",
     "logOut": "Log out",
     "signUp": "Create account",
     "backHome": "Back to home",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "close": "Close"
+  },
+  "orgSwitcher": {
+    "label": "Current business",
+    "switchTo": "Switch to",
+    "create": "Create a new business"
   }
 }

@@ -29,5 +29,11 @@
     "subject": "Your Satis verification code",
     "heading": "Verification code",
     "body": "Use this code to confirm the action:"
+  },
+  "invitation": {
+    "subject": "Join {organization} on Satis",
+    "heading": "Join {organization}",
+    "body": "{inviter} invited you to join {organization} on Satis as {role}. The invitation expires in 7 days.",
+    "button": "Accept invitation"
   }
 }

@@ -8,7 +8,7 @@ import { SubmitButton } from "@/components/forms/submit-button";
 import { trackClient } from "@/lib/observability/client";
 import { signUp } from "../actions";
 
-export function SignupForm() {
+export function SignupForm({ next }: { next?: string }) {
   const t = useTranslations("auth");
   const te = useTranslations("errors");
   const locale = useLocale();
@@ -18,6 +18,7 @@ export function SignupForm() {
   return (
     <form action={action} noValidate className="flex flex-col gap-5">
       {state.formError && <FormAlert tone="error">{te(state.formError)}</FormAlert>}
+      {next && <input type="hidden" name="next" value={next} />}
       <FormField
         label={t("fields.fullName")}
         name="fullName"

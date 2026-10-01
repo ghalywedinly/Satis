@@ -12,6 +12,12 @@ const load = {
     dashboard: (await import("./ar/dashboard.json")).default,
     survey: (await import("./ar/survey.json")).default,
     emails: (await import("./ar/emails.json")).default,
+    organization: (await import("./ar/organization.json")).default,
+    onboarding: (await import("./ar/onboarding.json")).default,
+    locations: (await import("./ar/locations.json")).default,
+    team: (await import("./ar/team.json")).default,
+    invite: (await import("./ar/invite.json")).default,
+    settings: (await import("./ar/settings.json")).default,
   }),
   en: async () => ({
     common: (await import("./en/common.json")).default,
@@ -23,6 +29,12 @@ const load = {
     dashboard: (await import("./en/dashboard.json")).default,
     survey: (await import("./en/survey.json")).default,
     emails: (await import("./en/emails.json")).default,
+    organization: (await import("./en/organization.json")).default,
+    onboarding: (await import("./en/onboarding.json")).default,
+    locations: (await import("./en/locations.json")).default,
+    team: (await import("./en/team.json")).default,
+    invite: (await import("./en/invite.json")).default,
+    settings: (await import("./en/settings.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;
 
