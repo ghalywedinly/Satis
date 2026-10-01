@@ -1,13 +1,16 @@
 import { z } from "zod";
 
+/** Strips whitespace and wrapping quotes, which creep in when values are pasted into a dashboard. */
+export const clean = (v: unknown) => (typeof v === "string" ? v.trim().replace(/^(["'])(.*)\1$/, "$2").trim() : v);
+
 // Empty strings in .env files mean "not set".
 const optional = <T extends z.ZodType>(schema: T) =>
-  z.preprocess((v) => (v === "" ? undefined : v), schema.optional());
+  z.preprocess((v) => (clean(v) === "" ? undefined : clean(v)), schema.optional());
 
 export const appEnvSchema = z.enum(["development", "staging", "production"]);
 
 export const publicEnvSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z.url(),
+  NEXT_PUBLIC_SITE_URL: z.preprocess(clean, z.url()),
   NEXT_PUBLIC_SUPABASE_URL: optional(z.url()),
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: optional(z.string().min(1)),
   NEXT_PUBLIC_SENTRY_DSN: optional(z.url()),
