@@ -20,6 +20,7 @@ const load = {
     surveys: (await import("./ar/surveys.json")).default,
     publicSurvey: (await import("./ar/publicSurvey.json")).default,
     surveyTemplate: (await import("./ar/surveyTemplate.json")).default,
+    inbox: (await import("./ar/inbox.json")).default,
   }),
   en: async () => ({
     common: (await import("./en/common.json")).default,
@@ -39,6 +40,7 @@ const load = {
     surveys: (await import("./en/surveys.json")).default,
     publicSurvey: (await import("./en/publicSurvey.json")).default,
     surveyTemplate: (await import("./en/surveyTemplate.json")).default,
+    inbox: (await import("./en/inbox.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;
 

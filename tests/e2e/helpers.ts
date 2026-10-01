@@ -105,3 +105,22 @@ export async function createBusiness(page: Page, { name, type, location, city }:
 /** The business shown in the header switcher. */
 export const currentBusiness = (page: Page, name: string) =>
   page.getByRole("button", { name: new RegExp(`(Current business|النشاط التجاري الحالي): ${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });
+
+/** New owner who goes through all 7 onboarding steps, including the first survey. Returns its public URL. */
+export async function onboardWithSurvey(page: Page, localePrefix: "" | "/en", business: string) {
+  await signUpAndVerify(page, { email: uniqueEmail("survey-owner"), name: "Owner", localePrefix });
+  const en = localePrefix === "/en";
+  await page.getByRole("button", { name: en ? "Start setup" : "ابدأ الإعداد" }).click();
+  await page.locator('input[name="name"]').fill(business);
+  await page.getByRole("button", { name: en ? "Next" : "التالي" }).click();
+  await page.locator('label:has(input[name="businessType"][value="cafe"])').click();
+  await page.getByRole("button", { name: en ? "Next" : "التالي" }).click();
+  await page.locator('input[name="locationName"]').fill(en ? "Jeddah - Tahlia" : "جدة - التحلية");
+  await page.locator('button[type="submit"]').click();
+
+  await expect(page).toHaveURL(/\/onboarding\/survey$/);
+  await page.getByRole("button", { name: en ? "Create and publish survey" : "أنشئ الاستبيان وانشره" }).click();
+  await expect(page).toHaveURL(/\/onboarding\/qr\?survey=/);
+  const url = (await page.locator("main bdi").first().textContent())!.trim();
+  return url;
+}

@@ -14,5 +14,8 @@ export type AnalyticsEvent =
   | "survey_completed"
   | "coupon_claimed"
   | "dashboard_viewed"
+  | "inbox_viewed"
+  | "response_triaged"
+  | "response_tagged"
   | "upgrade_clicked"
   | "subscription_started";

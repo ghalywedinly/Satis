@@ -1,6 +1,6 @@
 # Satis — architecture proposal
 
-Status: **approved** (all recommendations in §2 accepted). Phases 1–3 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey).
+Status: **approved** (all recommendations in §2 accepted). Phases 1–4 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox).
 
 This answers "First task" of the master build specification: the current state of the repository, the proposed architecture, database schema, folder structure, environment variables, external services, security requirements and risks. Each section separates **MVP** from **Future**.
 
@@ -158,11 +158,11 @@ MVP question types: rating (1–5), NPS (0–10), single choice, multiple choice
 
 | Table | Key columns | Notes |
 |---|---|---|
-| `survey_responses` | `organization_id`, `survey_id`, `survey_version_id`, `location_id`, `link_id`, `submission_id` (unique, client-generated), `locale`, `submitted_at`, `csat_score`, `nps_score`, `has_comment`, `device_type`, `status` (new/in_progress/resolved), `is_read`, `is_important`, `search tsvector` | Scores are copied onto the response at submission so dashboards aggregate one table. `submission_id` makes retries idempotent |
+| `survey_responses` | `organization_id`, `survey_id`, `survey_version_id`, `location_id`, `link_id`, `submission_id` (unique, client-generated), `locale`, `submitted_at`, `csat_score`, `nps_score`, `has_comment`, `device_type`, `status` (new/in_progress/resolved), `is_read`, `is_important`, `comment_text`, `rating_sentiment` (generated) | Scores and written comments are copied onto the response at submission so the inbox and dashboards read one table. `submission_id` makes retries idempotent. Search is `ilike` on `comment_text` within one business; a trigram index is added when measured query times need it |
 | `survey_answers` | `organization_id`, `response_id`, `question_id`, `value_number`, `value_text`, `value_option_ids uuid[]` | Validated against the version by `submit_response()` |
-| `feedback_tags` | `organization_id`, `name`, `color`, `source` (manual/ai) | |
-| `response_tags` | `response_id`, `tag_id`, `organization_id` | |
-| `response_contacts` | `organization_id`, `response_id`, `name`, `phone`, `email`, `consent_at` | **Optional PII, kept separate** from answers; stricter RLS (admin+); deletable without losing the anonymous response |
+| `feedback_tags` | `organization_id`, `name` (unique per business, case-insensitive) | `color` and `source` (manual/ai) arrive with AI themes in Phase 7 |
+| `response_tags` | `response_id`, `tag_id`, `organization_id` | Composite foreign keys keep both sides in the same business |
+| `response_contacts` (later) | `organization_id`, `response_id`, `name`, `phone`, `email`, `consent_at` | Not built yet: the survey doesn't ask for contact details. **Optional PII, kept separate** from answers; stricter RLS (admin+); deletable without losing the anonymous response |
 
 Not stored: IP addresses (only a salted hash inside the rate-limit table, expiring), full user agents (only `device_type`).
 

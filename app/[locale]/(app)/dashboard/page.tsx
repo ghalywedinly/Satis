@@ -11,6 +11,7 @@ import { captureServerEvent } from "@/lib/observability/analytics";
 import { requireMembership } from "@/lib/org/context";
 import { can } from "@/lib/permissions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { countUnread } from "@/modules/feedback/queries";
 import { CreateSurveyButton } from "@/modules/surveys/components/create-survey-button";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/dashboard">): Promise<Metadata> {
@@ -26,7 +27,7 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
   const organizationId = membership.organization.id;
   const supabase = await createSupabaseServerClient();
   const weekAgo = daysAgoIso(7);
-  const [profile, t, surveys, responses] = await Promise.all([
+  const [profile, t, surveys, responses, unread] = await Promise.all([
     getProfile(user.id),
     getTranslations({ locale, namespace: "dashboard" }),
     supabase.from("surveys").select("id", { count: "exact", head: true }).eq("organization_id", organizationId).neq("status", "archived"),
@@ -35,6 +36,7 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
       .select("id", { count: "exact", head: true })
       .eq("organization_id", organizationId)
       .gte("submitted_at", weekAgo),
+    countUnread(organizationId),
   ]);
   captureServerEvent("dashboard_viewed", user.id, { locale, organization_id: organizationId });
   const name = profile?.full_name?.split(" ")[0];
@@ -43,12 +45,13 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
   const stats = [
     { label: t("surveysCount"), value: surveyCount },
     { label: t("responsesWeek"), value: responses.count ?? 0 },
+    { label: t("unreadFeedback"), value: unread },
   ];
 
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-3xl font-extrabold sm:text-4xl">{name ? t("welcome", { name }) : t("welcomeNoName")}</h1>
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-3">
         {stats.map((stat) => (
           <Card key={stat.label} className="gap-2 px-6">
             <p className="eyebrow">{stat.label}</p>
@@ -66,6 +69,9 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/das
         </Card>
       ) : (
         <div className="flex flex-wrap gap-2">
+          <Button asChild>
+            <Link href="/inbox">{t("viewFeedback")}</Link>
+          </Button>
           <Button asChild variant="outline">
             <Link href="/surveys">{t("viewSurveys")}</Link>
           </Button>

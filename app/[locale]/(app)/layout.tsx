@@ -6,10 +6,12 @@ import { UserMenu } from "@/components/app-shell/user-menu";
 import { SatisMark } from "@/components/brand/satis-mark";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { getProfile } from "@/lib/auth/session";
+import { formatCount } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";
 import { resolveLocale } from "@/lib/i18n/server";
 import { getMemberships, requireMembership } from "@/lib/org/context";
 import { can } from "@/lib/permissions";
+import { countUnread } from "@/modules/feedback/queries";
 
 /**
  * Shell for every page inside a business. The proxy already redirects signed-out visitors;
@@ -18,14 +20,16 @@ import { can } from "@/lib/permissions";
 export default async function AppLayout({ children, params }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
   const { user, membership } = await requireMembership(locale);
-  const [profile, memberships, t] = await Promise.all([
+  const [profile, memberships, t, unread] = await Promise.all([
     getProfile(user.id),
     getMemberships(),
     getTranslations({ locale, namespace: "common" }),
+    countUnread(membership.organization.id),
   ]);
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "dashboard" },
+    { href: "/inbox", label: "inbox", badge: unread > 0 ? formatCount(locale, Math.min(unread, 99)) + (unread > 99 ? "+" : "") : undefined },
     { href: "/surveys", label: "surveys" },
     { href: "/locations", label: "locations" },
     { href: "/team", label: "team" },

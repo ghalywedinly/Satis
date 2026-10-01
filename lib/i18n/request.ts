@@ -1,6 +1,7 @@
 import { hasLocale } from "next-intl";
 import { getRequestConfig } from "next-intl/server";
 import { loadMessages } from "@/locales";
+import { APP_TIME_ZONE } from "./format";
 import { routing } from "./routing";
 
 export default getRequestConfig(async ({ requestLocale }) => {
@@ -9,7 +10,6 @@ export default getRequestConfig(async ({ requestLocale }) => {
   return {
     locale,
     messages: await loadMessages(locale),
-    // Organizations get their own time zone in Phase 2; this is the app-wide default.
-    timeZone: "Asia/Riyadh",
+    timeZone: APP_TIME_ZONE,
   };
 });

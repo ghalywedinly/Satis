@@ -8,11 +8,13 @@
   },
   "nav": {
     "dashboard": "لوحة التحكم",
+    "inbox": "الآراء",
     "mainNavigation": "التنقل الرئيسي",
     "locations": "الفروع",
     "team": "الفريق",
     "settings": "الإعدادات",
-    "surveys": "الاستبيانات"
+    "surveys": "الاستبيانات",
+    "unreadBadge": "غير مقروءة"
   },
   "actions": {
     "logIn": "تسجيل الدخول",

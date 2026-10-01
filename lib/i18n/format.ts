@@ -28,9 +28,12 @@ export function formatSar(locale: Locale, halalas: number) {
   return locale === "ar" ? `${amount} ر.س` : `SAR ${amount}`;
 }
 
-/** Dates in the product's numbering convention (Western digits), Gregorian calendar. */
+/** Businesses are in Saudi Arabia; organizations may get their own time zone later. */
+export const APP_TIME_ZONE = "Asia/Riyadh";
+
+/** Dates in the product's numbering convention (Western digits), Gregorian calendar, Saudi time. */
 export function formatDate(locale: Locale, date: Date | string, options: Intl.DateTimeFormatOptions = { day: "numeric", month: "short", year: "numeric" }) {
-  return new Intl.DateTimeFormat(intlLocale(locale), options).format(typeof date === "string" ? new Date(date) : date);
+  return new Intl.DateTimeFormat(intlLocale(locale), { timeZone: APP_TIME_ZONE, ...options }).format(typeof date === "string" ? new Date(date) : date);
 }
 
 /** Integers for use inside translated messages. Pass the result as a string so ICU doesn't reformat it. */

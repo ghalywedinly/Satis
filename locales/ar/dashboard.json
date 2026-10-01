@@ -8,5 +8,7 @@
   "responsesWeek": "الإجابات خلال 7 أيام",
   "createSurvey": "أنشئ أول استبيان",
   "createSurveyBody": "أنشئ استبيانًا من قالب جاهز وانشره خلال دقيقة.",
-  "viewSurveys": "عرض الاستبيانات"
+  "viewSurveys": "عرض الاستبيانات",
+  "unreadFeedback": "آراء غير مقروءة",
+  "viewFeedback": "اعرض الآراء"
 }

@@ -1,24 +1,5 @@
-import { expect, test, type Browser, type Page } from "@playwright/test";
-import { signUpAndVerify, uniqueEmail } from "./helpers";
-
-/** New owner who goes through all 7 onboarding steps, including the first survey. Returns its public URL. */
-async function onboardWithSurvey(page: Page, localePrefix: "" | "/en", business: string) {
-  await signUpAndVerify(page, { email: uniqueEmail("survey-owner"), name: "Owner", localePrefix });
-  const en = localePrefix === "/en";
-  await page.getByRole("button", { name: en ? "Start setup" : "ابدأ الإعداد" }).click();
-  await page.locator('input[name="name"]').fill(business);
-  await page.getByRole("button", { name: en ? "Next" : "التالي" }).click();
-  await page.locator('label:has(input[name="businessType"][value="cafe"])').click();
-  await page.getByRole("button", { name: en ? "Next" : "التالي" }).click();
-  await page.locator('input[name="locationName"]').fill(en ? "Jeddah - Tahlia" : "جدة - التحلية");
-  await page.locator('button[type="submit"]').click();
-
-  await expect(page).toHaveURL(/\/onboarding\/survey$/);
-  await page.getByRole("button", { name: en ? "Create and publish survey" : "أنشئ الاستبيان وانشره" }).click();
-  await expect(page).toHaveURL(/\/onboarding\/qr\?survey=/);
-  const url = (await page.locator("main bdi").first().textContent())!.trim();
-  return url;
-}
+import { expect, test, type Browser } from "@playwright/test";
+import { onboardWithSurvey } from "./helpers";
 
 async function customer(browser: Browser, url: string) {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });

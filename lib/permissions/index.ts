@@ -14,6 +14,7 @@ const MINIMUM_ROLE = {
   "auditLog.read": "admin",
   "locations.manage": "manager",
   "surveys.manage": "manager",
+  "feedback.triage": "staff",
 } as const satisfies Record<string, OrgRole>;
 
 export type Permission = keyof typeof MINIMUM_ROLE;

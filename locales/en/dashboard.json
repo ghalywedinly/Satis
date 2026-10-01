@@ -8,5 +8,7 @@
   "responsesWeek": "Responses in the last 7 days",
   "createSurvey": "Create your first survey",
   "createSurveyBody": "Create a survey from a ready-made template and publish it in a minute.",
-  "viewSurveys": "View surveys"
+  "viewSurveys": "View surveys",
+  "unreadFeedback": "Unread feedback",
+  "viewFeedback": "View feedback"
 }

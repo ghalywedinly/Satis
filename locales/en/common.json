@@ -8,11 +8,13 @@
   },
   "nav": {
     "dashboard": "Dashboard",
+    "inbox": "Feedback",
     "mainNavigation": "Main navigation",
     "locations": "Locations",
     "team": "Team",
     "settings": "Settings",
-    "surveys": "Surveys"
+    "surveys": "Surveys",
+    "unreadBadge": "unread"
   },
   "actions": {
     "logIn": "Log in",

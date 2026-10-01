@@ -303,10 +303,41 @@ export type Database = {
           nps_score: number | null;
           has_comment: boolean;
           submitted_at: string;
+          status: Database["public"]["Enums"]["response_status"];
+          is_read: boolean;
+          is_important: boolean;
+          comment_text: string | null;
+          rating_sentiment: RatingSentiment | null;
         };
         Insert: never;
-        Update: never;
-        Relationships: [];
+        Update: {
+          status?: Database["public"]["Enums"]["response_status"];
+          is_read?: boolean;
+          is_important?: boolean;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "survey_responses_survey_id_fkey";
+            columns: ["survey_id"];
+            isOneToOne: false;
+            referencedRelation: "surveys";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "survey_responses_location_id_fkey";
+            columns: ["location_id"];
+            isOneToOne: false;
+            referencedRelation: "locations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "survey_responses_survey_version_id_fkey";
+            columns: ["survey_version_id"];
+            isOneToOne: false;
+            referencedRelation: "survey_versions";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       survey_answers: {
         Row: {
@@ -321,6 +352,33 @@ export type Database = {
         Insert: never;
         Update: never;
         Relationships: [];
+      };
+      feedback_tags: {
+        Row: Timestamps & { id: string; organization_id: string; name: string };
+        Insert: { organization_id: string; name: string };
+        Update: never;
+        Relationships: [];
+      };
+      response_tags: {
+        Row: { organization_id: string; response_id: string; tag_id: string; created_at: string };
+        Insert: { organization_id: string; response_id: string; tag_id: string };
+        Update: never;
+        Relationships: [
+          {
+            foreignKeyName: "response_tags_response_id_organization_id_fkey";
+            columns: ["response_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "survey_responses";
+            referencedColumns: ["id", "organization_id"];
+          },
+          {
+            foreignKeyName: "response_tags_tag_id_organization_id_fkey";
+            columns: ["tag_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "feedback_tags";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
       };
     };
     Views: { [_ in never]: never };
@@ -393,11 +451,13 @@ export type Database = {
         };
         Returns: string;
       };
+      add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
     };
     Enums: {
       app_locale: "ar" | "en";
       org_role: "owner" | "admin" | "manager" | "staff" | "viewer";
       survey_status: "draft" | "published" | "paused" | "archived";
+      response_status: "new" | "in_progress" | "resolved";
       business_type: "restaurant" | "cafe" | "retail" | "clinic" | "beauty" | "hotel" | "gym" | "entertainment" | "other";
     };
     CompositeTypes: { [_ in never]: never };
@@ -407,3 +467,5 @@ export type Database = {
 export type OrgRole = Database["public"]["Enums"]["org_role"];
 export type BusinessType = Database["public"]["Enums"]["business_type"];
 export type SurveyStatus = Database["public"]["Enums"]["survey_status"];
+export type ResponseStatus = Database["public"]["Enums"]["response_status"];
+export type RatingSentiment = "positive" | "neutral" | "negative";
