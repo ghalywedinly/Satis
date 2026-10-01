@@ -201,9 +201,17 @@
   * { @apply border-border outline-ring/50; }
   body { @apply bg-background text-foreground font-sans antialiased; }
   h1, h2, h3, h4 { @apply font-display font-bold; letter-spacing: var(--tracking-heading); }
-  [dir="rtl"], :lang(ar) { font-family: var(--font-arabic); }
-  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, :lang(ar) h1, :lang(ar) h2, :lang(ar) h3 { letter-spacing: 0; }
   .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/*
+ * Arabic always renders in Readex Pro with no letter-spacing (spacing breaks letter joining).
+ * Deliberately outside any layer so it wins over font-display / font-sans / tracking utilities.
+ * Latin fragments inside Arabic pages opt out with lang="en".
+ */
+:lang(ar) {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
 }
 
 /* Slice: the parallelogram from the mark. Use on chips, highlights, rating bars. */

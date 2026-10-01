@@ -94,7 +94,7 @@ export function OutlinedCard({ children, className }: { children: React.ReactNod
 /** Pill tag with ink outline, for floating labels such as "Top rated store". */
 export function OutlinedPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white py-1.5 pl-2.5 pr-3.5 text-sm font-semibold text-ink", className)}>
+    <span className={cn("inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white py-1.5 ps-2.5 pe-3.5 text-sm font-semibold text-ink", className)}>
       {children}
     </span>
   );

@@ -1,0 +1,20 @@
+{
+  "generic": "Something went wrong. Please try again.",
+  "invalidCredentials": "Email or password is incorrect.",
+  "emailNotConfirmed": "Verify your email before logging in.",
+  "userExists": "An account with this email already exists.",
+  "weakPassword": "Choose a stronger password.",
+  "samePassword": "Choose a password different from your current one.",
+  "rateLimited": "Too many attempts. Wait a minute and try again.",
+  "linkInvalid": "This link is invalid or has expired. Request a new one.",
+  "sessionExpired": "Your session has expired. Log in again.",
+  "notConfigured": "Sign-in isn't available right now.",
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page may have moved, or the link is incorrect."
+  },
+  "page": {
+    "title": "Something unexpected happened",
+    "body": "We've logged the problem and will look into it. Try again in a moment."
+  }
+}

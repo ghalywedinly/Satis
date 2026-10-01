@@ -1,6 +1,6 @@
 # Satis — architecture proposal
 
-Status: **proposal, awaiting approval.** Nothing in this document has been implemented yet.
+Status: **approved** (all recommendations in §2 accepted). Phase 1 (foundation) implemented.
 
 This answers "First task" of the master build specification: the current state of the repository, the proposed architecture, database schema, folder structure, environment variables, external services, security requirements and risks. Each section separates **MVP** from **Future**.
 

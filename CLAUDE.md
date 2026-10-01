@@ -6,10 +6,23 @@ Satis is a **customer satisfaction platform** (feedback surveys, CSAT, NPS, sent
 
 Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual reference: `Satis Branding/design_handoff_satis_brand/reference/Satis Brand Identity v4.dc.html`.
 
+## Engineering rules (see `docs/architecture-proposal.md`)
+- **Text:** never hardcode UI text. Every string lives in `locales/ar/*.json` and `locales/en/*.json` (same keys, enforced by `npm test` and the `react/jsx-no-literals` lint rule). Arabic is primary, not a translation afterthought.
+- **Direction:** logical classes only (`ms-/me-/ps-/pe-/start-/end-/text-start/text-end`); lint rejects `ml-/mr-/pl-/pr-/left-/right-/text-left/text-right`. Directional icons get `rtl:-scale-x-100`. Emails, codes and URLs inside Arabic text use `<bdi dir="ltr">`.
+- **Routing:** Arabic at `/…`, English at `/en/…` (next-intl, `lib/i18n`). Use `Link`/`redirect` from `@/lib/i18n/navigation`, and `resolveLocale(params)` at the top of every page and layout.
+- **Data access:** `createSupabaseServerClient()` (acts as the user, RLS applies). The admin client bypasses RLS: only for webhooks, jobs and rate limiting after the request is authorized.
+- **Authorization:** check on the server **and** enforce with RLS. Never rely on the client.
+- **Database:** every change is a migration in `supabase/migrations/` with pgTAP tests (`docs/runbooks/migrations.md`). Every tenant table has `organization_id`, RLS enabled, explicit grants.
+- **Validation:** Zod on every server action/route; messages are `validation.*` keys.
+- **Secrets:** server-only modules (`lib/env/server.ts`, `import "server-only"`); never `NEXT_PUBLIC_` a secret.
+- **Privacy:** no personal data in analytics, logs or Sentry. Analytics events are listed in `lib/observability/analytics-events.ts`.
+- **Next.js 16:** `middleware` is now `proxy.ts`; read `node_modules/next/dist/docs` before using an API.
+- **Before pushing:** `npm run lint && npm run typecheck && npm test && npm run db:test` (or `db:test:local`), and `npm run test:e2e` for user-facing flows.
+
 ## Always
 - Stack: Next.js App Router, TypeScript, Tailwind v4, shadcn/ui. Tokens live in `app/globals.css` (`@theme`) — use token classes (`bg-ink`, `text-ultramarine`, `bg-zest`, `font-display`, `rounded-card`), never raw hex in components.
 - Logo: `<SatisLogo />` / `<SatisMark />` from `components/brand/satis-mark.tsx`. Never retype "Satis" as a logo, never stretch, outline, rotate, recolour outside the listed tones, or add effects.
-- Headings, numerals, logo: `font-display` (Bricolage Grotesque 700/800, negative tracking). Body/UI: `font-sans` (Instrument Sans). Arabic: `font-arabic` (Readex Pro) with `dir="rtl"`, tracking 0.
+- Headings, numerals, logo: `font-display` (Bricolage Grotesque 700/800, negative tracking). Body/UI: `font-sans` (Instrument Sans). Arabic: Readex Pro with tracking 0, applied automatically to anything inside `lang="ar"` (see `globals.css`).
 - Sentence case everywhere. Buttons are verb + object ("Send feedback", "Book a demo"). No emoji. Digits with commas (2,140). Percent with no space (92.4%).
 - Say **customers** (the brand's shoppers) and **teams** (merchant users). Never "users" in UI copy.
 

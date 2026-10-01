@@ -1,0 +1,20 @@
+{
+  "appName": "Satis",
+  "skipToContent": "Skip to content",
+  "language": {
+    "label": "Language",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "mainNavigation": "Main navigation"
+  },
+  "actions": {
+    "logIn": "Log in",
+    "logOut": "Log out",
+    "signUp": "Create account",
+    "backHome": "Back to home",
+    "tryAgain": "Try again"
+  }
+}

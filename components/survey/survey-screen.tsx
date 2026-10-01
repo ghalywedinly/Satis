@@ -2,16 +2,25 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { SatisLogo, SatisMark } from "@/components/brand/satis-mark";
 import { RatingSlices, SliceHighlight } from "@/components/brand/slice";
 import { cn } from "@/lib/utils";
-import { ANSWERS, COPY, TOPICS, type Answer, type Locale, type Topic } from "./copy";
+
+/*
+ * Visual prototype of the customer survey ("06 Product UI" in the brand reference).
+ * Not routed yet: Phase 3 connects it to published surveys at /s/{code} and real submission.
+ */
 
 const TOP_SLICE = "40,4 98,4 68.3,30 10.3,30";
+const TOPICS = ["speed", "staff", "waiting"] as const;
+const ANSWERS = ["improve", "good", "excellent"] as const;
+type Topic = (typeof TOPICS)[number];
+type Answer = (typeof ANSWERS)[number];
 
-/** Mobile post-visit survey. Mirrors "06 Product UI" in the brand reference, EN and AR (RTL). */
-export function SurveyScreen({ locale }: { locale: Locale }) {
-  const t = COPY[locale];
+export function SurveyScreen({ business }: { business: string }) {
+  const t = useTranslations("survey");
+  const locale = useLocale();
   const ar = locale === "ar";
   const [rating, setRating] = useState(0);
   const [answers, setAnswers] = useState<Partial<Record<Topic, Answer>>>({});
@@ -24,23 +33,13 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
   };
 
   return (
-    <main
-      lang={locale}
-      dir={ar ? "rtl" : "ltr"}
-      className="mx-auto flex min-h-dvh w-full max-w-[420px] flex-col gap-3.5 bg-sand px-4 pt-6 pb-4"
-    >
-      <header className="flex items-center justify-between">
+    <main className="mx-auto flex min-h-dvh w-full max-w-[420px] flex-col gap-3.5 bg-sand px-4 pt-6 pb-4">
+      <header className="flex items-center">
         <SatisLogo size={ar ? 17 : 18} locale={locale} />
-        <span
-          aria-hidden
-          className="flex size-[30px] items-center justify-center rounded-full bg-border text-[11px] font-semibold"
-        >
-          {t.initials}
-        </span>
       </header>
 
       {sent ? (
-        <ThankYou locale={locale} topScore={rating === 5} onEdit={() => setSent(false)} />
+        <ThankYou topScore={rating === 5} onEdit={() => setSent(false)} />
       ) : (
         <>
           <section className="relative overflow-hidden rounded-card bg-ink p-[18px] text-sand">
@@ -48,36 +47,30 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
               aria-hidden
               viewBox={ar ? "8 0 60 32" : "40 0 60 32"}
               preserveAspectRatio={ar ? "xMinYMin slice" : "xMaxYMin slice"}
-              className="absolute top-0 h-[30px] w-[28%] fill-ultramarine ltr:right-0 rtl:left-0"
+              className="absolute end-0 top-0 h-[30px] w-[28%] fill-ultramarine"
             >
               <polygon points={TOP_SLICE} />
             </svg>
             <div className="relative flex flex-col gap-3">
-              <p className="mt-[18px] text-xs text-ink-300">{t.eyebrow(t.store)}</p>
+              <p className="mt-[18px] text-xs text-ink-300">{t("eyebrow", { business })}</p>
               <h1
                 className={cn(
                   "text-sand",
-                  ar ? "font-arabic text-[26px] leading-[1.3]" : "text-[28px] font-extrabold leading-[1.05]",
+                  ar ? "text-[26px] leading-[1.3]" : "text-[28px] leading-[1.05] font-extrabold",
                 )}
               >
-                {t.question}
+                {t("question")}
               </h1>
               <div className="flex justify-between text-xs" aria-hidden>
-                <span className="font-semibold">{t.poor}</span>
-                <span className="text-ink-300">{t.excellent}</span>
+                <span className="font-semibold">{t("poor")}</span>
+                <span className="text-ink-300">{t("excellent")}</span>
               </div>
-              <RatingSlices
-                value={rating}
-                onChange={setRating}
-                size="sm"
-                onDark
-                className="gap-[3px]"
-              />
+              <RatingSlices value={rating} onChange={setRating} size="sm" onDark className="gap-[3px]" />
             </div>
           </section>
 
-          <h2 className={cn("text-muted-foreground", ar ? "font-arabic text-[13px] font-semibold" : "eyebrow font-sans")}>
-            {t.stoodOut}
+          <h2 className={cn("text-muted-foreground", ar ? "text-[13px] font-semibold" : "eyebrow font-sans")}>
+            {t("stoodOut")}
           </h2>
           <ul className="flex flex-col rounded-card border border-border bg-white">
             {TOPICS.map((topic) => {
@@ -91,9 +84,9 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
                     onClick={() => setOpen(expanded ? null : topic)}
                     className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-card px-4 py-3.5 text-start outline-none focus-visible:shadow-focus"
                   >
-                    <span className="text-sm font-medium">{t.topics[topic]}</span>
+                    <span className="text-sm font-medium">{t(`topics.${topic}`)}</span>
                     <span className="flex items-center gap-1.5">
-                      <AnswerValue answer={answer} locale={locale} />
+                      <AnswerValue answer={answer} />
                       <ChevronDown
                         aria-hidden
                         strokeWidth={1.75}
@@ -105,7 +98,7 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
                     </span>
                   </button>
                   {expanded && (
-                    <div role="radiogroup" aria-label={t.topics[topic]} className="flex gap-2 px-4 pb-3.5">
+                    <div role="radiogroup" aria-label={t(`topics.${topic}`)} className="flex gap-2 px-4 pb-3.5">
                       {ANSWERS.map((a) => (
                         <button
                           key={a}
@@ -115,12 +108,10 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
                           onClick={() => choose(topic, a)}
                           className={cn(
                             "h-9 flex-1 cursor-pointer rounded-control border text-[13px] font-semibold outline-none transition-colors duration-[140ms] ease-[var(--ease-standard)] focus-visible:shadow-focus active:translate-y-px",
-                            answer === a
-                              ? "border-ink bg-ink text-sand"
-                              : "border-input bg-white text-ink hover:bg-sand-100",
+                            answer === a ? "border-ink bg-ink text-sand" : "border-input bg-white text-ink hover:bg-sand-100",
                           )}
                         >
-                          {t.answers[a]}
+                          {t(`answers.${a}`)}
                         </button>
                       ))}
                     </div>
@@ -136,7 +127,7 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
             onClick={() => setSent(true)}
             className="mt-auto h-12 w-full cursor-pointer rounded-control bg-ultramarine text-[15px] font-semibold text-white outline-none transition-colors duration-[140ms] ease-[var(--ease-standard)] hover:bg-ultra-600 focus-visible:shadow-focus active:translate-y-px disabled:cursor-not-allowed disabled:bg-ink-200 disabled:text-ink-500"
           >
-            {t.submit}
+            {t("submit")}
           </button>
         </>
       )}
@@ -144,40 +135,35 @@ export function SurveyScreen({ locale }: { locale: Locale }) {
   );
 }
 
-function AnswerValue({ answer, locale }: { answer?: Answer; locale: Locale }) {
-  const t = COPY[locale];
-  if (!answer) return <span className="text-[13px] text-muted-foreground">{t.choose}</span>;
+function AnswerValue({ answer }: { answer?: Answer }) {
+  const t = useTranslations("survey");
+  if (!answer) return <span className="text-[13px] text-muted-foreground">{t("choose")}</span>;
   if (answer === "excellent") {
-    return <SliceHighlight className="slice-sm px-2.5 py-[3px] text-xs">{t.answers.excellent}</SliceHighlight>;
+    return <SliceHighlight className="slice-sm px-2.5 py-[3px] text-xs">{t("answers.excellent")}</SliceHighlight>;
   }
-  if (answer === "improve") return <span className="text-[13px] font-semibold text-ember-700">{t.answers.improve}</span>;
-  return <span className="text-[13px] text-muted-foreground">{t.answers.good}</span>;
+  if (answer === "improve") return <span className="text-[13px] font-semibold text-ember-700">{t("answers.improve")}</span>;
+  return <span className="text-[13px] text-muted-foreground">{t("answers.good")}</span>;
 }
 
-function ThankYou({ locale, topScore, onEdit }: { locale: Locale; topScore: boolean; onEdit: () => void }) {
-  const t = COPY[locale];
+function ThankYou({ topScore, onEdit }: { topScore: boolean; onEdit: () => void }) {
+  const t = useTranslations("survey");
+  const ar = useLocale() === "ar";
   return (
-    <section
-      role="status"
-      className="flex flex-col items-center justify-center gap-4 rounded-card bg-ink px-6 py-12 text-center text-sand"
-    >
+    <section role="status" className="flex flex-col items-center justify-center gap-4 rounded-card bg-ink px-6 py-12 text-center text-sand">
       <SatisMark
         tone="sand-zest"
-        className={cn(
-          "h-14 animate-in fade-in zoom-in-75 duration-200",
-          topScore && "duration-[320ms] ease-[var(--ease-pop)]",
-        )}
+        className={cn("h-14 animate-in fade-in zoom-in-75 duration-200", topScore && "duration-[320ms] ease-[var(--ease-pop)]")}
       />
-      <h1 className={cn("text-sand", locale === "ar" ? "font-arabic text-[26px] leading-[1.3]" : "text-[28px] font-extrabold leading-[1.05]")}>
-        {t.thanksTitle}
+      <h1 className={cn("text-sand", ar ? "text-[26px] leading-[1.3]" : "text-[28px] leading-[1.05] font-extrabold")}>
+        {t("thanksTitle")}
       </h1>
-      <p className="max-w-[260px] text-sm text-ink-300">{t.thanksBody}</p>
+      <p className="max-w-[260px] text-sm text-ink-300">{t("thanksBody")}</p>
       <button
         type="button"
         onClick={onEdit}
         className="cursor-pointer rounded-control px-3 py-2 text-sm font-semibold text-ultra-300 underline-offset-4 outline-none hover:underline focus-visible:shadow-focus"
       >
-        {t.edit}
+        {t("edit")}
       </button>
     </section>
   );

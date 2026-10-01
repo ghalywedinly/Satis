@@ -1,0 +1,20 @@
+{
+  "appName": "ساتيس",
+  "skipToContent": "انتقل إلى المحتوى",
+  "language": {
+    "label": "اللغة",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "mainNavigation": "التنقل الرئيسي"
+  },
+  "actions": {
+    "logIn": "تسجيل الدخول",
+    "logOut": "تسجيل الخروج",
+    "signUp": "إنشاء حساب",
+    "backHome": "العودة إلى الرئيسية",
+    "tryAgain": "حاول مرة أخرى"
+  }
+}

@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, types, unit tests, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+  database:
+    name: Migrations and RLS tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      # Applies every migration to a fresh database, then runs the pgTAP tests in supabase/tests.
+      - run: supabase db start
+      - run: supabase test db
+
+  e2e:
+    name: End-to-end (Arabic + English, desktop + mobile)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Start local Supabase (auth emails go to Mailpit)
+        run: supabase start -x studio,imgproxy,edge-runtime,logflare,vector,realtime,storage-api,postgres-meta
+      - name: Write .env.local for the local stack
+        run: |
+          eval "$(supabase status -o env)"
+          {
+            echo "APP_ENV=development"
+            echo "NEXT_PUBLIC_SITE_URL=http://localhost:3000"
+            echo "NEXT_PUBLIC_SUPABASE_URL=$API_URL"
+            echo "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$ANON_KEY"
+            echo "SUPABASE_SECRET_KEY=$SERVICE_ROLE_KEY"
+            echo "RATE_LIMIT_SALT=ci-only-salt-not-a-secret-0123456789"
+            echo "RATE_LIMIT_DISABLED=true"
+            # The local stack sends auth emails itself (Mailpit); this only lets the hook endpoint's own tests run.
+            echo "AUTH_EMAIL_HOOK_SECRET=v1,whsec_$(openssl rand -base64 32)"
+          } > .env.local
+      - run: npm run build
+      - run: npm run test:e2e
+        env:
+          MAILPIT_URL: http://127.0.0.1:54324
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

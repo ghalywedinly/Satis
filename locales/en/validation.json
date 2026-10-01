@@ -1,0 +1,9 @@
+{
+  "required": "This field is required.",
+  "email": "Enter a valid email address.",
+  "passwordMin": "Password must be at least 8 characters.",
+  "passwordMax": "Password is too long.",
+  "passwordLettersDigits": "Use both letters and numbers.",
+  "passwordMismatch": "Passwords don't match.",
+  "tooLong": "This is too long."
+}
