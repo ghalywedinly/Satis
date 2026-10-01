@@ -46,13 +46,21 @@ export function RatingSlices({
       {Array.from({ length: max }, (_, i) => {
         const n = i + 1;
         const color = n === value ? "bg-zest" : n < value ? "bg-ultramarine" : onDark ? "bg-ink-700" : "bg-ink-100";
-        const El = onChange ? "button" : "div";
+        const slice = <span className={cn("block transition-colors duration-[140ms] ease-[var(--ease-standard)]", h, clip, color)} />;
+        if (!onChange) return <div key={n} className="flex-1">{slice}</div>;
+        // The visible slice is thin; the button's vertical padding gives a 44px-class touch target.
         return (
-          <El
+          <button
             key={n}
-            {...(onChange ? { type: "button", role: "radio", "aria-checked": n === value, "aria-label": `${n}`, onClick: () => onChange(n) } : {})}
-            className={cn("flex-1 transition-colors duration-[140ms] ease-[var(--ease-standard)]", h, clip, color)}
-          />
+            type="button"
+            role="radio"
+            aria-checked={n === value}
+            aria-label={`${n}`}
+            onClick={() => onChange(n)}
+            className="-my-4 flex-1 cursor-pointer rounded-xs py-4 outline-none focus-visible:shadow-focus"
+          >
+            {slice}
+          </button>
         );
       })}
     </div>
