@@ -12,7 +12,7 @@ import { saveLocalePreference } from "@/modules/auth/actions";
  * Switches between Arabic and English on the current page. For signed-in users
  * (`persist`), the choice is also saved to their profile for future sessions and emails.
  */
-export function LanguageSwitcher({ persist = false }: { persist?: boolean }) {
+export function LanguageSwitcher({ persist = false, className }: { persist?: boolean; className?: string }) {
   const t = useTranslations("common.language");
   const locale = useLocale();
   const other = routing.locales.find((l) => l !== locale)!;
@@ -25,6 +25,7 @@ export function LanguageSwitcher({ persist = false }: { persist?: boolean }) {
       type="button"
       variant="ghost"
       size="sm"
+      className={className}
       disabled={pending}
       aria-label={`${t("label")}: ${t(other)}`}
       onClick={() =>

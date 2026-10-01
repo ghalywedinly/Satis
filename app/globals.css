@@ -92,6 +92,14 @@
   --tracking-heading: -0.03em;
   --tracking-logo: -0.04em;
   --tracking-eyebrow: 0.10em;
+
+  /* Marketing only: product cards drifting gently in the hero. Disabled by reduced motion. */
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 /* ───────── shadcn/ui semantic variables mapped to Satis ───────── */

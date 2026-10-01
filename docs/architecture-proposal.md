@@ -15,7 +15,7 @@ The repository is not empty. It has a small, working base:
 | Next.js 16.3 (App Router), React 19.2, TypeScript, Tailwind CSS v4 | Set up, builds, lints clean |
 | shadcn/ui | Configured by hand (`components.json`, `lib/utils.ts`). Its registry (`ui.shadcn.com`) is blocked from this cloud environment, so components cannot be pulled with the CLI here |
 | Brand system | `app/globals.css` (tokens), `app/fonts.ts`, `components/brand/` (logo, slice elements), `public/brand/` (SVGs), brand rules in `CLAUDE.md`, full handoff in `Satis Branding/` |
-| Starter page `/` | Placeholder showing the brand. Will be replaced by the landing page |
+| Starter page `/` | Replaced by the landing page (hero, how it works, features, customer flow, dashboard showcase, pricing, FAQ) |
 | Survey prototype | `/en/survey`, `/ar/survey`, on branch `claude/festive-mayer-itj3hl` only (not on `main`). Static, not connected to data, and its text lives in a TypeScript file instead of an i18n system |
 | Supabase, auth, database, i18n, tests, CI | None yet |
 
