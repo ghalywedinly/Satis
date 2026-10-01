@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/satis-design-system-2dbd3e8a-6295-4ea3-ad21-285b6bb4c38d/tokens/fonts.css">
+<style>
+  body { margin: 0; background: #FAF8F4; }
+  a { color: #2B3AF3; text-decoration: none; }
+  a:hover { color: #1F2BC4; }
+</style>
+</helmet>
+<div style="font-family: 'Instrument Sans', system-ui, sans-serif; color: #0B0D12; background: #FAF8F4; min-height: 100vh; padding: 56px 24px 80px; box-sizing: border-box">
+  <div style="max-width: 1216px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px">
+    <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid #E6E2DA; padding-bottom: 16px">
+      <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -0.03em">Satis — Logo</span>
+      <span style="font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; color: #5A606E">Sliced fold · v1.0</span>
+    </div>
+
+    <div style="background: #fff; border: 1px solid #E6E2DA; border-radius: 28px; min-height: 380px; display: flex; align-items: center; justify-content: center; padding: 48px 24px">
+      <div style="display: flex; align-items: center; gap: 24px">
+        <svg viewBox="8 4 90 84" style="height: 92px; width: auto"><g fill="#0B0D12"><polygon points="40,4 98,4 68.3,30 10.3,30"></polygon><polygon points="11.1,34 57.1,34 94.9,58 48.9,58"></polygon><polygon points="66,88 8,88 37.7,62 95.7,62"></polygon></g></svg>
+        <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 128px; letter-spacing: -0.04em; line-height: 1">Satis</span>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span style="font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; color: #5A606E">Colourways</span>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 16px">
+        <sc-for list="{{ ways }}" as="w" hint-placeholder-count="8">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <div style="background: {{ w.bg }}; border: 1px solid {{ w.border }}; border-radius: 20px; min-height: 200px; display: flex; align-items: center; justify-content: center; padding: 32px">
+              <div style="display: flex; align-items: center; gap: 14px">
+                <svg viewBox="8 4 90 84" style="height: 42px; width: auto"><polygon points="40,4 98,4 68.3,30 10.3,30" fill="{{ w.a }}"></polygon><polygon points="11.1,34 57.1,34 94.9,58 48.9,58" fill="{{ w.b }}"></polygon><polygon points="66,88 8,88 37.7,62 95.7,62" fill="{{ w.a }}"></polygon></svg>
+                <span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 58px; letter-spacing: -0.04em; line-height: 1; color: {{ w.word }}">Satis</span>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; gap: 12px; font-size: 13px"><span style="font-weight: 600">{{ w.name }}</span><span style="color: #5A606E">{{ w.note }}</span></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 16px">
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <span style="font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; color: #5A606E">App icons</span>
+        <div style="background: #fff; border: 1px solid #E6E2DA; border-radius: 20px; padding: 32px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center">
+          <sc-for list="{{ icons }}" as="ic" hint-placeholder-count="4">
+            <div style="width: 96px; height: 96px; border-radius: 22px; background: {{ ic.bg }}; border: 1px solid {{ ic.border }}; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+              <svg viewBox="8 4 90 84" style="width: 54%; height: auto"><polygon points="40,4 98,4 68.3,30 10.3,30" fill="{{ ic.a }}"></polygon><polygon points="11.1,34 57.1,34 94.9,58 48.9,58" fill="{{ ic.b }}"></polygon><polygon points="66,88 8,88 37.7,62 95.7,62" fill="{{ ic.a }}"></polygon></svg>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px">
+        <span style="font-size: 12px; letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; color: #5A606E">Small sizes · 48 / 32 / 24 / 16 px</span>
+        <div style="background: #fff; border: 1px solid #E6E2DA; border-radius: 20px; padding: 32px; display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; justify-content: center; min-height: 96px">
+          <sc-for list="{{ sizes }}" as="s" hint-placeholder-count="4">
+            <div style="width: {{ s.px }}; height: {{ s.px }}; border-radius: {{ s.r }}; background: #2B3AF3; display: flex; align-items: center; justify-content: center">
+              <svg viewBox="8 4 90 84" style="width: 60%; height: auto"><g fill="#fff"><polygon points="40,4 98,4 68.3,30 10.3,30"></polygon><polygon points="11.1,34 57.1,34 94.9,58 48.9,58"></polygon><polygon points="66,88 8,88 37.7,62 95.7,62"></polygon></g></svg>
+            </div>
+          </sc-for>
+          <div style="display: flex; align-items: center; gap: 6px"><svg viewBox="8 4 90 84" style="height: 15px; width: auto"><g fill="#0B0D12"><polygon points="40,4 98,4 68.3,30 10.3,30"></polygon><polygon points="11.1,34 57.1,34 94.9,58 48.9,58"></polygon><polygon points="66,88 8,88 37.7,62 95.7,62"></polygon></g></svg><span style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 21px; letter-spacing: -0.04em; line-height: 1">Satis</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const w = (name, note, bg, a, b, word, border) => ({ name, note, bg, a, b, word, border: border || bg });
+    return {
+      ways: [
+        w('Primary', 'Ink on white', '#FFFFFF', '#0B0D12', '#0B0D12', '#0B0D12', '#E6E2DA'),
+        w('Brand', 'Ultramarine mark, ink word', '#FAF8F4', '#2B3AF3', '#2B3AF3', '#0B0D12', '#E6E2DA'),
+        w('Accent fold', 'Middle slice in Ultramarine', '#FFFFFF', '#0B0D12', '#2B3AF3', '#0B0D12', '#E6E2DA'),
+        w('Reversed', 'Sand on Ink', '#0B0D12', '#FAF8F4', '#FAF8F4', '#FAF8F4'),
+        w('Reward', 'Zest middle slice, on Ink', '#0B0D12', '#FAF8F4', '#FFCF28', '#FAF8F4'),
+        w('On Ultramarine', 'White on brand blue', '#2B3AF3', '#FFFFFF', '#FFFFFF', '#FFFFFF'),
+        w('Campaign', 'Zest slice on brand blue', '#2B3AF3', '#FFFFFF', '#FFCF28', '#FFFFFF'),
+        w('On Zest', 'Ink on reward yellow', '#FFCF28', '#0B0D12', '#0B0D12', '#0B0D12'),
+      ],
+      icons: [
+        { bg: '#2B3AF3', a: '#FFFFFF', b: '#FFFFFF', border: '#2B3AF3' },
+        { bg: '#0B0D12', a: '#FAF8F4', b: '#FFCF28', border: '#0B0D12' },
+        { bg: '#FFFFFF', a: '#0B0D12', b: '#2B3AF3', border: '#E6E2DA' },
+        { bg: '#FFCF28', a: '#0B0D12', b: '#0B0D12', border: '#FFCF28' },
+      ],
+      sizes: [
+        { px: '48px', r: '11px' }, { px: '32px', r: '8px' }, { px: '24px', r: '6px' }, { px: '16px', r: '4px' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
