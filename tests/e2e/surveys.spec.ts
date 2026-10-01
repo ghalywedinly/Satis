@@ -155,7 +155,6 @@ test.describe("surveys", () => {
     await page.getByRole("button", { name: "Publish changes" }).click();
     await expect(page.getByText("Survey published.")).toBeVisible();
 
-    await c.page.waitForTimeout(900);
     await c.page.getByRole("button", { name: "Send feedback" }).click();
     await expect(c.page.locator("main [role=alert]")).toHaveText("This survey was just updated. Reload the page to continue.");
     await c.context.close();

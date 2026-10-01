@@ -42,7 +42,6 @@ export function SurveyForm({
   const [done, setDone] = useState(false);
   const [pending, startTransition] = useTransition();
   const [submissionId] = useState(() => crypto.randomUUID());
-  const [startedAt] = useState(() => Date.now());
   const honeypot = useRef<HTMLInputElement>(null);
   const questionRefs = useRef<Record<string, HTMLFieldSetElement | null>>({});
   const fallback = definition.defaultLocale;
@@ -80,7 +79,6 @@ export function SurveyForm({
         locale,
         answers: cleaned,
         website: honeypot.current?.value ?? "",
-        elapsedMs: Date.now() - startedAt,
       });
       if ("ok" in result) setDone(true);
       else setError(result.error);

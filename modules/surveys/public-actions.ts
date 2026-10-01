@@ -18,7 +18,6 @@ const inputSchema = z.object({
   answers: answersSchema,
   // Honeypot: a hidden field people never fill in, but naive bots do.
   website: z.string().max(200),
-  elapsedMs: z.number().int().nonnegative(),
 });
 
 function deviceType(userAgent: string | null): "mobile" | "tablet" | "desktop" {
@@ -34,8 +33,9 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
   if (!parsed.success) return { error: "generic" };
   const data = parsed.data;
 
-  // Likely automated: pretend it worked, store nothing.
-  if (data.website !== "" || data.elapsedMs < 800) return { ok: true };
+  // Filled-in honeypot means a bot: pretend it worked, store nothing. (No timing heuristic:
+  // a fast but genuine customer must never lose their answers silently.)
+  if (data.website !== "") return { ok: true };
 
   if (!(await consumeRateLimit("surveySubmit", `${await clientIp()}:${data.code}`))) return { error: "rateLimited" };
 
