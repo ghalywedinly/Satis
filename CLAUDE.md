@@ -39,6 +39,9 @@ Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual referen
 - `SliceHighlight` — slanted plate behind a word/score. `RatingSlices` — 1–5 scale in slices. `Supergraphic` — giant cropped mark (marketing only). `OutlinedCard` / `OutlinedPill` — 3px ink-outlined white cards floating over Ember/Ink (marketing hero only, not dashboard). `SpeedLines` — dividers.
 - Utilities: `slice`, `slice-sm|md|lg` (clip-path parallelogram), `eyebrow`.
 
+## Design skill
+`.claude/skills/design-taste-frontend-v1` guides layout, motion and polish. Where it conflicts with this file, this file wins: brand colours (Ultramarine stays the primary), fonts (Bricolage Grotesque, Instrument Sans, Readex Pro), lucide-react icons, CSS motion with reduced-motion support, Arabic-first RTL, and no new dependencies without a reason.
+
 ## UI defaults
 - Controls radius 10px, cards 20px with 1px `border-border` and **no shadow at rest**; dialogs 28px.
 - Hover darkens one step (500 → 600); press moves 1px down; focus = 3px ring `#B6BEFB`. Never remove focus.
