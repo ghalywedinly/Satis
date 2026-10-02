@@ -15,6 +15,8 @@ const DB_ERRORS: Record<string, ErrorKey> = {
   invalid_survey: "invalidSurvey",
   survey_unavailable: "surveyUnavailable",
   invalid_tag: "invalidTag",
+  coupon_redeemed: "couponAlreadyRedeemed",
+  coupon_expired: "couponExpired",
 };
 
 /** Translates a PostgREST/Postgres error into a user-facing message key. RLS denials read as "forbidden". */

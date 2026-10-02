@@ -5,8 +5,8 @@ import { Link, usePathname } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export type NavItem = {
-  href: "/dashboard" | "/inbox" | "/surveys" | "/locations" | "/team" | "/settings";
-  label: "dashboard" | "inbox" | "surveys" | "locations" | "team" | "settings";
+  href: "/dashboard" | "/inbox" | "/surveys" | "/coupons" | "/locations" | "/team" | "/settings";
+  label: "dashboard" | "inbox" | "surveys" | "coupons" | "locations" | "team" | "settings";
   /** Pre-formatted count shown next to the label (e.g. unread feedback). */
   badge?: string;
 };

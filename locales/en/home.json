@@ -64,7 +64,7 @@
     "teamOwner": "Noura",
     "teamManager": "Fahad",
     "teamStaff": "Sara",
-    "coupon": "15% off your next visit",
+    "coupon": "{amount} off your next visit",
     "insight": "Customers mentioned slow service 18 times this week at Tahlia, mostly in the evening.",
     "comment4": "Friendly staff and a calm place"
   },

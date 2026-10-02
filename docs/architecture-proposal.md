@@ -1,6 +1,6 @@
 # Satis — architecture proposal
 
-Status: **approved** (all recommendations in §2 accepted). Phases 1–5 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox; analytics dashboard).
+Status: **approved** (all recommendations in §2 accepted). Phases 1–6 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox; analytics dashboard; rewards and coupons).
 
 This answers "First task" of the master build specification: the current state of the repository, the proposed architecture, database schema, folder structure, environment variables, external services, security requirements and risks. Each section separates **MVP** from **Future**.
 
@@ -170,8 +170,8 @@ Not stored: IP addresses (only a salted hash inside the rate-limit table, expiri
 
 | Table | Key columns | Notes |
 |---|---|---|
-| `coupon_offers` | `organization_id`, `survey_id`, `location_id` (nullable = all), `title jsonb`, `discount_type`, `discount_value`, `valid_days`, `usage_limit`, `status` | The reward rule |
-| `coupon_issuances` | `organization_id`, `offer_id`, `response_id`, `code` (unique), `expires_at`, `redeemed_at`, `redeemed_by`, `redeemed_location_id` | One unique code per completed response, so codes can't be shared. Redemption is a staff screen for MVP; POS integrations later use the same table |
+| `coupon_offers` | `organization_id`, `survey_id`, `location_id` (nullable = all), `note jsonb` (optional conditions per language), `discount_type` (percent/amount in halalas), `discount_value`, `valid_days`, `usage_limit`, `status` (active/paused/archived) | The reward rule. One active offer per survey |
+| `coupon_issuances` | `organization_id`, `offer_id`, `response_id`, `code` (unique, 8 easy-to-read characters), a snapshot of the discount, `expires_at`, `redeemed_at`, `redeemed_by`, `redeemed_location_id` | One unique code per completed response, so codes can't be shared. Issued by `issue_coupon` (server only), redeemed atomically by `redeem_coupon` (staff and above). Redemption is a staff screen for MVP; POS integrations later use the same table |
 
 **Billing (Phase 8)**
 

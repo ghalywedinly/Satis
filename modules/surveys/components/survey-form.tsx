@@ -8,6 +8,8 @@ import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { Messages } from "@/locales";
 import { textIn, unansweredRequired, type Answers, type Question, type SurveyDefinition } from "../definition";
+import { CouponTicket } from "@/modules/coupons/components/coupon-ticket";
+import { discountAmount, type Coupon } from "@/modules/coupons/definition";
 import { submitSurveyResponse, type SubmitResult } from "../public-actions";
 
 export type SurveyLabels = Messages["publicSurvey"];
@@ -40,6 +42,7 @@ export function SurveyForm({
   const [missing, setMissing] = useState<string[]>([]);
   const [error, setError] = useState<Exclude<SubmitResult, { ok: true }>["error"] | null>(null);
   const [done, setDone] = useState(false);
+  const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [pending, startTransition] = useTransition();
   const [submissionId] = useState(() => crypto.randomUUID());
   const honeypot = useRef<HTMLInputElement>(null);
@@ -80,7 +83,10 @@ export function SurveyForm({
         answers: cleaned,
         website: honeypot.current?.value ?? "",
       });
-      if ("ok" in result) setDone(true);
+      if ("ok" in result) {
+        setCoupon(result.coupon ?? null);
+        setDone(true);
+      }
       else setError(result.error);
     });
   };
@@ -110,6 +116,23 @@ export function SurveyForm({
           <SatisMark tone="sand-zest" className="h-14 animate-in fade-in zoom-in-75 duration-200 ease-[var(--ease-pop)]" />
           <h1 className="text-[28px] leading-tight font-extrabold text-sand">{labels.thanksTitle}</h1>
           <p className="max-w-[300px] text-ink-200">{thanksBody}</p>
+          {coupon && (
+            <CouponTicket
+              coupon={coupon}
+              locale={locale}
+              fallback={fallback}
+              labels={{
+                eyebrow: labels.couponEyebrow.replace("{business}", organizationName),
+                off: labels.couponOff.replace("{amount}", discountAmount(locale, coupon.discountType, coupon.discountValue)),
+                code: labels.couponCode,
+                validUntil: labels.couponValidUntil,
+                howTo: labels.couponHowTo,
+                keep: labels.couponKeep,
+                copy: labels.couponCopy,
+                copied: labels.couponCopied,
+              }}
+            />
+          )}
           {mode.kind === "preview" && (
             <>
               <p className="text-xs text-ink-300">{labels.previewThanks}</p>

@@ -13,6 +13,8 @@ export type AnalyticsEvent =
   | "survey_started"
   | "survey_completed"
   | "coupon_claimed"
+  | "coupon_offer_saved"
+  | "coupon_redeemed"
   | "dashboard_viewed"
   | "inbox_viewed"
   | "response_triaged"

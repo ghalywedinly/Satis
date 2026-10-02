@@ -31,6 +31,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
     { href: "/dashboard", label: "dashboard" },
     { href: "/inbox", label: "inbox", badge: unread > 0 ? formatCount(locale, Math.min(unread, 99)) + (unread > 99 ? "+" : "") : undefined },
     { href: "/surveys", label: "surveys" },
+    { href: "/coupons", label: "coupons" },
     { href: "/locations", label: "locations" },
     { href: "/team", label: "team" },
     ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings" } as const] : []),

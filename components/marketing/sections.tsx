@@ -31,6 +31,7 @@ import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import { BrowserFrame, MiniRating, PhoneFrame, PillBar, SlantedBars, Sparkline } from "./mockups";
+import { discountAmount } from "@/modules/coupons/definition";
 import { Reveal } from "./motion";
 import { ScanScreen, SurveyScreen, ThanksScreen } from "./phone-screens";
 
@@ -327,10 +328,10 @@ export function Features({ qrSvg, question }: { qrSvg: string; question: { ar: s
               ))}
             </div>
           </FeatureCard>
-          <FeatureCard icon={Ticket} index={6} title={t("coupons.title")} body={t("coupons.body")} soon={t("comingSoon")}>
+          <FeatureCard icon={Ticket} index={6} title={t("coupons.title")} body={t("coupons.body")}>
             <div className="relative flex w-full max-w-[260px] items-center gap-3 rounded-[14px] border-2 border-dashed border-ink-300 bg-white p-4">
               <Ticket strokeWidth={1.75} className="size-8 shrink-0 text-ember" />
-              <span className="font-display text-base leading-snug font-bold">{m("coupon")}</span>
+              <span className="font-display text-base leading-snug font-bold">{m("coupon", { amount: discountAmount(locale, "percent", 15) })}</span>
             </div>
           </FeatureCard>
           <FeatureCard icon={Sparkles} index={7} title={t("ai.title")} body={t("ai.body")} soon={t("comingSoon")}>

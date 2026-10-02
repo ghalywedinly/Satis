@@ -6,9 +6,10 @@ import { captureServerEvent } from "@/lib/observability/analytics";
 import { reportError } from "@/lib/observability/errors";
 import { clientIp, consumeRateLimit } from "@/lib/rate-limit";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import type { Coupon } from "@/modules/coupons/definition";
 import { answersSchema } from "./schemas";
 
-export type SubmitResult = { ok: true } | { error: "generic" | "changed" | "rateLimited" | "unavailable" };
+export type SubmitResult = { ok: true; coupon?: Coupon } | { error: "generic" | "changed" | "rateLimited" | "unavailable" };
 
 const inputSchema = z.object({
   code: z.string().regex(/^[A-Za-z0-9]{8,16}$/),
@@ -46,7 +47,7 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
   }
 
   const device = deviceType((await headers()).get("user-agent"));
-  const { error } = await supabase.rpc("submit_survey_response", {
+  const { data: responseId, error } = await supabase.rpc("submit_survey_response", {
     p_code: data.code,
     p_version_id: data.versionId,
     p_submission_id: data.submissionId,
@@ -62,5 +63,14 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
   }
 
   captureServerEvent("survey_completed", data.submissionId, { locale: data.locale, device_type: device });
-  return { ok: true };
+
+  // The reward, if the business offers one. Its failure must never lose the customer's answers.
+  const { data: coupon, error: couponError } = await supabase.rpc("issue_coupon", { p_response_id: responseId });
+  if (couponError) {
+    reportError(couponError, { area: "coupons", action: "issue" });
+    return { ok: true };
+  }
+  if (!coupon) return { ok: true };
+  captureServerEvent("coupon_claimed", data.submissionId, { locale: data.locale });
+  return { ok: true, coupon: coupon as unknown as Coupon };
 }

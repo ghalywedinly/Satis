@@ -359,6 +359,75 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      coupon_offers: {
+        Row: Timestamps & {
+          id: string;
+          organization_id: string;
+          survey_id: string;
+          location_id: string | null;
+          discount_type: Database["public"]["Enums"]["coupon_discount_type"];
+          discount_value: number;
+          note: Json;
+          valid_days: number;
+          usage_limit: number | null;
+          status: Database["public"]["Enums"]["coupon_offer_status"];
+        };
+        Insert: {
+          organization_id: string;
+          survey_id: string;
+          location_id?: string | null;
+          discount_type: Database["public"]["Enums"]["coupon_discount_type"];
+          discount_value: number;
+          note?: Json;
+          valid_days?: number;
+          usage_limit?: number | null;
+        };
+        Update: {
+          location_id?: string | null;
+          discount_type?: Database["public"]["Enums"]["coupon_discount_type"];
+          discount_value?: number;
+          note?: Json;
+          valid_days?: number;
+          usage_limit?: number | null;
+          status?: Database["public"]["Enums"]["coupon_offer_status"];
+        };
+        Relationships: [
+          {
+            foreignKeyName: "coupon_offers_survey_id_organization_id_fkey";
+            columns: ["survey_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "surveys";
+            referencedColumns: ["id", "organization_id"];
+          },
+          {
+            foreignKeyName: "coupon_offers_location_id_organization_id_fkey";
+            columns: ["location_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "locations";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
+      };
+      coupon_issuances: {
+        Row: {
+          id: string;
+          organization_id: string;
+          offer_id: string;
+          response_id: string;
+          code: string;
+          discount_type: Database["public"]["Enums"]["coupon_discount_type"];
+          discount_value: number;
+          note: Json;
+          issued_at: string;
+          expires_at: string;
+          redeemed_at: string | null;
+          redeemed_by: string | null;
+          redeemed_location_id: string | null;
+        };
+        Insert: never;
+        Update: never;
+        Relationships: [];
+      };
       response_tags: {
         Row: { organization_id: string; response_id: string; tag_id: string; created_at: string };
         Insert: { organization_id: string; response_id: string; tag_id: string };
@@ -452,6 +521,9 @@ export type Database = {
         Returns: string;
       };
       add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
+      issue_coupon: { Args: { p_response_id: string }; Returns: Json };
+      lookup_coupon: { Args: { p_organization_id: string; p_code: string }; Returns: Json };
+      redeem_coupon: { Args: { p_organization_id: string; p_code: string; p_location_id?: string | null }; Returns: Json };
       get_analytics: {
         Args: { p_organization_id: string; p_from: string; p_to: string; p_location_id?: string | null; p_survey_id?: string | null };
         Returns: Json;
@@ -466,6 +538,8 @@ export type Database = {
       org_role: "owner" | "admin" | "manager" | "staff" | "viewer";
       survey_status: "draft" | "published" | "paused" | "archived";
       response_status: "new" | "in_progress" | "resolved";
+      coupon_discount_type: "percent" | "amount";
+      coupon_offer_status: "active" | "paused" | "archived";
       business_type: "restaurant" | "cafe" | "retail" | "clinic" | "beauty" | "hotel" | "gym" | "entertainment" | "other";
     };
     CompositeTypes: { [_ in never]: never };
@@ -477,3 +551,5 @@ export type BusinessType = Database["public"]["Enums"]["business_type"];
 export type SurveyStatus = Database["public"]["Enums"]["survey_status"];
 export type ResponseStatus = Database["public"]["Enums"]["response_status"];
 export type RatingSentiment = "positive" | "neutral" | "negative";
+export type CouponDiscountType = Database["public"]["Enums"]["coupon_discount_type"];
+export type CouponOfferStatus = Database["public"]["Enums"]["coupon_offer_status"];

@@ -28,5 +28,8 @@
   "emailMismatch": "This invitation was sent to a different email.",
   "invalidSurvey": "Finish the survey before publishing it.",
   "surveyUnavailable": "This survey isn't available right now.",
-  "invalidTag": "Tag names can be 1 to 40 characters."
+  "invalidTag": "Tag names can be 1 to 40 characters.",
+  "couponAlreadyRedeemed": "This code has already been used.",
+  "couponExpired": "This code has expired.",
+  "offerActiveExists": "This survey already has an active reward. Pause it before starting another."
 }
