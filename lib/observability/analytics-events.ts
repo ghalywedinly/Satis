@@ -15,6 +15,7 @@ export type AnalyticsEvent =
   | "coupon_claimed"
   | "coupon_offer_saved"
   | "coupon_redeemed"
+  | "ai_analysis_requested"
   | "dashboard_viewed"
   | "inbox_viewed"
   | "response_triaged"

@@ -5,6 +5,7 @@ import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { InboxRow } from "../queries";
+import { AiThemeChips } from "@/modules/ai/components/ai-themes";
 import { ScoreBadge, SentimentBadge, StatusBadge, TagChip } from "./badges";
 
 export function ResponseList({ rows, backQuery }: { rows: InboxRow[]; backQuery: string }) {
@@ -48,6 +49,7 @@ export function ResponseList({ rows, backQuery }: { rows: InboxRow[]; backQuery:
                 <span aria-hidden>·</span>
                 <time dateTime={row.submitted_at}>{formatDate(locale, row.submitted_at, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}</time>
               </div>
+              {row.analysis && <AiThemeChips praise={row.analysis.praise_themes} complaints={row.analysis.complaint_themes} />}
               {row.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
                   {row.tags.map(({ tag }) => tag && <TagChip key={tag.id} name={tag.name} />)}

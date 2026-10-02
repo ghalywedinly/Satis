@@ -31,5 +31,6 @@
   "invalidTag": "Tag names can be 1 to 40 characters.",
   "couponAlreadyRedeemed": "This code has already been used.",
   "couponExpired": "This code has expired.",
-  "offerActiveExists": "This survey already has an active reward. Pause it before starting another."
+  "offerActiveExists": "This survey already has an active reward. Pause it before starting another.",
+  "aiNotConfigured": "AI analysis isn't set up yet."
 }

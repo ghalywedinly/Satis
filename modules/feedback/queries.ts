@@ -6,13 +6,14 @@ import type { SurveyDefinition } from "@/modules/surveys/definition";
 import { likePattern, PAGE_SIZE, type InboxFilters } from "./filters";
 
 const LIST_COLUMNS =
-  "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, comment_text, submitted_at, survey:surveys(name), location:locations(name), tags:response_tags(tag:feedback_tags(id, name))";
+  "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, comment_text, submitted_at, survey:surveys(name), location:locations(name), tags:response_tags(tag:feedback_tags(id, name)), analysis:response_analyses(sentiment, praise_themes, complaint_themes)";
 
 /** One page of the inbox, newest first, plus the total matching the filters. */
 export async function listResponses(organizationId: string, filters: InboxFilters) {
   const supabase = await createSupabaseServerClient();
   // A second, inner-joined embed narrows the list to one tag without hiding the response's other tags.
-  const columns = filters.tag ? `${LIST_COLUMNS}, tagged:response_tags!inner(tag_id)` : LIST_COLUMNS;
+  // Likewise for an AI theme: the inner join keeps only responses whose analysis mentions it.
+  const columns = [LIST_COLUMNS, filters.tag && "tagged:response_tags!inner(tag_id)", filters.theme && "themed:response_analyses!inner(themes)"].filter(Boolean).join(", ");
   let query = supabase
     .from("survey_responses")
     .select(columns as typeof LIST_COLUMNS, { count: "exact" })
@@ -23,6 +24,7 @@ export async function listResponses(organizationId: string, filters: InboxFilter
   if (filters.survey) query = query.eq("survey_id", filters.survey);
   if (filters.location) query = query.eq("location_id", filters.location);
   if (filters.tag) query = query.eq("tagged.tag_id", filters.tag);
+  if (filters.theme) query = query.contains("themed.themes", [filters.theme]);
   if (filters.period !== "all") query = query.gte("submitted_at", daysAgoIso(Number(filters.period)));
   if (filters.unread) query = query.eq("is_read", false);
   if (filters.important) query = query.eq("is_important", true);
@@ -76,7 +78,7 @@ export const getResponse = cache(async (organizationId: string, responseId: stri
   const { data } = await supabase
     .from("survey_responses")
     .select(
-      "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, locale, device_type, submitted_at, survey_id, survey:surveys(name), location:locations(name), version:survey_versions(definition), tags:response_tags(tag:feedback_tags(id, name))",
+      "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, locale, device_type, submitted_at, survey_id, survey:surveys(name), location:locations(name), version:survey_versions(definition), tags:response_tags(tag:feedback_tags(id, name)), analysis:response_analyses(sentiment, praise_themes, complaint_themes)",
     )
     .eq("id", responseId)
     .eq("organization_id", organizationId)

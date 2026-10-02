@@ -1,6 +1,6 @@
 # Satis — architecture proposal
 
-Status: **approved** (all recommendations in §2 accepted). Phases 1–6 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox; analytics dashboard; rewards and coupons).
+Status: **approved** (all recommendations in §2 accepted). Phases 1–7 implemented (foundation; businesses, locations, team; surveys, QR codes, public survey; feedback inbox; analytics dashboard; rewards and coupons; AI analysis in its reduced launch form).
 
 This answers "First task" of the master build specification: the current state of the repository, the proposed architecture, database schema, folder structure, environment variables, external services, security requirements and risks. Each section separates **MVP** from **Future**.
 
@@ -186,7 +186,7 @@ Not stored: IP addresses (only a salted hash inside the rate-limit table, expiri
 
 | Table | Key columns | Notes |
 |---|---|---|
-| `response_analyses` | `organization_id`, `response_id`, `sentiment`, `themes text[]`, `language`, `model`, `prompt_version` | Produced in batches |
+| `response_analyses` | `organization_id`, `response_id`, `sentiment` (positive/neutral/negative/mixed), `praise_themes`, `complaint_themes`, `themes` (generated), `language`, `model`, `prompt_version` | Produced in batches of 40 from a fixed theme list (`modules/ai/taxonomy.ts`); comments are redacted first |
 | `ai_insights` | `organization_id`, `location_id`, `period_start`, `period_end`, `kind`, `observed jsonb`, `interpretation jsonb` (per locale), `model`, `prompt_version` | **`observed`** = numbers computed in SQL (e.g. "slow service: 18 mentions, Tahlia, 18:00–22:00"). **`interpretation`** = AI text, shown labelled as AI-generated |
 | `ai_insight_evidence` | `insight_id`, `response_id` | Every insight links to the responses behind it; insights without evidence are rejected |
 
@@ -194,7 +194,7 @@ Not stored: IP addresses (only a salted hash inside the rate-limit table, expiri
 
 | Table | Purpose |
 |---|---|
-| `jobs` | Background work queue (type, payload, run_at, attempts, locked_at, error) |
+| `jobs` | Background work queue (type, payload, run_at, attempts, locked_at, error). Not needed yet: AI work is found by query (comments without an analysis) and run by Vercel Cron |
 | `rate_limits` | Fixed-window counters keyed by hashed key; rows expire |
 
 ### 4.2 Future tables (not built in MVP)

@@ -428,6 +428,81 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      response_analyses: {
+        Row: {
+          id: string;
+          organization_id: string;
+          response_id: string;
+          sentiment: Database["public"]["Enums"]["ai_sentiment"];
+          praise_themes: string[];
+          complaint_themes: string[];
+          themes: string[];
+          language: string | null;
+          model: string;
+          prompt_version: string;
+          analyzed_at: string;
+        };
+        Insert: {
+          organization_id: string;
+          response_id: string;
+          sentiment: Database["public"]["Enums"]["ai_sentiment"];
+          praise_themes?: string[];
+          complaint_themes?: string[];
+          language?: string | null;
+          model: string;
+          prompt_version: string;
+        };
+        Update: never;
+        Relationships: [
+          {
+            foreignKeyName: "response_analyses_response_id_organization_id_fkey";
+            columns: ["response_id", "organization_id"];
+            isOneToOne: true;
+            referencedRelation: "survey_responses";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
+      };
+      ai_insights: {
+        Row: {
+          id: string;
+          organization_id: string;
+          kind: "weekly_summary";
+          period_start: string;
+          period_end: string;
+          observed: Json;
+          interpretation: Json;
+          model: string;
+          prompt_version: string;
+          created_at: string;
+        };
+        Insert: {
+          organization_id: string;
+          kind: "weekly_summary";
+          period_start: string;
+          period_end: string;
+          observed: Json;
+          interpretation: Json;
+          model: string;
+          prompt_version: string;
+        };
+        Update: never;
+        Relationships: [];
+      };
+      ai_insight_evidence: {
+        Row: { organization_id: string; insight_id: string; response_id: string };
+        Insert: { organization_id: string; insight_id: string; response_id: string };
+        Update: never;
+        Relationships: [
+          {
+            foreignKeyName: "ai_insight_evidence_response_id_organization_id_fkey";
+            columns: ["response_id", "organization_id"];
+            isOneToOne: false;
+            referencedRelation: "survey_responses";
+            referencedColumns: ["id", "organization_id"];
+          },
+        ];
+      };
       response_tags: {
         Row: { organization_id: string; response_id: string; tag_id: string; created_at: string };
         Insert: { organization_id: string; response_id: string; tag_id: string };
@@ -522,6 +597,15 @@ export type Database = {
       };
       add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
       issue_coupon: { Args: { p_response_id: string }; Returns: Json };
+      ai_pending_comments: {
+        Args: { p_organization_id?: string | null; p_limit?: number };
+        Returns: { id: string; organization_id: string; comment_text: string }[];
+      };
+      ai_weekly_observed: { Args: { p_organization_id: string; p_from: string; p_to: string }; Returns: Json };
+      get_theme_counts: {
+        Args: { p_organization_id: string; p_from: string; p_to: string; p_location_id?: string | null; p_survey_id?: string | null };
+        Returns: Json;
+      };
       lookup_coupon: { Args: { p_organization_id: string; p_code: string }; Returns: Json };
       redeem_coupon: { Args: { p_organization_id: string; p_code: string; p_location_id?: string | null }; Returns: Json };
       get_analytics: {
@@ -539,6 +623,7 @@ export type Database = {
       survey_status: "draft" | "published" | "paused" | "archived";
       response_status: "new" | "in_progress" | "resolved";
       coupon_discount_type: "percent" | "amount";
+      ai_sentiment: "positive" | "neutral" | "negative" | "mixed";
       coupon_offer_status: "active" | "paused" | "archived";
       business_type: "restaurant" | "cafe" | "retail" | "clinic" | "beauty" | "hotel" | "gym" | "entertainment" | "other";
     };

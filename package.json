@@ -20,6 +20,7 @@
     "db:migration": "supabase migration new"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
     "@sentry/core": "^11.1.0",

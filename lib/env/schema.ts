@@ -25,6 +25,12 @@ export const serverEnvSchema = z.object({
   EMAIL_FROM: optional(z.string().min(3)),
   POSTHOG_HOST: optional(z.url()),
   RATE_LIMIT_SALT: optional(z.string().min(16)),
+  /** AI analysis (Phase 7). "fake" is a keyword-based stand-in for development and tests only. */
+  AI_PROVIDER: optional(z.enum(["anthropic", "fake"])),
+  AI_MODEL: optional(z.string().min(1)),
+  ANTHROPIC_API_KEY: optional(z.string().min(1)),
+  /** Shared secret Vercel Cron sends to /api/cron/* routes. */
+  CRON_SECRET: optional(z.string().min(16)),
   EMAIL_OUTBOX_DIR: optional(z.string()),
   /** Development only: turns off rate limiting for automated tests. Rejected in staging/production. */
   RATE_LIMIT_DISABLED: z.preprocess((v) => v === "true", z.boolean()).default(false),

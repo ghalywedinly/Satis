@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { Link } from "@/lib/i18n/navigation";
+import { THEMES } from "@/modules/ai/taxonomy";
 import { PERIODS, SENTIMENTS, STATUSES, type InboxFilters } from "../filters";
 
 type Option = { id: string; name: string };
@@ -29,6 +30,7 @@ export function InboxFilterBar({
   const t = useTranslations("inbox.filters");
   const tStatus = useTranslations("inbox.status");
   const tSentiment = useTranslations("inbox.sentiment");
+  const tThemes = useTranslations("ai.themes");
   const submit = (e: React.ChangeEvent<HTMLElement>) => (e.currentTarget as HTMLInputElement).form?.requestSubmit();
 
   const select = (name: keyof InboxFilters, label: string, value: string | undefined, options: { value: string; label: string }[], allLabel?: string) => (
@@ -64,13 +66,14 @@ export function InboxFilterBar({
           {t("searchButton")}
         </Button>
       </div>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7">
         {select("period", t("period"), filters.period, PERIODS.map((p) => ({ value: p, label: t(`periods.${p}`) })))}
         {select("status", t("status"), filters.status, STATUSES.map((s) => ({ value: s, label: tStatus(s) })), t("all"))}
         {select("sentiment", t("sentiment"), filters.sentiment, SENTIMENTS.map((s) => ({ value: s, label: tSentiment(s) })), t("all"))}
         {select("survey", t("survey"), filters.survey, surveys.map((s) => ({ value: s.id, label: s.name })), t("allSurveys"))}
         {select("location", t("location"), filters.location, locations.map((l) => ({ value: l.id, label: l.name })), t("allLocations"))}
         {select("tag", t("tag"), filters.tag, tags.map((g) => ({ value: g.id, label: g.name })), t("allTags"))}
+        {select("theme", t("theme"), filters.theme, THEMES.map((theme) => ({ value: theme, label: tThemes(theme) })), t("allThemes"))}
       </div>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
         {(["unread", "important", "comments"] as const).map((name) => (

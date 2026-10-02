@@ -11,6 +11,7 @@ import { captureServerEvent } from "@/lib/observability/analytics";
 import { requireMembership } from "@/lib/org/context";
 import { can } from "@/lib/permissions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { AiInsightsSection } from "@/modules/ai/components/insights-section";
 import { BarList, Meter, NpsBar } from "@/modules/analytics/components/breakdowns";
 import { DailyChart, type DailyPoint } from "@/modules/analytics/components/daily-chart";
 import { DashboardFilterBar } from "@/modules/analytics/components/dashboard-filters";
@@ -227,6 +228,8 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           </section>
         </>
       )}
+
+      <AiInsightsSection locale={locale} organizationId={organizationId} filters={filters} range={range} canAnalyze={can(membership.role, "surveys.manage")} />
 
       <Card className="gap-0 p-0">
         <h2 className="px-6 pt-5 pb-3 font-sans text-base font-semibold">{t("locations.title")}</h2>

@@ -14,6 +14,8 @@ export const RATE_LIMITS = {
   resendVerification: { limit: 5, windowSeconds: 3600 },
   // Generous: a café's customers often share one Wi-Fi address.
   surveySubmit: { limit: 30, windowSeconds: 600 },
+  // "Analyze now" calls a paid AI service: a few runs per business per hour.
+  aiManual: { limit: 5, windowSeconds: 3600 },
 } satisfies Record<string, RateLimitRule>;
 
 /**

@@ -47,7 +47,9 @@
     "important": "Important only",
     "comments": "With comments only",
     "apply": "Apply filters",
-    "clear": "Clear filters"
+    "clear": "Clear filters",
+    "theme": "Topic",
+    "allThemes": "All topics"
   },
   "status": {
     "new": "New",

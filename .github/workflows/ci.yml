@@ -72,6 +72,8 @@ jobs:
             echo "SUPABASE_SECRET_KEY=$SERVICE_ROLE_KEY"
             echo "RATE_LIMIT_SALT=ci-only-salt-not-a-secret-0123456789"
             echo "RATE_LIMIT_DISABLED=true"
+            # A keyword-based stand-in for the AI provider: no API key needed in CI.
+            echo "AI_PROVIDER=fake"
             # Emails sent by the app (team invitations) go to a local outbox the tests read.
             echo "EMAIL_OUTBOX_DIR=$RUNNER_TEMP/outbox"
             # The local stack sends auth emails itself (Mailpit); this only lets the hook endpoint's own tests run.

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { THEMES } from "@/modules/ai/taxonomy";
 
 /**
  * Inbox filters live in the URL (?status=new&period=30…), so a filtered view can be
@@ -20,6 +21,7 @@ const schema = z.object({
   survey: optional(z.uuid()),
   location: optional(z.uuid()),
   tag: optional(z.uuid()),
+  theme: optional(z.enum(THEMES)),
   period: z.preprocess(blankToUndefined, z.enum(PERIODS).default("30")).catch("30"),
   q: optional(z.string().max(100)),
   unread: flag,
@@ -52,7 +54,7 @@ export function filtersToQuery(filters: Partial<InboxFilters>): string {
 
 /** Whether anything narrows the list beyond the default period (for the empty state). */
 export const isFiltered = (f: InboxFilters) =>
-  Boolean(f.status || f.sentiment || f.survey || f.location || f.tag || f.q || f.unread || f.important || f.comments || f.period !== "30");
+  Boolean(f.status || f.sentiment || f.survey || f.location || f.tag || f.theme || f.q || f.unread || f.important || f.comments || f.period !== "30");
 
 /**
  * Escapes LIKE wildcards so a search for "50%" finds "50%", not everything.

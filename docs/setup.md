@@ -44,6 +44,13 @@ Import the GitHub repository, then add every variable from `.env.example` for ea
 Generate `RATE_LIMIT_SALT` with `openssl rand -hex 32` (different per environment).
 Use the Pro plan before launch (Hobby is for non-commercial use).
 
+**AI (optional until launch).** Create an API key at console.anthropic.com and set
+`ANTHROPIC_API_KEY` (server-only) and `AI_PROVIDER=anthropic`; `AI_MODEL` defaults to `claude-opus-5-5`.
+Set `CRON_SECRET` (`openssl rand -hex 32`): Vercel Cron sends it to `/api/cron/*`, scheduled in
+`vercel.json` (comments analysed nightly, weekly summary on Sunday morning, Saudi time).
+Without a key, AI features stay hidden; managers can also run the analysis from the dashboard.
+Comments are stripped of emails, phone numbers and links before they're sent (`lib/ai/redact.ts`).
+
 ## 5. GitHub
 
 Protect `main`: require a pull request and passing **CI** checks before merging.

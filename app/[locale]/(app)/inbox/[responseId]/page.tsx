@@ -9,6 +9,7 @@ import type { Locale } from "@/lib/i18n/routing";
 import { resolveLocale } from "@/lib/i18n/server";
 import { requireMembership } from "@/lib/org/context";
 import { can } from "@/lib/permissions";
+import { AiThemeChips } from "@/modules/ai/components/ai-themes";
 import { ScoreBadge, SentimentBadge, StatusBadge } from "@/modules/feedback/components/badges";
 import { TagEditor } from "@/modules/feedback/components/tag-editor";
 import { MarkRead, TriageControls } from "@/modules/feedback/components/triage-controls";
@@ -27,11 +28,12 @@ export default async function ResponsePage({ params, searchParams }: PageProps<"
   const { responseId } = await params;
   const { membership } = await requireMembership(locale);
   const organizationId = membership.organization.id;
-  const [response, allTags, t, tCommon] = await Promise.all([
+  const [response, allTags, t, tCommon, tAi] = await Promise.all([
     getResponse(organizationId, responseId),
     listTags(organizationId),
     getTranslations({ locale, namespace: "inbox" }),
     getTranslations({ locale, namespace: "common" }),
+    getTranslations({ locale, namespace: "ai" }),
   ]);
   if (!response) notFound();
 
@@ -102,6 +104,20 @@ export default async function ResponsePage({ params, searchParams }: PageProps<"
         </Card>
 
         <div className="flex flex-col gap-6">
+          {response.analysis && (
+            <Card className="gap-3 px-6">
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="text-lg font-bold">{tAi("label")}</h2>
+                <span className="rounded-full bg-grape-50 px-2.5 py-1 text-xs font-semibold text-grape-600">{tAi(`sentiment.${response.analysis.sentiment}`)}</span>
+              </div>
+              {response.analysis.praise_themes.length + response.analysis.complaint_themes.length > 0 ? (
+                <AiThemeChips praise={response.analysis.praise_themes} complaints={response.analysis.complaint_themes} />
+              ) : (
+                <p className="text-sm text-muted-foreground">{tAi("noThemes")}</p>
+              )}
+              <p className="text-xs text-muted-foreground">{tAi("disclaimer")}</p>
+            </Card>
+          )}
           <Card className="gap-4 px-6">
             <h2 className="text-lg font-bold">{t("detail.triage")}</h2>
             {canTriage ? (
