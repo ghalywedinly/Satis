@@ -29,7 +29,12 @@ export function SiteHeader() {
   ];
 
   return (
-    <header className={cn("sticky top-0 z-40 bg-ink transition-[border-color] duration-[140ms]", scrolled ? "border-b border-ink-700" : "border-b border-transparent")}>
+    <header
+      className={cn(
+        "sticky top-0 z-40 bg-ink transition-[border-color] duration-[140ms]",
+        scrolled ? "border-b border-ink-700" : "border-b border-transparent",
+      )}
+    >
       <div className="mx-auto flex w-full max-w-[1216px] items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <Link href="/" aria-label={t("home")} className="shrink-0 rounded-control outline-none focus-visible:shadow-focus">
           <SatisLogo size={26} tone="sand-zest" locale={locale} />

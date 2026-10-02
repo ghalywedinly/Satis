@@ -59,8 +59,8 @@ export function SlantedBars({ heights, className }: { heights: number[]; classNa
       {heights.map((h, i) => (
         <div
           key={i}
-          className={cn("flex-1 -skew-x-[18deg] rounded-t-[3px]", i === heights.length - 1 ? "bg-zest" : "bg-ultramarine")}
-          style={{ height: `${h}%` }}
+          className={cn("grow-bar flex-1 -skew-x-[18deg] rounded-t-[3px]", i === heights.length - 1 ? "bg-zest" : "bg-ultramarine")}
+          style={{ height: `${h}%`, "--b": i } as React.CSSProperties}
         />
       ))}
     </div>
@@ -87,10 +87,7 @@ export function MiniRating({ value, dark = false, className }: { value: number; 
   return (
     <div aria-hidden className={cn("flex gap-1", className)}>
       {[1, 2, 3, 4, 5].map((n) => (
-        <span
-          key={n}
-          className={cn("slice-md h-3.5 flex-1", n === value ? "bg-zest" : n < value ? "bg-ultramarine" : dark ? "bg-ink-700" : "bg-ink-100")}
-        />
+        <span key={n} className={cn("slice-md h-3.5 flex-1", n === value ? "bg-zest" : n < value ? "bg-ultramarine" : dark ? "bg-ink-700" : "bg-ink-100")} />
       ))}
     </div>
   );

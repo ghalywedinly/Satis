@@ -7,6 +7,7 @@ import { formatNumber, formatPercent } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { MiniRating, PhoneFrame, PillBar, Sparkline } from "./mockups";
+import { Rotating } from "./motion";
 import { SurveyScreen } from "./phone-screens";
 
 export function Hero() {
@@ -23,7 +24,11 @@ export function Hero() {
             <Button asChild className="h-14 rounded-[12px] bg-zest px-7 text-[17px] font-bold text-ink hover:bg-zest-500">
               <Link href="/signup">{t("primaryCta")}</Link>
             </Button>
-            <Button asChild variant="outline" className="h-14 rounded-[12px] border-[1.5px] border-ink-600 bg-transparent px-6 text-base text-sand hover:bg-ink-800 hover:text-sand">
+            <Button
+              asChild
+              variant="outline"
+              className="h-14 rounded-[12px] border-[1.5px] border-ink-600 bg-transparent px-6 text-base text-sand hover:bg-ink-800 hover:text-sand"
+            >
               <a href="#how">
                 {t("secondaryCta")}
                 <ArrowDown aria-hidden strokeWidth={1.75} />
@@ -60,7 +65,7 @@ function HeroVisual() {
       <OutlinedCard className="absolute end-0 top-16 z-20 flex w-[260px] max-w-[62%] animate-float flex-col gap-3 p-5 sm:end-[2%]">
         <span className="text-xs text-muted-foreground">{t("store")}</span>
         <div className="flex items-baseline gap-2">
-          <span className="font-display text-5xl leading-none font-extrabold tracking-[-0.04em]">{formatNumber(locale, 4.8)}</span>
+          <span className="font-display text-5xl leading-none font-extrabold tracking-[-0.04em]">{formatNumber(locale, 4.7)}</span>
           <span className="text-sm font-semibold text-muted-foreground">{t("csatOf")}</span>
         </div>
         <MiniRating value={5} />
@@ -83,17 +88,18 @@ function HeroVisual() {
       <OutlinedPill className="absolute end-[30%] top-0 z-30 animate-float">
         <SatisMark tone="ink" className="h-3.5 w-auto" />
         {t("topRated")}
+        <span className="size-2 rounded-full bg-mint animate-pulse-dot" />
       </OutlinedPill>
 
       <OutlinedCard className="absolute start-[26%] bottom-[24%] z-30 hidden w-[190px] sm:flex animate-float-slow flex-col gap-2.5 rounded-[18px] p-4 [animation-delay:-3s]">
         <span className="text-[13px] font-bold">{t("sentimentToday")}</span>
-        <PillBar label={t("positive")} value={formatPercent(locale, 0.82, 0)} ratio={0.82} color="bg-mint" />
-        <PillBar label={t("negative")} value={formatPercent(locale, 0.06, 0)} ratio={0.06} color="bg-ember" />
+        <PillBar label={t("positive")} value={formatPercent(locale, 0.83, 0)} ratio={0.83} color="bg-mint" />
+        <PillBar label={t("negative")} value={formatPercent(locale, 0.04, 0)} ratio={0.04} color="bg-ember" />
       </OutlinedCard>
 
       <OutlinedCard className="absolute end-0 bottom-4 z-20 hidden w-[200px] sm:flex animate-float flex-col gap-1 rounded-[18px] p-4 [animation-delay:-2s] sm:end-[2%]">
         <span className="font-display text-3xl leading-none font-extrabold tracking-[-0.04em]">
-          {formatNumber(locale, 18, { signDisplay: "always" })} <span className="text-[0.5em] text-muted-foreground">{t("npsLabel")}</span>
+          {formatNumber(locale, 23, { signDisplay: "always" })} <span className="text-[0.5em] text-muted-foreground">{t("npsLabel")}</span>
         </span>
         <span className="text-[13px] text-muted-foreground">{t("in90Days")}</span>
         <Sparkline className="mt-1.5" />
@@ -109,7 +115,7 @@ function HeroVisual() {
             <Star className="size-3 fill-zest text-zest-600" />
             <span className="font-normal text-muted-foreground">{t("justNow")}</span>
           </span>
-          <span className="truncate text-xs text-ink-600">{t("comment1")}</span>
+          <Rotating items={[t("comment1"), t("comment3"), t("comment4")]} className="text-xs text-ink-600" />
         </span>
       </div>
     </div>

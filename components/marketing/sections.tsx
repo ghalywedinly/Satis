@@ -1,4 +1,27 @@
-import { Plus, BarChart3, Building2, Check, Coffee, Dumbbell, Hotel, MessageSquareText, QrCode, ScanLine, ShieldCheck, ShoppingBag, Sparkles, Stethoscope, Ticket, Users, UtensilsCrossed, Gamepad2, Scissors, Languages, Smartphone, Timer } from "lucide-react";
+import {
+  Plus,
+  BarChart3,
+  Building2,
+  Check,
+  Coffee,
+  Dumbbell,
+  Hotel,
+  MessageSquareText,
+  QrCode,
+  ScanLine,
+  ShieldCheck,
+  ShoppingBag,
+  Sparkles,
+  Stethoscope,
+  Ticket,
+  Users,
+  UtensilsCrossed,
+  Gamepad2,
+  Scissors,
+  Languages,
+  Smartphone,
+  Timer,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { SatisMark } from "@/components/brand/satis-mark";
 import { OutlinedCard, SliceHighlight, SpeedLines, Supergraphic } from "@/components/brand/slice";
@@ -8,18 +31,31 @@ import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import { BrowserFrame, MiniRating, PhoneFrame, PillBar, SlantedBars, Sparkline } from "./mockups";
+import { Reveal } from "./motion";
 import { ScanScreen, SurveyScreen, ThanksScreen } from "./phone-screens";
 
 /** Price of the launch plan in halalas. Moves to the plans table with billing (Phase 8). */
 export const LAUNCH_PRICE_HALALAS = 15000;
 
-function SectionHeading({ eyebrow, title, body, center = false, dark = false }: { eyebrow: string; title: string; body?: string; center?: boolean; dark?: boolean }) {
+function SectionHeading({
+  eyebrow,
+  title,
+  body,
+  center = false,
+  dark = false,
+}: {
+  eyebrow: string;
+  title: string;
+  body?: string;
+  center?: boolean;
+  dark?: boolean;
+}) {
   return (
-    <div className={cn("flex max-w-2xl flex-col gap-3", center && "mx-auto items-center text-center")}>
+    <Reveal className={cn("flex max-w-2xl flex-col gap-3", center && "mx-auto items-center text-center")}>
       <span className={cn("eyebrow", dark && "!text-ink-300")}>{eyebrow}</span>
       <h2 className={cn("text-[clamp(30px,4vw,48px)] leading-[1.08] font-extrabold", dark && "text-sand")}>{title}</h2>
-      {body && <p className={cn("text-lg leading-relaxed", dark ? "text-ink-200" : "text-muted-foreground")}>{body}</p>}
-    </div>
+      {body && <p className={cn("max-w-[65ch] text-lg leading-relaxed", dark ? "text-ink-200" : "text-muted-foreground")}>{body}</p>}
+    </Reveal>
   );
 }
 
@@ -39,18 +75,27 @@ const INDUSTRIES = [
 export function Industries() {
   const t = useTranslations("home.industries");
   const types = useTranslations("organization.businessTypes");
+  const chips = (hidden: boolean) => (
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 gap-3 pe-3">
+      {INDUSTRIES.map(({ key, Icon }) => (
+        <li key={key} className="flex items-center gap-2 rounded-full border border-border bg-sand px-4 py-2 text-sm font-semibold whitespace-nowrap">
+          <Icon aria-hidden strokeWidth={1.75} className="size-4 text-ultramarine" />
+          {types(key)}
+        </li>
+      ))}
+    </ul>
+  );
   return (
     <section className="border-b border-border bg-white">
-      <div className="mx-auto flex w-full max-w-[1216px] flex-col items-center gap-6 px-4 py-10 sm:px-6">
-        <p className="text-center text-sm font-semibold text-muted-foreground">{t("title")}</p>
-        <ul className="flex flex-wrap justify-center gap-2.5">
-          {INDUSTRIES.map(({ key, Icon }) => (
-            <li key={key} className="flex items-center gap-2 rounded-full border border-border bg-sand px-4 py-2 text-sm font-semibold">
-              <Icon aria-hidden strokeWidth={1.75} className="size-4 text-ultramarine" />
-              {types(key)}
-            </li>
-          ))}
-        </ul>
+      <div className="mx-auto flex w-full max-w-[1216px] flex-col items-center gap-6 py-10">
+        <p className="px-4 text-center text-sm font-semibold text-muted-foreground">{t("title")}</p>
+        {/* An endless band: the list twice, sliding by one copy; edges fade into the page. */}
+        <div className="group relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] motion-reduce:animate-none">
+            {chips(false)}
+            {chips(true)}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -132,17 +177,19 @@ export function HowItWorks({ qrSvg }: { qrSvg: string }) {
     <section id="how" className="scroll-mt-20 bg-sand">
       <div className="mx-auto flex w-full max-w-[1216px] flex-col gap-12 px-4 py-20 sm:px-6 lg:py-28">
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} />
-        <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ol className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:pb-24">
           {steps.map((step, i) => (
-            <li key={step.key} className="flex flex-col overflow-hidden rounded-card border border-border bg-white">
-              <div aria-hidden className={cn("h-56 overflow-hidden px-4 pt-6", step.tone)}>
-                {step.art}
-              </div>
-              <div className="flex flex-col gap-2 p-6">
-                <span className="slice-sm w-fit bg-ink px-2.5 py-0.5 text-xs font-bold text-sand">{t("step", { number: formatCount(locale, i + 1) })}</span>
-                <h3 className="text-xl font-bold">{t(`steps.${step.key}.title`)}</h3>
-                <p className="text-muted-foreground">{t(`steps.${step.key}.body`)}</p>
-              </div>
+            <li key={step.key} className={cn("lg:translate-y-[var(--step)]")} style={{ "--step": `${i * 32}px` } as React.CSSProperties}>
+              <Reveal index={i} className="flex h-full flex-col overflow-hidden rounded-card border border-border bg-white">
+                <div aria-hidden className={cn("h-56 overflow-hidden px-4 pt-6", step.tone)}>
+                  {step.art}
+                </div>
+                <div className="flex flex-col gap-2 p-6">
+                  <span className="slice-sm w-fit bg-ink px-2.5 py-0.5 text-xs font-bold text-sand">{t("step", { number: formatCount(locale, i + 1) })}</span>
+                  <h3 className="text-xl font-bold">{t(`steps.${step.key}.title`)}</h3>
+                  <p className="text-muted-foreground">{t(`steps.${step.key}.body`)}</p>
+                </div>
+              </Reveal>
             </li>
           ))}
         </ol>
@@ -153,24 +200,45 @@ export function HowItWorks({ qrSvg }: { qrSvg: string }) {
 
 /* ───────── Features ───────── */
 
-function FeatureCard({ icon: Icon, title, body, soon, children, className }: { icon: typeof QrCode; title: string; body: string; soon?: string; children?: React.ReactNode; className?: string }) {
+function FeatureCard({
+  icon: Icon,
+  title,
+  body,
+  soon,
+  index = 0,
+  children,
+  className,
+}: {
+  icon: typeof QrCode;
+  title: string;
+  body: string;
+  soon?: string;
+  index?: number;
+  children?: React.ReactNode;
+  className?: string;
+}) {
   return (
-    <li className={cn("flex flex-col overflow-hidden rounded-card border border-border bg-white", className)}>
-      {children && (
-        <div aria-hidden className="relative flex flex-1 items-center justify-center overflow-hidden bg-sand-100 p-6">
-          {children}
+    <li className={className}>
+      <Reveal
+        index={index % 3}
+        className="flex h-full flex-col overflow-hidden rounded-card border border-border bg-white transition-[border-color] duration-[200ms] hover:border-ink-200"
+      >
+        {children && (
+          <div aria-hidden className="relative flex flex-1 items-center justify-center overflow-hidden bg-sand-100 p-6">
+            {children}
+          </div>
+        )}
+        <div className="flex flex-col gap-2 p-6">
+          <div className="flex items-center gap-2">
+            <span className="flex size-9 items-center justify-center rounded-[10px] bg-ultra-50 text-ultramarine">
+              <Icon aria-hidden strokeWidth={1.75} className="size-5" />
+            </span>
+            {soon && <span className="rounded-full bg-grape-50 px-2.5 py-1 text-xs font-semibold text-grape-600">{soon}</span>}
+          </div>
+          <h3 className="text-lg font-bold">{title}</h3>
+          <p className="text-muted-foreground">{body}</p>
         </div>
-      )}
-      <div className="flex flex-col gap-2 p-6">
-        <div className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-[10px] bg-ultra-50 text-ultramarine">
-            <Icon aria-hidden strokeWidth={1.75} className="size-5" />
-          </span>
-          {soon && <span className="rounded-full bg-grape-50 px-2.5 py-1 text-xs font-semibold text-grape-600">{soon}</span>}
-        </div>
-        <h3 className="text-lg font-bold">{title}</h3>
-        <p className="text-muted-foreground">{body}</p>
-      </div>
+      </Reveal>
     </li>
   );
 }
@@ -195,27 +263,27 @@ export function Features({ qrSvg, question }: { qrSvg: string; question: { ar: s
       <div className="mx-auto flex w-full max-w-[1216px] flex-col gap-12 px-4 py-20 sm:px-6 lg:py-28">
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} body={t("subtitle")} />
         <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <FeatureCard icon={MessageSquareText} title={t("inbox.title")} body={t("inbox.body")} className="lg:col-span-2">
+          <FeatureCard icon={MessageSquareText} index={0} title={t("inbox.title")} body={t("inbox.body")} className="lg:col-span-2">
             <div className="flex w-full max-w-lg flex-col gap-2">
               {inboxRows.map((row) => (
                 <div key={row.text} className="flex items-center gap-3 rounded-[14px] border border-border bg-white px-4 py-3 text-sm">
                   <span className={cn("size-2 shrink-0 rounded-full", row.unread ? "bg-ultramarine" : "bg-transparent")} />
-                  <span className={cn("shrink-0 rounded-[8px] px-2 py-0.5 font-display font-extrabold", row.tone)}>
-                    {formatCount(locale, row.score)}
-                  </span>
+                  <span className={cn("shrink-0 rounded-[8px] px-2 py-0.5 font-display font-extrabold", row.tone)}>{formatCount(locale, row.score)}</span>
                   <span className="flex-1 truncate font-medium">{row.text}</span>
                   <span className="hidden shrink-0 rounded-full bg-sand-100 px-2 py-0.5 text-xs text-ink-600 sm:inline">{row.status}</span>
                 </div>
               ))}
             </div>
           </FeatureCard>
-          <FeatureCard icon={QrCode} title={t("qr.title")} body={t("qr.body")}>
+          <FeatureCard icon={QrCode} index={1} title={t("qr.title")} body={t("qr.body")}>
             <div className="relative rotate-[-4deg] rounded-[16px] border-[3px] border-ink bg-white p-3">
               <div className="size-28 [&_svg]:size-full" dangerouslySetInnerHTML={{ __html: qrSvg }} />
-              <span className="absolute -end-6 -top-3 rotate-[4deg] rounded-full border-2 border-ink bg-zest px-2.5 py-0.5 text-xs font-bold">{m("printReady")}</span>
+              <span className="absolute -end-6 -top-3 rotate-[4deg] rounded-full border-2 border-ink bg-zest px-2.5 py-0.5 text-xs font-bold">
+                {m("printReady")}
+              </span>
             </div>
           </FeatureCard>
-          <FeatureCard icon={BarChart3} title={t("analytics.title")} body={t("analytics.body")}>
+          <FeatureCard icon={BarChart3} index={2} title={t("analytics.title")} body={t("analytics.body")}>
             <div className="flex w-full max-w-xs flex-col gap-2 rounded-[16px] border border-border bg-white p-4">
               <span className="text-xs text-muted-foreground">{m("csat")}</span>
               <span className="font-display text-4xl font-extrabold tracking-[-0.04em]">{formatPercent(locale, 0.924, 1)}</span>
@@ -223,14 +291,14 @@ export function Features({ qrSvg, question }: { qrSvg: string; question: { ar: s
               <SlantedBars heights={[38, 52, 45, 60, 55, 68, 63, 74, 70, 82, 78, 92]} className="h-16" />
             </div>
           </FeatureCard>
-          <FeatureCard icon={Building2} title={t("locations.title")} body={t("locations.body")}>
+          <FeatureCard icon={Building2} index={3} title={t("locations.title")} body={t("locations.body")}>
             <div className="flex w-full max-w-xs flex-col gap-3 rounded-[16px] border border-border bg-white p-4">
               {branches.map((b) => (
                 <PillBar key={b.name} label={b.name} value={formatPercent(locale, b.ratio, 0)} ratio={b.ratio} color="bg-ultramarine" />
               ))}
             </div>
           </FeatureCard>
-          <FeatureCard icon={Languages} title={t("surveys.title")} body={t("surveys.body")}>
+          <FeatureCard icon={Languages} index={4} title={t("surveys.title")} body={t("surveys.body")}>
             <div className="flex gap-3">
               <div className="flex w-36 flex-col gap-2 rounded-[14px] bg-ink p-3 text-sand" lang="ar" dir="rtl">
                 <span className="font-arabic text-sm leading-snug font-bold">{question.ar}</span>
@@ -242,7 +310,7 @@ export function Features({ qrSvg, question }: { qrSvg: string; question: { ar: s
               </div>
             </div>
           </FeatureCard>
-          <FeatureCard icon={Users} title={t("team.title")} body={t("team.body")} className="md:col-span-2 lg:col-span-1">
+          <FeatureCard icon={Users} index={5} title={t("team.title")} body={t("team.body")} className="md:col-span-2 lg:col-span-1">
             <div className="flex w-full max-w-xs flex-col gap-2">
               {(
                 [
@@ -259,13 +327,13 @@ export function Features({ qrSvg, question }: { qrSvg: string; question: { ar: s
               ))}
             </div>
           </FeatureCard>
-          <FeatureCard icon={Ticket} title={t("coupons.title")} body={t("coupons.body")} soon={t("comingSoon")}>
+          <FeatureCard icon={Ticket} index={6} title={t("coupons.title")} body={t("coupons.body")} soon={t("comingSoon")}>
             <div className="relative flex w-full max-w-[260px] items-center gap-3 rounded-[14px] border-2 border-dashed border-ink-300 bg-white p-4">
               <Ticket strokeWidth={1.75} className="size-8 shrink-0 text-ember" />
               <span className="font-display text-base leading-snug font-bold">{m("coupon")}</span>
             </div>
           </FeatureCard>
-          <FeatureCard icon={Sparkles} title={t("ai.title")} body={t("ai.body")} soon={t("comingSoon")}>
+          <FeatureCard icon={Sparkles} index={7} title={t("ai.title")} body={t("ai.body")} soon={t("comingSoon")}>
             <div className="flex w-full max-w-lg items-start gap-3 rounded-[16px] border border-border bg-white p-4">
               <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-grape-50 text-grape-600">
                 <Sparkles strokeWidth={1.75} className="size-4" />
@@ -301,12 +369,14 @@ export function CustomerFlow({ qrSvg }: { qrSvg: string }) {
         <SectionHeading eyebrow={t("eyebrow")} title={t("title")} body={t("body")} dark />
         <ol className="grid gap-10 sm:grid-cols-3">
           {phones.map((p, i) => (
-            <li key={p.key} className={cn("flex flex-col items-center gap-5", p.offset)}>
-              <PhoneFrame className="h-[420px] w-[210px] border-ink-600">{p.screen}</PhoneFrame>
-              <span className="flex items-center gap-2 font-display text-lg font-bold">
-                <span className="slice-sm bg-zest px-2 text-sm text-ink">{formatNumber("en", i + 1)}</span>
-                {t(`steps.${p.key}`)}
-              </span>
+            <li key={p.key} className={p.offset}>
+              <Reveal index={i} className="flex flex-col items-center gap-5">
+                <PhoneFrame className={cn("h-[420px] w-[210px] border-ink-600", i === 1 ? "animate-float" : "animate-float-slow")}>{p.screen}</PhoneFrame>
+                <span className="flex items-center gap-2 font-display text-lg font-bold">
+                  <span className="slice-sm bg-zest px-2 text-sm text-ink">{formatNumber("en", i + 1)}</span>
+                  {t(`steps.${p.key}`)}
+                </span>
+              </Reveal>
             </li>
           ))}
         </ol>
@@ -330,14 +400,14 @@ export function Showcase({ host }: { host: string }) {
   const m = useTranslations("home.mock");
   const locale = useLocale() as Locale;
   const kpis = [
-    { label: m("responses"), value: formatCount(locale, 2140), delta: formatPercent(locale, 0.12, 0) },
+    { label: m("responses"), value: formatCount(locale, 2147), delta: formatPercent(locale, 0.116, 1) },
     { label: m("csat"), value: formatPercent(locale, 0.924, 1), delta: formatNumber(locale, 3.1, { signDisplay: "always" }) },
-    { label: m("nps"), value: formatNumber(locale, 48, { signDisplay: "always" }), delta: formatNumber(locale, 6, { signDisplay: "always" }) },
+    { label: m("nps"), value: formatNumber(locale, 47, { signDisplay: "always" }), delta: formatNumber(locale, 6, { signDisplay: "always" }) },
   ];
   const branches = [
-    { name: m("locationA"), n: 912, ratio: 0.94 },
+    { name: m("locationA"), n: 913, ratio: 0.94 },
     { name: m("locationB"), n: 784, ratio: 0.81 },
-    { name: m("locationC"), n: 444, ratio: 0.67 },
+    { name: m("locationC"), n: 450, ratio: 0.68 },
   ];
   return (
     <section className="relative overflow-hidden bg-sand">
@@ -346,49 +416,51 @@ export function Showcase({ host }: { host: string }) {
         <div className="relative">
           <span aria-hidden className="slice-lg absolute -start-6 top-10 hidden h-12 w-48 bg-ember lg:block" />
           <span aria-hidden className="slice-lg absolute -end-6 bottom-16 hidden h-12 w-56 bg-ultramarine lg:block" />
-          <BrowserFrame address={`${host}/dashboard`} className="relative mx-auto max-w-5xl">
-            <div className="grid gap-0 md:grid-cols-[180px_minmax(0,1fr)]">
-              <div className="hidden flex-col gap-1 border-e border-border bg-sand-50 p-4 text-sm md:flex">
-                <SatisMark tone="ink-ultra" className="mb-4 h-6 w-auto self-start" />
-                <span className="rounded-[10px] bg-sand-100 px-3 py-2 font-semibold">{m("dashboard")}</span>
-                <span className="px-3 py-2 text-muted-foreground">{m("inbox")}</span>
-                <span className="px-3 py-2 text-muted-foreground">{m("surveys")}</span>
-                <span className="px-3 py-2 text-muted-foreground">{m("branches")}</span>
-              </div>
-              <div className="flex flex-col gap-4 bg-sand p-4 sm:p-6">
-                <div className="grid grid-cols-3 gap-3">
-                  {kpis.map((k) => (
-                    <div key={k.label} className="flex flex-col gap-1 rounded-[14px] border border-border bg-white p-3 sm:p-4">
-                      <span className="truncate text-xs text-muted-foreground">{k.label}</span>
-                      <span className="font-display text-xl font-extrabold tracking-[-0.03em] sm:text-3xl">{k.value}</span>
-                      <span className="w-fit rounded-full bg-mint-50 px-1.5 text-[11px] font-semibold text-mint-700">{k.delta}</span>
-                    </div>
-                  ))}
+          <Reveal>
+            <BrowserFrame address={`${host}/dashboard`} className="relative mx-auto max-w-5xl">
+              <div className="grid gap-0 md:grid-cols-[180px_minmax(0,1fr)]">
+                <div className="hidden flex-col gap-1 border-e border-border bg-sand-50 p-4 text-sm md:flex">
+                  <SatisMark tone="ink-ultra" className="mb-4 h-6 w-auto self-start" />
+                  <span className="rounded-[10px] bg-sand-100 px-3 py-2 font-semibold">{m("dashboard")}</span>
+                  <span className="px-3 py-2 text-muted-foreground">{m("inbox")}</span>
+                  <span className="px-3 py-2 text-muted-foreground">{m("surveys")}</span>
+                  <span className="px-3 py-2 text-muted-foreground">{m("branches")}</span>
                 </div>
-                <div className="grid gap-3 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-                  <div className="flex flex-col gap-3 rounded-[14px] border border-border bg-white p-4">
-                    <span className="text-sm font-semibold">{m("responsesPerDay")}</span>
-                    <SlantedBars heights={[30, 45, 38, 52, 48, 66, 58, 72, 64, 80, 70, 88, 76, 94]} className="h-32" />
-                  </div>
-                  <div className="flex flex-col gap-3 rounded-[14px] border border-border bg-white p-4">
-                    <span className="text-sm font-semibold">{m("branches")}</span>
-                    {branches.map((b) => (
-                      <div key={b.name} className="flex flex-col gap-1">
-                        <div className="flex justify-between text-xs">
-                          <span className="font-medium">{b.name}</span>
-                          <span className="text-muted-foreground">{formatCount(locale, b.n)}</span>
-                        </div>
-                        <div className="h-2 rounded-full bg-ultra-50">
-                          <div className="h-full rounded-full bg-ultramarine" style={{ width: `${b.ratio * 100}%` }} />
-                        </div>
+                <div className="flex flex-col gap-4 bg-sand p-4 sm:p-6">
+                  <div className="grid grid-cols-3 gap-3">
+                    {kpis.map((k) => (
+                      <div key={k.label} className="flex flex-col gap-1 rounded-[14px] border border-border bg-white p-3 sm:p-4">
+                        <span className="truncate text-xs text-muted-foreground">{k.label}</span>
+                        <span className="font-display text-xl font-extrabold tracking-[-0.03em] sm:text-3xl">{k.value}</span>
+                        <span className="w-fit rounded-full bg-mint-50 px-1.5 text-[11px] font-semibold text-mint-700">{k.delta}</span>
                       </div>
                     ))}
-                    <Sparkline className="mt-auto" color="#2B3AF3" />
+                  </div>
+                  <div className="grid gap-3 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+                    <div className="flex flex-col gap-3 rounded-[14px] border border-border bg-white p-4">
+                      <span className="text-sm font-semibold">{m("responsesPerDay")}</span>
+                      <SlantedBars heights={[30, 45, 38, 52, 48, 66, 58, 72, 64, 80, 70, 88, 76, 94]} className="h-32" />
+                    </div>
+                    <div className="flex flex-col gap-3 rounded-[14px] border border-border bg-white p-4">
+                      <span className="text-sm font-semibold">{m("branches")}</span>
+                      {branches.map((b) => (
+                        <div key={b.name} className="flex flex-col gap-1">
+                          <div className="flex justify-between text-xs">
+                            <span className="font-medium">{b.name}</span>
+                            <span className="text-muted-foreground">{formatCount(locale, b.n)}</span>
+                          </div>
+                          <div className="h-2 rounded-full bg-ultra-50">
+                            <div className="h-full rounded-full bg-ultramarine" style={{ width: `${b.ratio * 100}%` }} />
+                          </div>
+                        </div>
+                      ))}
+                      <Sparkline className="mt-auto" color="#2B3AF3" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </BrowserFrame>
+            </BrowserFrame>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -455,7 +527,10 @@ export function Faq() {
             <details key={item} className="group rounded-card border border-border bg-white open:border-ink-200">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-card px-6 py-5 text-lg font-semibold outline-none focus-visible:shadow-focus [&::-webkit-details-marker]:hidden">
                 {t(`items.${item}.q`)}
-                <span aria-hidden className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sand-100 transition-transform duration-[200ms] group-open:rotate-45">
+                <span
+                  aria-hidden
+                  className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sand-100 transition-transform duration-[200ms] group-open:rotate-45"
+                >
                   <Plus strokeWidth={1.75} className="size-4" />
                 </span>
               </summary>
@@ -495,7 +570,9 @@ export function FinalCta() {
             <span className="text-xs text-muted-foreground">{m("store")}</span>
             <span className="font-display text-5xl font-extrabold tracking-[-0.04em]">{formatNumber(locale, 4.8)}</span>
             <MiniRating value={5} />
-            <SliceHighlight tone="ink" className="w-fit text-sm">{m("topRated")}</SliceHighlight>
+            <SliceHighlight tone="ink" className="w-fit text-sm">
+              {m("topRated")}
+            </SliceHighlight>
           </OutlinedCard>
         </div>
       </div>
@@ -517,15 +594,27 @@ export function SiteFooter() {
           <div className="grid grid-cols-2 gap-10 text-sm">
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-sand">{t("footer.product")}</span>
-              <a href="#how" className="hover:text-sand">{t("nav.how")}</a>
-              <a href="#features" className="hover:text-sand">{t("nav.features")}</a>
-              <a href="#pricing" className="hover:text-sand">{t("nav.pricing")}</a>
-              <a href="#faq" className="hover:text-sand">{t("nav.faq")}</a>
+              <a href="#how" className="hover:text-sand">
+                {t("nav.how")}
+              </a>
+              <a href="#features" className="hover:text-sand">
+                {t("nav.features")}
+              </a>
+              <a href="#pricing" className="hover:text-sand">
+                {t("nav.pricing")}
+              </a>
+              <a href="#faq" className="hover:text-sand">
+                {t("nav.faq")}
+              </a>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-sand">{t("footer.account")}</span>
-              <Link href="/signup" className="hover:text-sand">{t("footer.signup")}</Link>
-              <Link href="/login" className="hover:text-sand">{t("nav.logIn")}</Link>
+              <Link href="/signup" className="hover:text-sand">
+                {t("footer.signup")}
+              </Link>
+              <Link href="/login" className="hover:text-sand">
+                {t("nav.logIn")}
+              </Link>
             </div>
           </div>
         </div>

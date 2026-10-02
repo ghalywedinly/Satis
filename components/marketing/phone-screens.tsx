@@ -23,7 +23,11 @@ export function SurveyScreen({ rating = 5 }: { rating?: number }) {
         {[t("speed"), t("staff"), t("wait")].map((item, i) => (
           <span key={item} className="flex items-center justify-between border-t border-sand-100 px-3 py-2">
             {item}
-            <span className={i < 2 ? "flex size-3.5 items-center justify-center rounded-[4px] bg-ultramarine text-white" : "size-3.5 rounded-[4px] border border-ink-200"}>
+            <span
+              className={
+                i < 2 ? "flex size-3.5 items-center justify-center rounded-[4px] bg-ultramarine text-white" : "size-3.5 rounded-[4px] border border-ink-200"
+              }
+            >
               {i < 2 && <Check strokeWidth={3} className="size-2.5" />}
             </span>
           </span>

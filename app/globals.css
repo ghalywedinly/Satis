@@ -96,6 +96,16 @@
   /* Marketing only: product cards drifting gently in the hero. Disabled by reduced motion. */
   --animate-float: float 7s ease-in-out infinite;
   --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(var(--marquee-shift, -50%)); }
+  }
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(15, 169, 104, 0.45); }
+    50% { box-shadow: 0 0 0 5px rgba(15, 169, 104, 0); }
+  }
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
@@ -233,6 +243,16 @@
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--muted-foreground);
 }
 
+/* Scroll reveal (components/marketing/motion.tsx). Hidden only once armed by script. */
+.reveal { transition: opacity 560ms var(--ease-entrance), transform 560ms var(--ease-entrance); transition-delay: calc(var(--i, 0) * 90ms); }
+.reveal[data-armed]:not([data-shown]) { opacity: 0; transform: translateY(18px); }
+/* Bars that grow from the baseline when their section is revealed. */
+.reveal[data-armed] .grow-bar { transform: scaleY(0.2); transform-origin: bottom; transition: transform 700ms var(--ease-entrance); transition-delay: calc(200ms + var(--b, 0) * 40ms); }
+.reveal[data-shown] .grow-bar { transform: none; }
+/* Marquee runs the other way in right-to-left pages. */
+[dir="rtl"] { --marquee-shift: 50%; }
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal[data-armed]:not([data-shown]) { opacity: 1; transform: none; }
   *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; }
 }
