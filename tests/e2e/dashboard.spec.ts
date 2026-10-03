@@ -26,7 +26,7 @@ test.describe("analytics dashboard", () => {
 
     // KPIs: 3 responses; CSAT 2 of 3 rated 4–5; NPS 1 promoter − 1 detractor = 0.
     const kpis = page.locator("main section").first();
-    const tile = (label: string) => kpis.locator("div", { has: page.getByText(label, { exact: true }) }).last();
+    const tile = (label: string) => kpis.getByRole("group", { name: label, exact: true });
     await expect(tile("الإجابات").locator("p.font-display")).toHaveText("3");
     await expect(tile("رضا العملاء (CSAT)").locator("p.font-display")).toHaveText("67%");
     await expect(tile("رضا العملاء (CSAT)")).toContainText("المتوسط 3.7 من 5");

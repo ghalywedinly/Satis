@@ -44,7 +44,7 @@ export default async function SurveysPage({ params }: PageProps<"/[locale]/surve
       {surveys.length === 0 ? (
         <p className="text-muted-foreground">{t("empty")}</p>
       ) : (
-        <ul className="flex flex-col divide-y divide-border rounded-card border border-border bg-white">
+        <ul className="flex flex-col divide-y divide-ink-100 rounded-card border glass">
           {surveys.map((survey) => (
             <li key={survey.id}>
               <Link

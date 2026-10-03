@@ -15,7 +15,9 @@
     "settings": "الإعدادات",
     "surveys": "الاستبيانات",
     "coupons": "المكافآت",
-    "unreadBadge": "غير مقروءة"
+    "unreadBadge": "غير مقروءة",
+    "collapse": "طيّ القائمة",
+    "expand": "توسيع القائمة"
   },
   "actions": {
     "logIn": "تسجيل الدخول",

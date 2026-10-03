@@ -12,7 +12,7 @@ export function ResponseList({ rows, backQuery }: { rows: InboxRow[]; backQuery:
   const t = useTranslations("inbox");
   const locale = useLocale() as Locale;
   return (
-    <ul className="flex flex-col divide-y divide-border rounded-card border border-border bg-white">
+    <ul className="flex flex-col divide-y divide-ink-100 rounded-card border glass">
       {rows.map((row) => (
         <li key={row.id}>
           <Link

@@ -25,7 +25,7 @@ export function MemberList({ members, currentUserId, currentRole }: { members: M
   return (
     <div className="flex flex-col gap-3">
       {error && <FormAlert tone="error">{te(error)}</FormAlert>}
-      <ul className="flex flex-col divide-y divide-border rounded-card border border-border bg-white">
+      <ul className="flex flex-col divide-y divide-ink-100 rounded-card border glass">
         {members.map((member) => {
           const self = member.userId === currentUserId;
           const name = member.fullName || member.email;

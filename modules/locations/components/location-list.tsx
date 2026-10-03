@@ -12,7 +12,7 @@ export function LocationList({ locations, canManage, archived = false }: { locat
   const locale = useLocale();
 
   return (
-    <ul className="flex flex-col divide-y divide-border rounded-card border border-border bg-white">
+    <ul className="flex flex-col divide-y divide-ink-100 rounded-card border glass">
       {locations.map((location) => (
         <li key={location.id} className="flex items-center gap-4 px-5 py-4">
           <MapPin aria-hidden strokeWidth={1.75} className="size-5 shrink-0 text-muted-foreground" />

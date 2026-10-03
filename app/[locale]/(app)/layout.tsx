@@ -1,13 +1,12 @@
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { AnalyticsIdentity } from "@/components/app-shell/analytics-identity";
-import { MainNav, type NavItem } from "@/components/app-shell/main-nav";
-import { OrgSwitcher } from "@/components/app-shell/org-switcher";
-import { UserMenu } from "@/components/app-shell/user-menu";
-import { SatisMark } from "@/components/brand/satis-mark";
-import { LanguageSwitcher } from "@/components/language-switcher";
+import { AppFrame } from "@/components/app-shell/app-frame";
+import { SIDEBAR_COOKIE } from "@/components/app-shell/sidebar-cookie";
+import { type NavItem } from "@/components/app-shell/main-nav";
+import { Supergraphic } from "@/components/brand/slice";
 import { getProfile } from "@/lib/auth/session";
 import { formatCount } from "@/lib/i18n/format";
-import { Link } from "@/lib/i18n/navigation";
 import { resolveLocale } from "@/lib/i18n/server";
 import { getMemberships, requireMembership } from "@/lib/org/context";
 import { can } from "@/lib/permissions";
@@ -20,11 +19,12 @@ import { countUnread } from "@/modules/feedback/queries";
 export default async function AppLayout({ children, params }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
   const { user, membership } = await requireMembership(locale);
-  const [profile, memberships, t, unread] = await Promise.all([
+  const [profile, memberships, t, unread, cookieStore] = await Promise.all([
     getProfile(user.id),
     getMemberships(),
     getTranslations({ locale, namespace: "common" }),
     countUnread(membership.organization.id),
+    cookies(),
   ]);
 
   const nav: NavItem[] = [
@@ -38,7 +38,11 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
   ];
 
   return (
-    <div className="flex min-h-dvh flex-col bg-sand">
+    <div className="app-glass relative isolate flex min-h-dvh flex-col">
+      {/* Fixed brand wash behind the glass, with a faint giant mark cropped off the edge. */}
+      <div aria-hidden className="app-backdrop fixed inset-0 -z-10 overflow-hidden print:hidden">
+        <Supergraphic colors={["#2B3AF3", "#FF6B4A", "#2B3AF3"]} className="-end-24 -bottom-24 h-[70vh] w-[46vh] opacity-[0.06] rtl:-scale-x-100" />
+      </div>
       <AnalyticsIdentity userId={user.id} />
       <a
         href="#content"
@@ -46,32 +50,16 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
       >
         {t("skipToContent")}
       </a>
-      <header className="border-b border-border bg-white print:hidden">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-3 sm:px-6">
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex min-w-0 items-center gap-2">
-              <Link href="/dashboard" aria-label={t("appName")} className="shrink-0 rounded-control p-1 outline-none focus-visible:shadow-focus">
-                <SatisMark tone="ink-ultra" className="h-6" />
-              </Link>
-              <span aria-hidden className="text-ink-200">
-                /
-              </span>
-              <OrgSwitcher
-                current={{ id: membership.organization.id, name: membership.organization.name }}
-                organizations={memberships.map((m) => ({ id: m.organization.id, name: m.organization.name }))}
-              />
-            </div>
-            <div className="flex shrink-0 items-center gap-1">
-              <LanguageSwitcher persist />
-              <UserMenu name={profile?.full_name ?? null} email={user.email} />
-            </div>
-          </div>
-          <MainNav items={nav} />
-        </div>
-      </header>
-      <main id="content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10 print:p-0">
+      <AppFrame
+        items={nav}
+        current={{ id: membership.organization.id, name: membership.organization.name }}
+        organizations={memberships.map((m) => ({ id: m.organization.id, name: m.organization.name }))}
+        name={profile?.full_name ?? null}
+        email={user.email ?? null}
+        initialCollapsed={cookieStore.get(SIDEBAR_COOKIE)?.value === "collapsed"}
+      >
         {children}
-      </main>
+      </AppFrame>
     </div>
   );
 }

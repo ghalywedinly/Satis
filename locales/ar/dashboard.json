@@ -1,6 +1,6 @@
 {
   "metaTitle": "لوحة التحكم",
-  "welcome": "أهلًا {name}",
+  "welcome": "أهلًا <hl>{name}</hl>",
   "welcomeNoName": "أهلًا بك",
   "createSurvey": "أنشئ أول استبيان",
   "createSurveyBody": "أنشئ استبيانًا من قالب جاهز وانشره خلال دقيقة.",
@@ -81,5 +81,17 @@
     "average": "المتوسط {score} من 5",
     "nps": "صافي الترويج {score}",
     "readComments": "اقرأ التعليقات"
+  },
+  "hero": {
+    "today": "اليوم، {date}",
+    "unread": "{count} جديدة للقراءة",
+    "allRead": "قرأت كل الآراء",
+    "openInbox": "افتح الآراء",
+    "manageSurveys": "أدِر الاستبيانات"
+  },
+  "sections": {
+    "trends": "الاتجاهات",
+    "breakdown": "التفاصيل",
+    "locations": "الفروع"
   }
 }

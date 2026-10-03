@@ -243,6 +243,32 @@
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--muted-foreground);
 }
 
+/*
+ * Signed-in app: a soft brand-colour wash behind frosted-glass surfaces.
+ * Text never sits on the gradient itself; it sits on near-opaque glass or solid Ink.
+ */
+.app-backdrop {
+  background-color: var(--color-sand-50);
+  background-image:
+    radial-gradient(60rem 40rem at 100% -10%, rgb(43 58 243 / 0.22), transparent 60%),
+    radial-gradient(44rem 32rem at -10% 30%, rgb(255 107 74 / 0.16), transparent 60%),
+    radial-gradient(40rem 30rem at 70% 105%, rgb(255 207 40 / 0.18), transparent 60%),
+    radial-gradient(36rem 28rem at 15% 100%, rgb(139 87 196 / 0.12), transparent 60%);
+}
+@utility glass {
+  background-color: rgb(255 255 255 / 0.72);
+  border-color: rgb(255 255 255 / 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+/* Cards inside the app become glass too. */
+.app-glass [data-slot="card"] {
+  background-color: rgb(255 255 255 / 0.72);
+  border-color: rgb(255 255 255 / 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+
 /* Scroll reveal (components/marketing/motion.tsx). Hidden only once armed by script. */
 .reveal { transition: opacity 560ms var(--ease-entrance), transform 560ms var(--ease-entrance); transition-delay: calc(var(--i, 0) * 90ms); }
 .reveal[data-armed]:not([data-shown]) { opacity: 0; transform: translateY(18px); }

@@ -48,7 +48,7 @@ export function InboxFilterBar({
   );
 
   return (
-    <Form action="" replace aria-label={t("label")} className="flex flex-col gap-4 rounded-card border border-border bg-white p-4 sm:p-5">
+    <Form action="" replace aria-label={t("label")} className="flex flex-col gap-4 rounded-card border glass p-4 sm:p-5">
       <div className="flex gap-2">
         <div className="relative flex-1">
           <Search aria-hidden strokeWidth={1.75} className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />

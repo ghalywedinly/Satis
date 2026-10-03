@@ -17,7 +17,7 @@ export function DashboardFilterBar({ filters, today, locations, surveys }: { fil
   const submit = (e: React.ChangeEvent<HTMLSelectElement>) => e.currentTarget.form?.requestSubmit();
 
   return (
-    <Form action="" replace scroll={false} aria-label={t("label")} className="flex flex-wrap items-end gap-3 rounded-card border border-border bg-white p-4">
+    <Form action="" replace scroll={false} aria-label={t("label")} className="flex flex-wrap items-end gap-3 rounded-card border glass p-4">
       <label className="flex min-w-36 flex-1 flex-col gap-1.5 text-sm font-medium sm:flex-none">
         {t("period")}
         <NativeSelect

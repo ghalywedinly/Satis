@@ -19,7 +19,7 @@ export function ShareCard({ surveyId, link, canManage }: { surveyId: string; lin
   const [isActive, setOptimisticActive] = useOptimistic(link.isActive);
 
   return (
-    <li className="flex flex-col gap-4 rounded-card border border-border bg-white p-5 sm:flex-row sm:items-start">
+    <li className="flex flex-col gap-4 rounded-card border glass p-5 sm:flex-row sm:items-start">
       {/* eslint-disable-next-line @next/next/no-img-element -- authenticated SVG from our own API, not optimizable */}
       <img src={`/api/qr/${link.code}?format=svg`} alt="" width={140} height={140} className="size-[140px] shrink-0 self-center rounded-tile border border-border sm:self-start" />
       <div className="flex min-w-0 flex-1 flex-col gap-3">

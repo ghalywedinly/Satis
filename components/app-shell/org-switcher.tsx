@@ -18,7 +18,7 @@ import { switchOrganization } from "@/modules/organizations/actions";
 type Org = { id: string; name: string };
 
 /** Shows the current business; lets people in several businesses switch, or create another. */
-export function OrgSwitcher({ current, organizations }: { current: Org; organizations: Org[] }) {
+export function OrgSwitcher({ current, organizations, compact = false }: { current: Org; organizations: Org[]; compact?: boolean }) {
   const t = useTranslations("common.orgSwitcher");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -26,10 +26,21 @@ export function OrgSwitcher({ current, organizations }: { current: Org; organiza
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="max-w-56 gap-1.5 px-2" disabled={pending} aria-label={`${t("label")}: ${current.name}`}>
-          <span className="truncate">{current.name}</span>
-          <ChevronsUpDown aria-hidden strokeWidth={1.75} className="text-muted-foreground" />
-        </Button>
+        {compact ? (
+          <Button variant="ghost" size="icon" className="size-11" disabled={pending} aria-label={`${t("label")}: ${current.name}`} title={current.name}>
+            <span aria-hidden className="slice-sm flex size-8 items-center justify-center bg-ultramarine font-display text-sm font-bold text-white">
+              {Array.from(current.name)[0]}
+            </span>
+          </Button>
+        ) : (
+          <Button variant="ghost" className="h-auto w-full justify-start gap-2.5 px-2 py-1.5" disabled={pending} aria-label={`${t("label")}: ${current.name}`}>
+            <span aria-hidden className="slice-sm flex size-8 shrink-0 items-center justify-center bg-ultramarine font-display text-sm font-bold text-white">
+              {Array.from(current.name)[0]}
+            </span>
+            <span className="flex-1 truncate text-start">{current.name}</span>
+            <ChevronsUpDown aria-hidden strokeWidth={1.75} className="text-muted-foreground" />
+          </Button>
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-60">
         <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">{t("switchTo")}</DropdownMenuLabel>

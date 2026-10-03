@@ -10,6 +10,7 @@ import {
   PASSWORD,
   signUpAndVerify,
   uniqueEmail,
+  userMenu,
 } from "./helpers";
 
 async function newOwner(browser: Browser, label: string, localePrefix: "" | "/en", business: string) {
@@ -190,7 +191,7 @@ test.describe("businesses and teams", () => {
 
   test("returning users skip onboarding and see their business", async ({ browser }) => {
     const { context, page, email } = await newOwner(browser, "returning", "", "مطعم الريم");
-    await page.locator("header button[aria-haspopup='menu']").last().click();
+    await userMenu(page).click();
     await page.getByRole("menuitem").last().click();
     await expect(page).toHaveURL(/localhost:\d+\/$/);
     await logInWith(page, email);

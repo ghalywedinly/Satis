@@ -42,7 +42,7 @@ export default async function CouponsPage({ params }: PageProps<"/[locale]/coupo
   const offerCard = (offer: OfferRow) => {
     const note = textIn(offer.note, locale, locale === "ar" ? "en" : "ar");
     return (
-      <li key={offer.id} className={cn("flex flex-col gap-4 rounded-card border border-border bg-white p-5", offer.status === "archived" && "opacity-70")}>
+      <li key={offer.id} className={cn("flex flex-col gap-4 rounded-card border glass p-5", offer.status === "archived" && "opacity-70")}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="flex flex-col gap-1">
             <p className="font-display text-2xl font-extrabold">{t("off", { amount: discountAmount(locale, offer.discount_type, offer.discount_value) })}</p>
@@ -113,7 +113,7 @@ export default async function CouponsPage({ params }: PageProps<"/[locale]/coupo
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-bold">{t("offers.title")}</h2>
         {current.length === 0 ? (
-          <div className="flex items-start gap-4 rounded-card border border-dashed border-ink-200 bg-white p-6">
+          <div className="flex items-start gap-4 rounded-card border border-dashed border-ink-200 glass p-6">
             <span className="flex size-12 shrink-0 items-center justify-center rounded-[14px] bg-ember-50 text-ember-600">
               <Ticket aria-hidden strokeWidth={1.75} className="size-6" />
             </span>

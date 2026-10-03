@@ -1,6 +1,6 @@
 {
   "metaTitle": "Dashboard",
-  "welcome": "Welcome, {name}",
+  "welcome": "Welcome, <hl>{name}</hl>",
   "welcomeNoName": "Welcome",
   "createSurvey": "Create your first survey",
   "createSurveyBody": "Create a survey from a ready-made template and publish it in a minute.",
@@ -81,5 +81,17 @@
     "average": "Average {score} out of 5",
     "nps": "NPS {score}",
     "readComments": "Read the comments"
+  },
+  "hero": {
+    "today": "Today, {date}",
+    "unread": "{count} new to read",
+    "allRead": "All feedback read",
+    "openInbox": "Open feedback",
+    "manageSurveys": "Manage surveys"
+  },
+  "sections": {
+    "trends": "Trends",
+    "breakdown": "Breakdown",
+    "locations": "Locations"
   }
 }

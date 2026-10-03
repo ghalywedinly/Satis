@@ -72,9 +72,11 @@ export async function logInWith(page: Page, email: string, password = PASSWORD, 
   await page.locator('button[type="submit"]').click();
 }
 
+/** The user menu: the last menu in the sidebar (desktop) or the top bar (mobile); the business switcher comes first. */
+export const userMenu = (page: Page) => page.locator("aside button[aria-haspopup='menu'], header button[aria-haspopup='menu']").locator("visible=true").last();
+
 export async function logOut(page: Page) {
-  // The user menu is the last menu in the header (the business switcher comes first).
-  await page.locator("header button[aria-haspopup='menu']").last().click();
+  await userMenu(page).click();
   await page.getByRole("menuitem").last().click();
   // Logging out lands on the home page in the current language.
   await expect(page).toHaveURL(/localhost:\d+\/(en)?$/);
