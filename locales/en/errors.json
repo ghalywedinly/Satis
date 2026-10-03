@@ -1,0 +1,36 @@
+{
+  "generic": "Something went wrong. Please try again.",
+  "invalidCredentials": "Email or password is incorrect.",
+  "emailNotConfirmed": "Verify your email before logging in.",
+  "userExists": "An account with this email already exists.",
+  "weakPassword": "Choose a stronger password.",
+  "samePassword": "Choose a password different from your current one.",
+  "rateLimited": "Too many attempts. Wait a minute and try again.",
+  "linkInvalid": "This link is invalid or has expired. Request a new one.",
+  "sessionExpired": "Your session has expired. Log in again.",
+  "notConfigured": "Sign-in isn't available right now.",
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page may have moved, or the link is incorrect."
+  },
+  "page": {
+    "title": "Something unexpected happened",
+    "body": "We've logged the problem and will look into it. Try again in a moment."
+  },
+  "forbidden": "You don't have permission to do this.",
+  "notFoundItem": "We couldn't find that. It may have been removed.",
+  "lastOwner": "A business needs at least one owner.",
+  "cannotChangeSelf": "You can't change your own role or remove yourself. Ask another owner.",
+  "alreadyMember": "This person is already on the team.",
+  "limitReached": "You've reached the maximum allowed.",
+  "inviteExpired": "This invitation has expired.",
+  "inviteUsed": "This invitation has already been used.",
+  "emailMismatch": "This invitation was sent to a different email.",
+  "invalidSurvey": "Finish the survey before publishing it.",
+  "surveyUnavailable": "This survey isn't available right now.",
+  "invalidTag": "Tag names can be 1 to 40 characters.",
+  "couponAlreadyRedeemed": "This code has already been used.",
+  "couponExpired": "This code has expired.",
+  "offerActiveExists": "This survey already has an active reward. Pause it before starting another.",
+  "aiNotConfigured": "AI analysis isn't set up yet."
+}

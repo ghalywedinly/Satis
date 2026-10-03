@@ -1,0 +1,216 @@
+{
+  "eyebrow": "Customer satisfaction platform",
+  "headline": "Listen to your customers. Understand your business. Improve every experience.",
+  "tagline": "Satisfaction, measured.",
+  "body": "Put a QR code in every location, collect feedback in seconds, see how customers feel branch by branch, and fix what matters first.",
+  "primaryCta": "Start free",
+  "secondaryCta": "See how it works",
+  "heroNote": "No card needed · Set up in minutes",
+  "announcement": "New: the feedback inbox and analytics dashboard are live",
+  "nav": {
+    "label": "Page sections",
+    "how": "How it works",
+    "features": "Features",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "logIn": "Log in",
+    "start": "Start free",
+    "home": "Satis home"
+  },
+  "mock": {
+    "store": "Nora Café · Riyadh",
+    "csatOf": "/ 5 CSAT",
+    "speed": "Speed of service",
+    "good": "Good",
+    "staff": "Staff friendliness",
+    "excellent": "Excellent",
+    "wait": "Waiting time",
+    "improve": "Could improve",
+    "sentimentToday": "Sentiment today",
+    "positive": "Positive",
+    "negative": "Negative",
+    "topRated": "Top rated store",
+    "npsLabel": "NPS",
+    "in90Days": "in 90 days",
+    "rateVisit": "Rate your visit · Nora Café",
+    "question": "How was your visit today?",
+    "poor": "Poor",
+    "standOut": "What did you like?",
+    "send": "Send feedback",
+    "thanks": "Thanks for your feedback!",
+    "thanksBody": "It helps us get better every visit.",
+    "newResponse": "New feedback",
+    "justNow": "Just now",
+    "comment1": "Great coffee and fast service",
+    "comment2": "Long wait at peak hours",
+    "comment3": "Clean and tidy place",
+    "tagWait": "Waiting time",
+    "statusNew": "New",
+    "statusProgress": "In progress",
+    "csat": "CSAT",
+    "vsLast": "{value} pts vs last month",
+    "responses": "Responses",
+    "nps": "NPS",
+    "locationA": "Jeddah - Tahlia",
+    "locationB": "Riyadh - Olaya",
+    "locationC": "Dammam - Shatea",
+    "responsesPerDay": "Responses per day",
+    "branches": "Locations",
+    "scanMe": "Scan me to rate your visit",
+    "printReady": "Ready to print",
+    "dashboard": "Dashboard",
+    "inbox": "Feedback",
+    "surveys": "Surveys",
+    "teamOwner": "Noura",
+    "teamManager": "Fahad",
+    "teamStaff": "Sara",
+    "coupon": "{amount} off your next visit",
+    "insight": "Customers mentioned slow service 18 times this week at Tahlia, mostly in the evening.",
+    "comment4": "Friendly staff and a calm place"
+  },
+  "industries": {
+    "title": "Built for the places your customers visit"
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "From a QR code to a decision, in four steps",
+    "steps": {
+      "place": {
+        "title": "Place a QR code",
+        "body": "Print a code for each location and put it on tables, at the till or on the receipt."
+      },
+      "collect": {
+        "title": "Collect feedback",
+        "body": "Customers scan and answer on their phone in seconds, in Arabic or English, with no app."
+      },
+      "understand": {
+        "title": "Understand the data",
+        "body": "Follow satisfaction and NPS day by day, and compare your locations."
+      },
+      "improve": {
+        "title": "Improve the experience",
+        "body": "Read comments, flag what matters and follow up every issue until it's resolved."
+      }
+    },
+    "step": "Step {number}"
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "Everything you need to hear your customers",
+    "subtitle": "Simple tools for your team, a fast experience for your customers.",
+    "comingSoon": "Coming soon",
+    "surveys": {
+      "title": "Ready-made surveys in Arabic and English",
+      "body": "Start from a template, edit the questions and publish in a minute. Every customer sees the survey in their language."
+    },
+    "qr": {
+      "title": "A QR code for every location",
+      "body": "A separate code for each location, ready to print or download, so you know where every response came from."
+    },
+    "inbox": {
+      "title": "Feedback inbox",
+      "body": "Every response in one place: search, filter, flag what matters, add tags and track status."
+    },
+    "analytics": {
+      "title": "Analytics dashboard",
+      "body": "CSAT, NPS and responses per day, compared with the previous period."
+    },
+    "locations": {
+      "title": "Location comparison",
+      "body": "See which location shines and which one needs your attention."
+    },
+    "team": {
+      "title": "Your team, with clear roles",
+      "body": "Invite your team as owner, manager, staff or viewer."
+    },
+    "coupons": {
+      "title": "Rewards for customers",
+      "body": "A discount after the survey gives customers a reason to come back."
+    },
+    "ai": {
+      "title": "AI insights",
+      "body": "A weekly summary of what customers praise and what they complain about."
+    }
+  },
+  "customer": {
+    "eyebrow": "Customer experience",
+    "title": "Scan. Answer. Done.",
+    "body": "A beautiful mobile experience that takes seconds, with no app and no sign-up. Your customer speaks up, and you know right away.",
+    "steps": {
+      "scan": "Scan the code",
+      "answer": "Answer in seconds",
+      "done": "Done"
+    },
+    "points": {
+      "noApp": "No app",
+      "bilingual": "Arabic and English",
+      "private": "No personal data",
+      "fast": "Under a minute"
+    }
+  },
+  "showcase": {
+    "eyebrow": "Dashboard",
+    "title": "See how customers feel, location by location",
+    "body": "The numbers that matter on one screen: how many customers answered, how happy they are, and which location needs you today."
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "One clear price",
+    "subtitle": "Every feature for all your locations, no surprises.",
+    "plan": "Standard",
+    "perMonth": "per month",
+    "vat": "Excludes VAT",
+    "includes": {
+      "surveys": "Surveys in Arabic and English",
+      "qr": "A QR code for every location",
+      "inbox": "Feedback inbox and tags",
+      "analytics": "Analytics and location comparison",
+      "team": "Invite your team with roles",
+      "support": "Arabic-first experience"
+    },
+    "cta": "Start free",
+    "note": "Early access: start free now. We'll tell you before billing starts."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions business owners ask",
+    "items": {
+      "app": {
+        "q": "Do my customers need to download an app?",
+        "a": "No. Customers scan the QR code with their phone camera and the survey opens in the browser."
+      },
+      "arabic": {
+        "q": "Is the survey in Arabic?",
+        "a": "Yes. Arabic comes first, and customers can switch to English with one tap."
+      },
+      "branches": {
+        "q": "Can I use it for more than one location?",
+        "a": "Yes. Add your locations and each one gets its own QR code and its own results, which you can compare."
+      },
+      "edit": {
+        "q": "Can I change the survey questions?",
+        "a": "Yes. Start from a template, then add, remove or reorder questions and publish changes whenever you like."
+      },
+      "privacy": {
+        "q": "Is my customers' data safe?",
+        "a": "Yes. Each business's data is kept separate, and only your team can see responses. The survey doesn't ask customers for personal details."
+      },
+      "setup": {
+        "q": "How long does setup take?",
+        "a": "Minutes. Create your account, add your location, publish the ready-made survey and print the QR code."
+      }
+    }
+  },
+  "finalCta": {
+    "title": "Start listening to your customers today",
+    "body": "Create your account and publish your first survey in minutes.",
+    "primary": "Start free",
+    "secondary": "Log in"
+  },
+  "footer": {
+    "product": "Product",
+    "account": "Account",
+    "signup": "Create account",
+    "rights": "© {year} Satis. All rights reserved."
+  }
+}

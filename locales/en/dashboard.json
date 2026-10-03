@@ -1,0 +1,97 @@
+{
+  "metaTitle": "Dashboard",
+  "welcome": "Welcome, <hl>{name}</hl>",
+  "welcomeNoName": "Welcome",
+  "createSurvey": "Create your first survey",
+  "createSurveyBody": "Create a survey from a ready-made template and publish it in a minute.",
+  "subtitle": "How your customers feel, at a glance.",
+  "filters": {
+    "label": "Filter the dashboard",
+    "period": "Period",
+    "periods": {
+      "today": "Today",
+      "7": "Last 7 days",
+      "30": "Last 30 days",
+      "90": "Last 90 days",
+      "custom": "Custom"
+    },
+    "from": "From",
+    "to": "To",
+    "apply": "Apply",
+    "location": "Location",
+    "allLocations": "All locations",
+    "survey": "Survey",
+    "allSurveys": "All surveys"
+  },
+  "kpi": {
+    "responses": "Responses",
+    "csat": "Customer satisfaction (CSAT)",
+    "csatHint": "Share of ratings that are 4 or 5",
+    "csatAverage": "Average {score} out of 5",
+    "nps": "Net Promoter Score (NPS)",
+    "npsHint": "Promoters minus detractors, from −100 to 100",
+    "npsBase": "From {count} answers",
+    "comments": "With comments",
+    "commentsShare": "{percent} of responses",
+    "noData": "No data yet",
+    "vsPrevious": "vs previous period",
+    "noPrevious": "Nothing to compare with yet",
+    "up": "Up {value}",
+    "down": "Down {value}",
+    "same": "No change",
+    "points": "{value} pts"
+  },
+  "empty": {
+    "title": "No responses in this period",
+    "body": "Try a longer period, or share your QR codes to start collecting feedback.",
+    "action": "Share your QR codes"
+  },
+  "charts": {
+    "responsesPerDay": "Responses per day",
+    "csatPerDay": "CSAT per day",
+    "csatPerDayHint": "Days without ratings are left blank",
+    "npsBreakdown": "NPS breakdown",
+    "detractors": "Detractors (0–6)",
+    "passives": "Passives (7–8)",
+    "promoters": "Promoters (9–10)",
+    "noNps": "No one answered the recommendation question in this period.",
+    "csatDistribution": "Ratings",
+    "ratingLabel": "{score} out of 5",
+    "noCsat": "No ratings in this period.",
+    "tableCaption": "Values shown in the chart",
+    "day": "Day",
+    "value": "Value",
+    "responsesValue": "{count} responses",
+    "csatValue": "{percent} satisfied",
+    "noRatings": "No ratings"
+  },
+  "locations": {
+    "title": "Locations",
+    "location": "Location",
+    "responses": "Responses",
+    "csat": "CSAT",
+    "nps": "NPS",
+    "empty": "No locations yet."
+  },
+  "questions": {
+    "title": "Results by question",
+    "chooseSurvey": "Choose a survey above to see results for each question.",
+    "answers": "Answers: {count}",
+    "noAnswers": "No answers in this period.",
+    "average": "Average {score} out of 5",
+    "nps": "NPS {score}",
+    "readComments": "Read the comments"
+  },
+  "hero": {
+    "today": "Today, {date}",
+    "unread": "{count} new to read",
+    "allRead": "All feedback read",
+    "openInbox": "Open feedback",
+    "manageSurveys": "Manage surveys"
+  },
+  "sections": {
+    "trends": "Trends",
+    "breakdown": "Breakdown",
+    "locations": "Locations"
+  }
+}

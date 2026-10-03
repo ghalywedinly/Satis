@@ -1,0 +1,39 @@
+{
+  "footer": "If you didn't request this email, you can safely ignore it.",
+  "linkFallback": "If the button doesn't work, copy and paste this link into your browser:",
+  "signup": {
+    "subject": "Activate your Satis account",
+    "heading": "Welcome to Satis",
+    "body": "Click the button to verify your email and get started.",
+    "button": "Activate my account"
+  },
+  "recovery": {
+    "subject": "Reset your Satis password",
+    "heading": "Reset your password",
+    "body": "You asked to set a new password. This link expires in one hour.",
+    "button": "Set a new password"
+  },
+  "emailChange": {
+    "subject": "Confirm your new email",
+    "heading": "Confirm your new email",
+    "body": "Click the button to confirm the change of your Satis email address.",
+    "button": "Confirm email"
+  },
+  "magicLink": {
+    "subject": "Your Satis sign-in link",
+    "heading": "Log in to Satis",
+    "body": "Click the button to log in. This link expires in one hour.",
+    "button": "Log in"
+  },
+  "reauthentication": {
+    "subject": "Your Satis verification code",
+    "heading": "Verification code",
+    "body": "Use this code to confirm the action:"
+  },
+  "invitation": {
+    "subject": "Join {organization} on Satis",
+    "heading": "Join {organization}",
+    "body": "{inviter} invited you to join {organization} on Satis as {role}. The invitation expires in 7 days.",
+    "button": "Accept invitation"
+  }
+}

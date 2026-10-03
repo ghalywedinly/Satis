@@ -1,0 +1,35 @@
+{
+  "appName": "Satis",
+  "skipToContent": "Skip to content",
+  "language": {
+    "label": "Language",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "inbox": "Feedback",
+    "mainNavigation": "Main navigation",
+    "locations": "Locations",
+    "team": "Team",
+    "settings": "Settings",
+    "surveys": "Surveys",
+    "coupons": "Rewards",
+    "unreadBadge": "unread",
+    "collapse": "Collapse menu",
+    "expand": "Expand menu"
+  },
+  "actions": {
+    "logIn": "Log in",
+    "logOut": "Log out",
+    "signUp": "Create account",
+    "backHome": "Back to home",
+    "tryAgain": "Try again",
+    "close": "Close"
+  },
+  "orgSwitcher": {
+    "label": "Current business",
+    "switchTo": "Switch to",
+    "create": "Create a new business"
+  }
+}
