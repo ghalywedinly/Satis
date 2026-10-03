@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useOptimistic, useRef, useState, useTransition } from "react";
+import { useEffect, useOptimistic, useState, useTransition } from "react";
 import { MailOpen, Star } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -83,13 +83,18 @@ function MarkUnreadButton({ responseId }: { responseId: string }) {
   );
 }
 
+/**
+ * Responses already marked read automatically in this tab. Remembered across re-renders so that
+ * "Mark unread" sticks: the page refreshes after it, and must not mark the response read again.
+ */
+const autoMarked = new Set<string>();
+
 /** Marks the response read once it's been opened by someone who can triage. */
 export function MarkRead({ responseId }: { responseId: string }) {
   const locale = useLocale() as Locale;
-  const done = useRef(false);
   useEffect(() => {
-    if (done.current) return;
-    done.current = true;
+    if (autoMarked.has(responseId)) return;
+    autoMarked.add(responseId);
     void updateResponse(locale, responseId, { is_read: true });
   }, [locale, responseId]);
   return null;
