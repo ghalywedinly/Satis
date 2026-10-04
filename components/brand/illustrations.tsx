@@ -39,7 +39,7 @@ export function FeedbackFlowIllustration({ className }: { className?: string }) 
         <rect x="70" y="110" width="50" height="6" rx="3" className="fill-ink-100" />
         <rect x="40" y="130" width="140" height="6" rx="3" className="fill-ink-100" />
         <rect x="40" y="142" width="112" height="6" rx="3" className="fill-ink-100" />
-        <Slices x={40} y={164} w={140} value={5} />
+        <Slices x={40} y={164} w={140} value={5} chosen="fill-ember" />
       </g>
       {/* score bubble */}
       <g className="motion-safe:animate-float-slow">
@@ -82,6 +82,52 @@ export function ShareSurveyIllustration({ className }: { className?: string }) {
         <rect x="206" y="52" width="30" height="6" rx="3" className="fill-ink" />
         <rect x="206" y="64" width="20" height="6" rx="3" className="fill-ink" />
       </g>
+    </svg>
+  );
+}
+
+/** A podium of slices with the mark on top: for the best-performing branch (on Zest). */
+export function PodiumIllustration({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 200 150" className={cn("pointer-events-none", className)}>
+      {/* podium steps, slanted like the mark */}
+      <polygon points="20,150 72,150 78,104 26,104" className="fill-ink/15" />
+      <polygon points="128,150 180,150 186,116 134,116" className="fill-ink/15" />
+      <polygon points="70,150 134,150 142,78 78,78" className="fill-ink" />
+      {/* the mark floating above the winner */}
+      <g className="motion-safe:animate-float">
+        <svg x="72" y="0" width="72" height="67" viewBox="8 4 90 84">
+          <polygon points="40,4 98,4 68.3,30 10.3,30" className="fill-ink" />
+          <polygon points="11.1,34 57.1,34 94.9,58 48.9,58" className="fill-white" />
+          <polygon points="66,88 8,88 37.7,62 95.7,62" className="fill-ink" />
+        </svg>
+      </g>
+      {/* sparkle slices */}
+      <polygon points="30,40 50,40 46,46 26,46" className="fill-ink" />
+      <polygon points="150,30 176,30 172,36 146,36" className="fill-white" />
+      <polygon points="160,60 176,60 172,66 156,66" className="fill-ink" />
+    </svg>
+  );
+}
+
+/** A speech bubble with an alert and a low rating: for customers waiting for a follow-up. */
+export function AlertIllustration({ className }: { className?: string }) {
+  return (
+    <svg aria-hidden viewBox="0 0 200 150" className={cn("pointer-events-none", className)}>
+      <g className="motion-safe:animate-float-slow">
+        <rect x="18" y="26" width="128" height="80" rx="18" className="fill-white stroke-ink" strokeWidth="3" />
+        <polygon points="40,104 64,104 34,128" className="fill-white stroke-ink" strokeWidth="3" strokeLinejoin="round" />
+        <rect x="38" y="46" width="60" height="8" rx="4" className="fill-ink-200" />
+        <rect x="38" y="60" width="86" height="6" rx="3" className="fill-ink-100" />
+        <Slices x={38} y={80} w={86} value={2} chosen="fill-ember" filled="fill-ember" empty="fill-ink-100" />
+      </g>
+      <g className="motion-safe:animate-float">
+        <circle cx="160" cy="40" r="26" className="fill-ember" />
+        <rect x="156" y="24" width="8" height="22" rx="4" className="fill-ink" />
+        <circle cx="160" cy="54" r="4.5" className="fill-ink" />
+      </g>
+      <polygon points="120,130 190,130 184,138 114,138" className="fill-ink" />
+      <polygon points="146,118 190,118 184,126 140,126" className="fill-ultramarine" />
     </svg>
   );
 }

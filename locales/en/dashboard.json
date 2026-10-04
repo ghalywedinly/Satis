@@ -93,5 +93,14 @@
     "trends": "Trends",
     "breakdown": "Breakdown",
     "locations": "Locations"
+  },
+  "highlights": {
+    "top": "Top branch",
+    "topDetail": "{percent} satisfied from {count} ratings",
+    "attention": "Needs attention",
+    "lowest": "Lowest satisfaction: {name} at {percent}",
+    "open": "{count} unhappy customers waiting for a follow-up",
+    "noneOpen": "No unhappy customers waiting. Nice work.",
+    "action": "Follow up now"
   }
 }

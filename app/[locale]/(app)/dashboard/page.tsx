@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { Inbox, Megaphone, MessageSquareQuote, MessageSquareText, Smile } from "lucide-react";
-import { FeedbackFlowIllustration, ShareSurveyIllustration } from "@/components/brand/illustrations";
+import { BarChart3, Inbox, ListChecks, MapPin, Megaphone, MessageSquareQuote, MessageSquareText, Smile, Star, TrendingUp, type LucideIcon } from "lucide-react";
+import { AlertIllustration, FeedbackFlowIllustration, PodiumIllustration, ShareSurveyIllustration } from "@/components/brand/illustrations";
 import { SliceHighlight } from "@/components/brand/slice";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -48,7 +48,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
   const range = rangeFor(filters);
   const supabase = await createSupabaseServerClient();
 
-  const [profile, t, surveyCount, options, analytics, definition, questionStats, unread] = await Promise.all([
+  const [profile, t, surveyCount, options, analytics, definition, questionStats, unread, openNegative] = await Promise.all([
     getProfile(user.id),
     getTranslations({ locale, namespace: "dashboard" }),
     supabase
@@ -62,6 +62,13 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
     filters.survey ? getPublishedDefinition(organizationId, filters.survey) : null,
     filters.survey ? getQuestionStats(organizationId, filters.survey, filters, range) : null,
     countUnread(organizationId),
+    supabase
+      .from("survey_responses")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", organizationId)
+      .eq("rating_sentiment", "negative")
+      .neq("status", "resolved")
+      .then((r) => r.count ?? 0),
   ]);
   captureServerEvent("dashboard_viewed", user.id, { locale, organization_id: organizationId, period: filters.period });
   const name = profile?.full_name?.split(" ")[0];
@@ -94,6 +101,16 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
         <FeedbackFlowIllustration className="hidden h-48 w-auto md:block lg:h-52" />
       </div>
     </div>
+  );
+
+  const chipTones = { ultra: "bg-ultra-50 text-ultramarine", mint: "bg-mint-50 text-mint-700", grape: "bg-grape-50 text-grape-600", ember: "bg-ember-50 text-ember-700" } as const;
+  const cardTitle = (label: string, Icon: LucideIcon, tone: keyof typeof chipTones) => (
+    <h2 className="flex items-center gap-2.5 font-sans text-base font-semibold">
+      <span aria-hidden className={cn("slice-sm flex h-7 w-9 shrink-0 items-center justify-center", chipTones[tone])}>
+        <Icon strokeWidth={1.75} className="size-4" />
+      </span>
+      {label}
+    </h2>
   );
 
   const sectionLabel = (label: string) => (
@@ -177,6 +194,16 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
     value: `${formatCount(locale, d.count)} · ${formatPercent(locale, totals.csatCount ? d.count / totals.csatCount : 0, 0)}`,
   }));
 
+  // Highlights: the branch customers like most, and the one (if several) they like least.
+  const rated = analytics.locations.filter((l) => l.csatCount > 0).map((l) => ({ ...l, ratio: csatRatio(l) ?? 0 }));
+  rated.sort((a, b) => b.ratio - a.ratio || b.csatCount - a.csatCount);
+  const top = rated[0];
+  const topRatio = top ? top.ratio : null;
+  const lowest = rated.length > 1 ? rated[rated.length - 1] : undefined;
+  const lowestRatio = lowest ? lowest.ratio : null;
+  // Percentages inside Arabic sentences stay left-to-right ("92%", not "%92").
+  const isolate = (text: string) => `\u2066${text}\u2069`;
+
   return (
     <div className="flex flex-col gap-6">
       {header}
@@ -189,7 +216,8 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           trend={responsesTrend}
           trendCaption={caption(responsesTrend)}
           icon={Inbox}
-          visual={analytics.daily.length > 1 ? <MiniBars values={analytics.daily.map((d) => d.responses)} /> : undefined}
+          tone="ultra"
+          visual={analytics.daily.length > 1 ? <MiniBars values={analytics.daily.map((d) => d.responses)} onColor /> : undefined}
         />
         <StatTile
           label={t("kpi.csat")}
@@ -199,7 +227,6 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           trend={csatTrend}
           trendCaption={caption(csatTrend)}
           icon={Smile}
-          accent="mint"
           visual={csat === null ? undefined : <MiniRing ratio={csat} tone="mint" />}
         />
         <StatTile
@@ -210,7 +237,8 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           trend={npsTrend}
           trendCaption={caption(npsTrend)}
           icon={Megaphone}
-          accent="grape"
+          tone="ink"
+          visual={totals.npsCount ? <MiniRing ratio={totals.promoters / totals.npsCount} tone="sand" /> : undefined}
         />
         <StatTile
           label={t("kpi.comments")}
@@ -218,10 +246,45 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           detail={totals.responses ? t("kpi.commentsShare", { percent: formatPercent(locale, totals.comments / totals.responses, 0) }) : undefined}
           trendCaption=""
           icon={MessageSquareQuote}
-          accent="ember"
-          visual={totals.responses ? <MiniRing ratio={totals.comments / totals.responses} /> : undefined}
+          tone="ember"
+          visual={totals.responses ? <MiniRing ratio={totals.comments / totals.responses} tone="ink" /> : undefined}
         />
       </section>
+
+      {totals.responses > 0 && (
+        <section className="grid gap-4 lg:grid-cols-2">
+          {top && topRatio !== null && (
+            <div className="relative isolate flex items-center justify-between gap-4 overflow-hidden rounded-card bg-zest p-6 text-ink">
+              <div className="flex min-w-0 flex-col gap-2">
+                <p className="text-sm font-semibold">{t("highlights.top")}</p>
+                <p className="truncate font-display text-3xl font-extrabold">{top.name}</p>
+                <p className="text-sm text-ink-700">{t("highlights.topDetail", { percent: isolate(formatPercent(locale, topRatio, 0)), count: formatCount(locale, top.csatCount) })}</p>
+              </div>
+              <PodiumIllustration className="hidden h-28 w-auto shrink-0 sm:block" />
+            </div>
+          )}
+          <div className="relative isolate flex items-center justify-between gap-4 overflow-hidden rounded-card border border-ember-200 bg-ember-50 p-6 text-ink">
+            <div className="flex min-w-0 flex-col items-start gap-2">
+              <p className="flex items-center gap-2 text-sm font-semibold text-ember-700">
+                <span aria-hidden className="slice-sm h-3 w-5 bg-ember" />
+                {t("highlights.attention")}
+              </p>
+              <p className="font-display text-xl font-bold">
+                {openNegative > 0 ? t("highlights.open", { count: formatCount(locale, openNegative) }) : t("highlights.noneOpen")}
+              </p>
+              {lowest && lowestRatio !== null && (
+                <p className="text-sm text-ink-700">{t("highlights.lowest", { name: lowest.name, percent: isolate(formatPercent(locale, lowestRatio, 0)) })}</p>
+              )}
+              {openNegative > 0 && (
+                <Button asChild size="sm" className="mt-1">
+                  <Link href="/inbox?sentiment=negative">{t("highlights.action")}</Link>
+                </Button>
+              )}
+            </div>
+            <AlertIllustration className="hidden h-28 w-auto shrink-0 sm:block" />
+          </div>
+        </section>
+      )}
 
       {totals.responses === 0 ? (
         <Card>
@@ -241,7 +304,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           {sectionLabel(t("sections.trends"))}
           <section className="grid gap-4 lg:grid-cols-2">
             <Card className="gap-4 px-6">
-              <h2 className="font-sans text-base font-semibold">{t("charts.responsesPerDay")}</h2>
+              {cardTitle(t("charts.responsesPerDay"), BarChart3, "ultra")}
               <DailyChart
                 mode="columns"
                 points={responsePoints}
@@ -254,7 +317,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
             </Card>
             <Card className="gap-4 px-6">
               <div className="flex flex-col gap-1">
-                <h2 className="font-sans text-base font-semibold">{t("charts.csatPerDay")}</h2>
+                {cardTitle(t("charts.csatPerDay"), TrendingUp, "mint")}
                 <p className="text-xs text-muted-foreground">{t("charts.csatPerDayHint")}</p>
               </div>
               <DailyChart
@@ -272,7 +335,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
           {sectionLabel(t("sections.breakdown"))}
           <section className="grid gap-4 lg:grid-cols-2">
             <Card className="gap-4 px-6">
-              <h2 className="font-sans text-base font-semibold">{t("charts.npsBreakdown")}</h2>
+              {cardTitle(t("charts.npsBreakdown"), Megaphone, "grape")}
               {totals.npsCount === 0 ? (
                 <p className="text-sm text-muted-foreground">{t("charts.noNps")}</p>
               ) : (
@@ -280,7 +343,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
               )}
             </Card>
             <Card className="gap-4 px-6">
-              <h2 className="font-sans text-base font-semibold">{t("charts.csatDistribution")}</h2>
+              {cardTitle(t("charts.csatDistribution"), Star, "ember")}
               {totals.csatCount === 0 ? <p className="text-sm text-muted-foreground">{t("charts.noCsat")}</p> : <BarList rows={ratingRows} />}
             </Card>
           </section>
@@ -291,7 +354,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
 
       {sectionLabel(t("sections.locations"))}
       <Card className="gap-0 overflow-hidden p-0">
-        <h2 className="px-6 pt-5 pb-3 font-sans text-base font-semibold">{t("locations.title")}</h2>
+        <div className="px-6 pt-5 pb-3">{cardTitle(t("locations.title"), MapPin, "ultra")}</div>
         {analytics.locations.length === 0 ? (
           <p className="px-6 pb-5 text-sm text-muted-foreground">{t("locations.empty")}</p>
         ) : (
@@ -336,7 +399,7 @@ export default async function DashboardPage({ params, searchParams }: PageProps<
       </Card>
 
       <Card className="gap-4 px-6">
-        <h2 className="font-sans text-base font-semibold">{t("questions.title")}</h2>
+        {cardTitle(t("questions.title"), ListChecks, "grape")}
         {definition && questionStats && filters.survey ? (
           <QuestionResults definition={definition} stats={questionStats} surveyId={filters.survey} />
         ) : (

@@ -40,17 +40,22 @@ export function DailyChart({
     return rtl ? 100 - start : start;
   };
   // The line breaks across days without a value instead of inventing one.
-  const segments: string[] = [];
+  // Each segment also gets a soft area underneath, closed down to the baseline.
+  const segments: { d: string; area: string }[] = [];
   let current = "";
+  let firstX = 0;
+  let lastX = 0;
+  const close = () => {
+    if (current) segments.push({ d: current, area: `${current}L${lastX},100L${firstX},100Z` });
+    current = "";
+  };
   points.forEach((p, i) => {
-    if (p.value === null) {
-      if (current) segments.push(current);
-      current = "";
-      return;
-    }
+    if (p.value === null) return close();
+    if (!current) firstX = x(i);
+    lastX = x(i);
     current += `${current ? "L" : "M"}${x(i)},${100 - y(p.value)}`;
   });
-  if (current) segments.push(current);
+  close();
   const labelEvery = Math.max(1, Math.ceil(n / 6));
   const activePoint = active === null ? null : points[active];
 
@@ -76,7 +81,8 @@ export function DailyChart({
                 <div key={p.day} className="flex h-full flex-1 items-end justify-center px-px">
                   <div
                     className={cn(
-                      "w-full max-w-6 rounded-t-[4px] transition-colors duration-[140ms]",
+                      // Slanted like the brand's slices.
+                      "w-full max-w-6 -skew-x-[12deg] rounded-t-[3px] transition-colors duration-[140ms]",
                       active === i ? "bg-ultra-700" : "bg-ultramarine",
                     )}
                     style={{ height: `${y(p.value ?? 0)}%`, minHeight: p.value ? 2 : 0 }}
@@ -88,8 +94,11 @@ export function DailyChart({
             <>
               <svg aria-hidden viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 size-full overflow-visible">
                 {activePoint && <line x1={x(active!)} x2={x(active!)} y1={0} y2={100} className="stroke-ink-200" strokeWidth={1} vectorEffect="non-scaling-stroke" />}
-                {segments.map((d) => (
-                  <path key={d} d={d} fill="none" className="stroke-ultramarine" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                {segments.map(({ area }) => (
+                  <path key={`a${area}`} d={area} className="fill-ultramarine/10" />
+                ))}
+                {segments.map(({ d }) => (
+                  <path key={d} d={d} fill="none" className="stroke-ultramarine" strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
                 ))}
               </svg>
               {points.map((p, i) =>
