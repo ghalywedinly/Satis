@@ -63,7 +63,7 @@
 
   --font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
   --font-sans: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
-  --font-arabic: var(--font-readex), "Readex Pro", system-ui, sans-serif;
+  --font-arabic: var(--font-readex-arabic), var(--font-readex), "Readex Pro", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
 
   --radius-xs: 4px;
