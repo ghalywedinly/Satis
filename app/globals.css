@@ -63,7 +63,7 @@
 
   --font-display: var(--font-bricolage), "Bricolage Grotesque", system-ui, sans-serif;
   --font-sans: var(--font-instrument), "Instrument Sans", system-ui, sans-serif;
-  --font-arabic: var(--font-readex), "Readex Pro", system-ui, sans-serif;
+  --font-arabic: var(--font-readex-arabic), var(--font-readex), "Readex Pro", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
 
   --radius-xs: 4px;
@@ -92,6 +92,24 @@
   --tracking-heading: -0.03em;
   --tracking-logo: -0.04em;
   --tracking-eyebrow: 0.10em;
+
+  /* Marketing only: product cards drifting gently in the hero. Disabled by reduced motion. */
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(var(--marquee-shift, -50%)); }
+  }
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(15, 169, 104, 0.45); }
+    50% { box-shadow: 0 0 0 5px rgba(15, 169, 104, 0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
 }
 
 /* ───────── shadcn/ui semantic variables mapped to Satis ───────── */
@@ -201,9 +219,17 @@
   * { @apply border-border outline-ring/50; }
   body { @apply bg-background text-foreground font-sans antialiased; }
   h1, h2, h3, h4 { @apply font-display font-bold; letter-spacing: var(--tracking-heading); }
-  [dir="rtl"], :lang(ar) { font-family: var(--font-arabic); }
-  [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, :lang(ar) h1, :lang(ar) h2, :lang(ar) h3 { letter-spacing: 0; }
   .tabular { font-variant-numeric: tabular-nums; }
+}
+
+/*
+ * Arabic always renders in Readex Pro with no letter-spacing (spacing breaks letter joining).
+ * Deliberately outside any layer so it wins over font-display / font-sans / tracking utilities.
+ * Latin fragments inside Arabic pages opt out with lang="en".
+ */
+:lang(ar) {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
 }
 
 /* Slice: the parallelogram from the mark. Use on chips, highlights, rating bars. */
@@ -217,6 +243,42 @@
   font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-eyebrow); color: var(--muted-foreground);
 }
 
+/*
+ * Signed-in app: a soft brand-colour wash behind frosted-glass surfaces.
+ * Text never sits on the gradient itself; it sits on near-opaque glass or solid Ink.
+ */
+.app-backdrop {
+  background-color: var(--color-sand-50);
+  background-image:
+    radial-gradient(60rem 40rem at 100% -10%, rgb(43 58 243 / 0.22), transparent 60%),
+    radial-gradient(44rem 32rem at -10% 30%, rgb(255 107 74 / 0.16), transparent 60%),
+    radial-gradient(40rem 30rem at 70% 105%, rgb(255 207 40 / 0.18), transparent 60%),
+    radial-gradient(36rem 28rem at 15% 100%, rgb(139 87 196 / 0.12), transparent 60%);
+}
+@utility glass {
+  background-color: rgb(255 255 255 / 0.72);
+  border-color: rgb(255 255 255 / 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+/* Cards inside the app become glass too. */
+.app-glass [data-slot="card"] {
+  background-color: rgb(255 255 255 / 0.72);
+  border-color: rgb(255 255 255 / 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(20px) saturate(1.5);
+}
+
+/* Scroll reveal (components/marketing/motion.tsx). Hidden only once armed by script. */
+.reveal { transition: opacity 560ms var(--ease-entrance), transform 560ms var(--ease-entrance); transition-delay: calc(var(--i, 0) * 90ms); }
+.reveal[data-armed]:not([data-shown]) { opacity: 0; transform: translateY(18px); }
+/* Bars that grow from the baseline when their section is revealed. */
+.reveal[data-armed] .grow-bar { transform: scaleY(0.2); transform-origin: bottom; transition: transform 700ms var(--ease-entrance); transition-delay: calc(200ms + var(--b, 0) * 40ms); }
+.reveal[data-shown] .grow-bar { transform: none; }
+/* Marquee runs the other way in right-to-left pages. */
+[dir="rtl"] { --marquee-shift: 50%; }
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal[data-armed]:not([data-shown]) { opacity: 1; transform: none; }
   *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; }
 }

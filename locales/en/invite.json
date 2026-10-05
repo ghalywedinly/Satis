@@ -1,0 +1,11 @@
+{
+  "metaTitle": "Invitation",
+  "title": "Join {organization}",
+  "body": "You've been invited to join {organization} on Satis as {role}.",
+  "accept": "Accept invitation",
+  "signInPrompt": "Log in or create an account with the email the invitation was sent to, then accept it.",
+  "logIn": "Log in",
+  "signUp": "Create account",
+  "emailMismatch": "This invitation was sent to a different email. Log in with the right account to accept it.",
+  "unavailable": "This invitation is no longer available. Ask an admin of the business for a new one."
+}

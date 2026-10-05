@@ -1,0 +1,35 @@
+{
+  "appName": "ساتيس",
+  "skipToContent": "انتقل إلى المحتوى",
+  "language": {
+    "label": "اللغة",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "nav": {
+    "dashboard": "لوحة التحكم",
+    "inbox": "الآراء",
+    "mainNavigation": "التنقل الرئيسي",
+    "locations": "الفروع",
+    "team": "الفريق",
+    "settings": "الإعدادات",
+    "surveys": "الاستبيانات",
+    "coupons": "المكافآت",
+    "unreadBadge": "غير مقروءة",
+    "collapse": "طيّ القائمة",
+    "expand": "توسيع القائمة"
+  },
+  "actions": {
+    "logIn": "تسجيل الدخول",
+    "logOut": "تسجيل الخروج",
+    "signUp": "إنشاء حساب",
+    "backHome": "العودة إلى الرئيسية",
+    "tryAgain": "حاول مرة أخرى",
+    "close": "إغلاق"
+  },
+  "orgSwitcher": {
+    "label": "النشاط التجاري الحالي",
+    "switchTo": "بدّل إلى",
+    "create": "أنشئ نشاطًا تجاريًا جديدًا"
+  }
+}

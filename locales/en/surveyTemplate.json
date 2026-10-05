@@ -1,0 +1,15 @@
+{
+  "name": "Post-visit survey",
+  "rating": "How was your visit today?",
+  "liked": "What did you like?",
+  "options": {
+    "service": "Quality of service",
+    "staff": "Staff friendliness",
+    "speed": "Speed of service",
+    "cleanliness": "Cleanliness",
+    "value": "Value for money"
+  },
+  "nps": "How likely are you to recommend us to a friend?",
+  "comment": "Is there anything else you'd like to tell us?",
+  "thankYou": "Thanks for your feedback! It helps us make every visit better."
+}
