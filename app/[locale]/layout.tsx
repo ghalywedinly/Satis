@@ -18,6 +18,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   return {
     title: { default: t("metadata.title"), template: `%s · ${t("common.appName")}` },
     description: t("metadata.description"),
+    // The name under the icon when the site is added to an iPhone home screen.
+    appleWebApp: { title: t("common.appName") },
   };
 }
 
