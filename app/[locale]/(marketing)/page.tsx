@@ -7,9 +7,9 @@ import { resolveLocale } from "@/lib/i18n/server";
 import { qrSvg } from "@/lib/qr";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
-  const locale = await resolveLocale(params);
-  const [t, ar, en, qr] = await Promise.all([
-    getTranslations({ locale, namespace: "home" }),
+  // Validates the locale and sets it for this request.
+  await resolveLocale(params);
+  const [ar, en, qr] = await Promise.all([
     getTranslations({ locale: "ar", namespace: "surveyTemplate" }),
     getTranslations({ locale: "en", namespace: "surveyTemplate" }),
     // A real, scannable code: it opens this page.
@@ -18,7 +18,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-sand">
-      <div className="bg-ultramarine px-4 py-3 text-center text-sm font-semibold text-white">{t("announcement")}</div>
       <SiteHeader />
       <main id="content" className="flex-1">
         <Hero />
