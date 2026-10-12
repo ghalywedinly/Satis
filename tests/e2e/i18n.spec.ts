@@ -5,7 +5,7 @@ test.describe("language and direction", () => {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("lang", "ar");
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("اسمع عملاءك. افهم أعمالك. حسّن كل تجربة.");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("رضا عملائك، بالأرقام.");
   });
 
   test("English lives under /en, left-to-right", async ({ page }) => {
@@ -13,7 +13,7 @@ test.describe("language and direction", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Listen to your customers. Understand your business. Improve every experience.",
+      "Customer satisfaction, measured.",
     );
   });
 

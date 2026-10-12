@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.describe("landing page", () => {
   test("Arabic landing page: sections, pricing and sign-up", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("اسمع عملاءك. افهم أعمالك. حسّن كل تجربة.");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("رضا عملائك، بالأرقام.");
     for (const heading of ["من رمز QR إلى قرار، في أربع خطوات", "كل ما تحتاجه لتسمع عملاءك", "امسح. أجب. انتهى.", "سعر واحد واضح", "أسئلة يطرحها أصحاب الأعمال"]) {
       await expect(page.getByRole("heading", { level: 2, name: heading })).toBeVisible();
     }

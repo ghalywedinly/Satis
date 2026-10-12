@@ -1,7 +1,7 @@
-import { ArrowDown, Bell, Star } from "lucide-react";
+import { ArrowDown, Bell, Check, Star } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { SatisMark } from "@/components/brand/satis-mark";
-import { OutlinedCard, OutlinedPill } from "@/components/brand/slice";
+import { OutlinedCard, OutlinedPill, SliceHighlight } from "@/components/brand/slice";
 import { Button } from "@/components/ui/button";
 import { formatNumber, formatPercent } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";
@@ -15,13 +15,19 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-sand">
       <div className="mx-auto grid w-full max-w-[1216px] items-center gap-12 px-4 pt-10 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-16 lg:pb-24">
-        <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <span className="eyebrow !text-ink-300">{t("eyebrow")}</span>
-          <h1 className="text-[clamp(40px,5vw,68px)] leading-[1.04] font-extrabold tracking-[-0.045em] text-sand">{t("headline")}</h1>
-          <p className="font-display text-2xl font-bold text-zest sm:text-3xl">{t("tagline")}</p>
-          <p className="max-w-[520px] text-lg leading-relaxed text-ink-200 sm:text-[19px]">{t("body")}</p>
+        <div className="flex flex-col items-start gap-7 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <span className="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-800 py-1.5 ps-2 pe-3.5 text-sm font-semibold text-ink-200">
+            <span aria-hidden className="inline-flex">
+              <SatisMark tone="sand" className="h-4 w-auto" />
+            </span>
+            {t("eyebrow")}
+          </span>
+          <h1 className="max-w-[12ch] text-[clamp(46px,6.4vw,84px)] leading-[1.02] font-extrabold tracking-[-0.045em] text-sand">
+            {t.rich("headline", { hl: (chunks) => <SliceHighlight tone="ultra" className="mt-2 px-[0.25em] pb-[0.06em]">{chunks}</SliceHighlight> })}
+          </h1>
+          <p className="max-w-[460px] text-lg leading-relaxed text-ink-200 sm:text-xl">{t("body")}</p>
           <div className="flex flex-wrap gap-3">
-            <Button asChild className="h-14 rounded-[12px] bg-zest px-7 text-[17px] font-bold text-ink hover:bg-zest-500">
+            <Button asChild className="h-14 rounded-[12px] bg-zest px-8 text-[17px] font-bold text-ink hover:bg-zest-500">
               <Link href="/signup">{t("primaryCta")}</Link>
             </Button>
             <Button
@@ -35,7 +41,14 @@ export function Hero() {
               </a>
             </Button>
           </div>
-          <p className="text-sm text-ink-300">{t("heroNote")}</p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-ink-300">
+            {(["noCard", "fast", "bilingual"] as const).map((point) => (
+              <li key={point} className="flex items-center gap-1.5">
+                <Check aria-hidden strokeWidth={2} className="size-4 text-mint" />
+                {t(`heroPoints.${point}`)}
+              </li>
+            ))}
+          </ul>
         </div>
         <HeroVisual />
       </div>
