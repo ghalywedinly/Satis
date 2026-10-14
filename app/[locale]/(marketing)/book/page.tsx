@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { ArrowLeft, Clock, Globe, Languages, Video } from "lucide-react";
+import { connection } from "next/server";
 import { getTranslations } from "next-intl/server";
 import { SatisLogo } from "@/components/brand/satis-mark";
 import { SliceHighlight } from "@/components/brand/slice";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { formatCount } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";
+import { isSupabaseConfigured } from "@/lib/env/public";
 import { resolveLocale } from "@/lib/i18n/server";
 import { reportError } from "@/lib/observability/errors";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -25,11 +27,13 @@ export default async function BookPage({ params }: PageProps<"/[locale]/book">) 
   const t = await getTranslations({ locale, namespace: "booking" });
   const minutes = formatCount(locale, MEETING_MINUTES);
 
+  // Times depend on the current moment and on bookings: always render per request.
+  await connection();
   const now = new Date();
   const days = bookingDays(now);
   const range = bookingWindow(days);
   let taken: string[] = [];
-  if (range) {
+  if (range && isSupabaseConfigured()) {
     const supabase = await createSupabaseServerClient();
     const { data, error } = await supabase.rpc("booked_meeting_slots", { p_from: range.from, p_to: range.to });
     // Without the list, every time still shows; the database refuses a taken one on submit.
