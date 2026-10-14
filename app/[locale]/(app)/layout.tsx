@@ -39,8 +39,12 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
 
   return (
     <div className="app-glass relative isolate flex min-h-dvh flex-col">
-      {/* Fixed brand wash behind the glass, with a faint giant mark cropped off the edge. */}
+      {/* Fixed brand wash behind the glass: drifting blurred colour blobs and a faint giant mark. */}
       <div aria-hidden className="app-backdrop fixed inset-0 -z-10 overflow-hidden print:hidden">
+        <div className="app-blob -top-[18vh] -end-[10vw] h-[60vh] w-[55vw] bg-ultramarine/45" />
+        <div className="app-blob top-[25vh] -start-[15vw] h-[55vh] w-[45vw] bg-ember/35 [animation-delay:-8s]" />
+        <div className="app-blob -bottom-[20vh] end-[15vw] h-[55vh] w-[50vw] bg-zest/40 [animation-delay:-15s]" />
+        <div className="app-blob top-[45vh] start-[30vw] h-[40vh] w-[35vw] bg-grape/25 [animation-delay:-4s]" />
         <Supergraphic colors={["#2B3AF3", "#FF6B4A", "#2B3AF3"]} className="-end-24 -bottom-24 h-[70vh] w-[46vh] opacity-[0.06] rtl:-scale-x-100" />
       </div>
       <AnalyticsIdentity userId={user.id} />

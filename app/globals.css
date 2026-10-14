@@ -249,24 +249,36 @@
  */
 .app-backdrop {
   background-color: var(--color-sand-50);
-  background-image:
-    radial-gradient(60rem 40rem at 100% -10%, rgb(43 58 243 / 0.22), transparent 60%),
-    radial-gradient(44rem 32rem at -10% 30%, rgb(255 107 74 / 0.16), transparent 60%),
-    radial-gradient(40rem 30rem at 70% 105%, rgb(255 207 40 / 0.18), transparent 60%),
-    radial-gradient(36rem 28rem at 15% 100%, rgb(139 87 196 / 0.12), transparent 60%);
+  background-image: linear-gradient(135deg, #f4f5ff 0%, var(--color-sand-50) 40%, #fff4ef 75%, #fffaf0 100%);
+}
+/* Large, heavily blurred colour blobs that drift slowly behind the glass. */
+.app-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+  animation: blob-drift 26s ease-in-out infinite alternate;
+}
+@keyframes blob-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4vw, -3vh, 0) scale(1.08); }
+  100% { transform: translate3d(-3vw, 4vh, 0) scale(0.96); }
 }
 @utility glass {
-  background-color: rgb(255 255 255 / 0.72);
-  border-color: rgb(255 255 255 / 0.85);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  backdrop-filter: blur(20px) saturate(1.5);
+  background-color: rgb(255 255 255 / 0.58);
+  border-color: rgb(255 255 255 / 0.75);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  backdrop-filter: blur(28px) saturate(1.8);
+  /* A thin light rim along the top edge, like real glass. */
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
 }
 /* Cards inside the app become glass too. */
 .app-glass [data-slot="card"] {
-  background-color: rgb(255 255 255 / 0.72);
-  border-color: rgb(255 255 255 / 0.85);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  backdrop-filter: blur(20px) saturate(1.5);
+  background-color: rgb(255 255 255 / 0.58);
+  border-color: rgb(255 255 255 / 0.75);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  backdrop-filter: blur(28px) saturate(1.8);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
 }
 
 /* Scroll reveal (components/marketing/motion.tsx). Hidden only once armed by script. */
