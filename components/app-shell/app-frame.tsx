@@ -58,7 +58,7 @@ export function AppFrame({
       >
         <div className={cn("flex items-center pt-1", collapsed ? "justify-center" : "justify-between ps-2")}>
           <Link href="/dashboard" aria-label={t("appName")} className="rounded-control p-1 outline-none focus-visible:shadow-focus">
-            {collapsed ? <SatisMark tone="ink-ultra" className="h-7" /> : <SatisLogo tone="ink-ultra" locale={locale} size={26} />}
+            {collapsed ? <SatisMark tone="ink" className="h-7" /> : <SatisLogo tone="ink" locale={locale} size={26} />}
           </Link>
         </div>
 
@@ -102,7 +102,7 @@ export function AppFrame({
         <div className="flex items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-1.5">
             <Link href="/dashboard" aria-label={t("appName")} className="shrink-0 rounded-control p-1 outline-none focus-visible:shadow-focus">
-              <SatisMark tone="ink-ultra" className="h-6" />
+              <SatisMark tone="ink" className="h-6" />
             </Link>
             <div className="min-w-0 max-w-56">
               <OrgSwitcher current={current} organizations={organizations} />
