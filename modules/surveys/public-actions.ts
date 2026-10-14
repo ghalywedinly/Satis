@@ -1,12 +1,14 @@
 "use server";
 
 import { headers } from "next/headers";
+import { after } from "next/server";
 import { z } from "zod";
 import { captureServerEvent } from "@/lib/observability/analytics";
 import { reportError } from "@/lib/observability/errors";
 import { clientIp, consumeRateLimit } from "@/lib/rate-limit";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import type { Coupon } from "@/modules/coupons/definition";
+import { sendNegativeAlert } from "@/modules/notifications/alerts";
 import { answersSchema } from "./schemas";
 
 export type SubmitResult = { ok: true; coupon?: Coupon } | { error: "generic" | "changed" | "rateLimited" | "unavailable" };
@@ -63,6 +65,8 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
   }
 
   captureServerEvent("survey_completed", data.submissionId, { locale: data.locale, device_type: device });
+  // Unhappy customer? Tell the team, after the customer's thank-you screen is on its way.
+  if (typeof responseId === "string") after(() => sendNegativeAlert(responseId));
 
   // The reward, if the business offers one. Its failure must never lose the customer's answers.
   const { data: coupon, error: couponError } = await supabase.rpc("issue_coupon", { p_response_id: responseId });

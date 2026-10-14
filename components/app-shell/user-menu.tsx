@@ -1,6 +1,6 @@
 "use client";
 
-import { LogOut, UserRound } from "lucide-react";
+import { BellRing, LogOut, UserRound } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +11,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "@/lib/i18n/navigation";
 import { resetClientIdentity } from "@/lib/observability/client";
 import { logOut } from "@/modules/auth/actions";
 
 export function UserMenu({ name, email, expanded = false, side }: { name: string | null; email: string | null; expanded?: boolean; side?: "top" | "bottom" }) {
   const t = useTranslations("common");
   const locale = useLocale();
+  const router = useRouter();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -50,6 +52,10 @@ export function UserMenu({ name, email, expanded = false, side }: { name: string
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => router.push("/notifications")}>
+          <BellRing aria-hidden strokeWidth={1.75} />
+          {t("nav.notifications")}
+        </DropdownMenuItem>
         <DropdownMenuItem
           onSelect={() => {
             resetClientIdentity();

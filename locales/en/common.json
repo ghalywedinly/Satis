@@ -17,7 +17,8 @@
     "coupons": "Rewards",
     "unreadBadge": "unread",
     "collapse": "Collapse menu",
-    "expand": "Expand menu"
+    "expand": "Expand menu",
+    "notifications": "Notifications"
   },
   "actions": {
     "logIn": "Log in",

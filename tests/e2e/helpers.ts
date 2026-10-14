@@ -13,6 +13,12 @@ export const latestAuthLink = (to: string) => latestEmailLink(to, /https?:\/\/[^
 /** Latest team invitation link sent to `to`. */
 export const latestInviteLink = (to: string) => latestEmailLink(to, /https?:\/\/[^\s"'<>]+\/invite\/[A-Za-z0-9_-]{43}/);
 
+/** Latest unhappy-customer alert sent to `to`: the link to that response in the inbox. */
+export const latestAlertLink = (to: string) => latestEmailLink(to, /https?:\/\/[^\s"'<>]+\/inbox\/[0-9a-f-]{36}/);
+
+/** How many emails the app has sent to `to` (dev outbox only). */
+export const emailCount = async (to: string) => (await fromOutbox(to)).length;
+
 /**
  * Polls for up to 15s for an email to `to` containing a link matching `pattern`. Emails sent by the
  * app are read from its dev outbox (E2E_EMAIL_OUTBOX); emails sent by Supabase from Mailpit (MAILPIT_URL).
@@ -109,8 +115,8 @@ export const currentBusiness = (page: Page, name: string) =>
   page.getByRole("button", { name: new RegExp(`(Current business|النشاط التجاري الحالي): ${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`) });
 
 /** New owner who goes through all 7 onboarding steps, including the first survey. Returns its public URL. */
-export async function onboardWithSurvey(page: Page, localePrefix: "" | "/en", business: string) {
-  await signUpAndVerify(page, { email: uniqueEmail("survey-owner"), name: "Owner", localePrefix });
+export async function onboardWithSurvey(page: Page, localePrefix: "" | "/en", business: string, email = uniqueEmail("survey-owner")) {
+  await signUpAndVerify(page, { email, name: "Owner", localePrefix });
   const en = localePrefix === "/en";
   await page.getByRole("button", { name: en ? "Start setup" : "ابدأ الإعداد" }).click();
   await page.locator('input[name="name"]').fill(business);

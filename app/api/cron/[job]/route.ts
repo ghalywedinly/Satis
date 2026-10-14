@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { serverEnv } from "@/lib/env/server";
 import { reportError } from "@/lib/observability/errors";
 import { analyzePending, generateWeeklySummaries } from "@/modules/ai/jobs";
+import { sendWeeklyReports } from "@/modules/notifications/weekly";
 
 // AI calls can take a while; Vercel stops the function at this limit.
 export const maxDuration = 60;
@@ -10,8 +11,14 @@ export const maxDuration = 60;
 const JOBS = {
   // Daily: analyse new comments, oldest first.
   "ai-analyze": () => analyzePending({ limit: 120 }),
-  // Weekly: analyse what's left, then summarise the week for every business.
-  "ai-weekly-summary": async () => ({ analyze: await analyzePending({ limit: 80 }), summaries: await generateWeeklySummaries() }),
+  // Sunday morning (Riyadh): analyse what's left, summarise the week, then email each team its report.
+  // The report goes out even when AI isn't set up; it just has no AI summary then.
+  "ai-weekly-summary": async () => {
+    const analyze = await analyzePending({ limit: 80 });
+    const summaries = await generateWeeklySummaries();
+    const reports = await sendWeeklyReports();
+    return { analyze, summaries, reports };
+  },
 } as const;
 
 /** Vercel Cron sends `Authorization: Bearer $CRON_SECRET`. Anything else is turned away. */

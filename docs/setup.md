@@ -30,6 +30,17 @@ Staging and production refuse to start if a required variable is missing (`lib/e
 Verify the sending domain (DNS records), create an API key, and set `RESEND_API_KEY` and
 `EMAIL_FROM` (for example `Satis <no-reply@your-domain>`).
 
+Besides sign-in emails, Resend sends team notifications (`modules/notifications`):
+
+- **Unhappy-customer alerts**: right after a response with a low rating (CSAT 1–2, or NPS 0–6 when
+  there is no rating), at most 20 per business per hour.
+- **Weekly report**: Sunday morning, from the same cron job as the AI weekly summary
+  (`/api/cron/ai-weekly-summary`, which needs `CRON_SECRET`). Sent to businesses with responses
+  that week; it includes the AI summary when AI is configured.
+
+Owners, admins and managers get both by default; each member can change their own choice on the
+Notifications page (account menu).
+
 ## 3. Sentry and PostHog
 
 - Sentry: create a Next.js project; set `NEXT_PUBLIC_SENTRY_DSN`. For readable stack traces, also set

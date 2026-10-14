@@ -35,5 +35,38 @@
     "heading": "Join {organization}",
     "body": "{inviter} invited you to join {organization} on Satis as {role}. The invitation expires in 7 days.",
     "button": "Accept invitation"
+  },
+  "notifications": {
+    "footer": "You get this email as a member of {business} on Satis.",
+    "manage": "Change your notification settings"
+  },
+  "negativeAlert": {
+    "subject": "Unhappy customer at {location}",
+    "eyebrow": "Alert · {business}",
+    "heading": "An unhappy customer at {location}",
+    "rating": "They rated their visit {score} out of 5.",
+    "nps": "They gave a recommendation score of {score} out of 10.",
+    "when": "Answered {time}.",
+    "comment": "What they wrote",
+    "button": "Open the feedback"
+  },
+  "weeklyReport": {
+    "subject": "Your week at {business}: {count} responses",
+    "eyebrow": "Weekly report · {from} – {to}",
+    "heading": "Your week at {business}",
+    "intro": "Here is how customers felt over the last 7 days, compared with the week before.",
+    "responses": "Responses",
+    "csat": "Customer satisfaction (CSAT)",
+    "nps": "Net Promoter Score (NPS)",
+    "comments": "Written comments",
+    "openUnhappy": "Unhappy customers waiting",
+    "up": "up {value}",
+    "down": "down {value}",
+    "same": "no change",
+    "points": "{value} pts",
+    "topBranch": "Top branch: {name}, {percent} satisfied.",
+    "lowestBranch": "Needs attention: {name}, {percent} satisfied.",
+    "aiLabel": "AI summary of the week",
+    "button": "Open the dashboard"
   }
 }

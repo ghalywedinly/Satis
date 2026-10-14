@@ -35,5 +35,38 @@
     "heading": "انضم إلى {organization}",
     "body": "دعاك {inviter} للانضمام إلى {organization} على ساتيس بصلاحية {role}. تنتهي الدعوة خلال 7 أيام.",
     "button": "اقبل الدعوة"
+  },
+  "notifications": {
+    "footer": "وصلك هذا البريد لأنك عضو في {business} على ساتيس.",
+    "manage": "غيّر إعدادات التنبيهات"
+  },
+  "negativeAlert": {
+    "subject": "عميل غير راضٍ في {location}",
+    "eyebrow": "تنبيه · {business}",
+    "heading": "عميل غير راضٍ في {location}",
+    "rating": "قيّم زيارته بـ {score} من 5.",
+    "nps": "أعطى درجة توصية {score} من 10.",
+    "when": "وصل الرأي {time}.",
+    "comment": "ما كتبه العميل",
+    "button": "افتح الرأي"
+  },
+  "weeklyReport": {
+    "subject": "أسبوعك في {business}: {count} إجابة",
+    "eyebrow": "التقرير الأسبوعي · {from} – {to}",
+    "heading": "أسبوعك في {business}",
+    "intro": "هذا ما شعر به عملاؤك خلال آخر 7 أيام، مقارنة بالأسبوع الذي قبله.",
+    "responses": "الإجابات",
+    "csat": "رضا العملاء (CSAT)",
+    "nps": "صافي نقاط الترويج (NPS)",
+    "comments": "التعليقات المكتوبة",
+    "openUnhappy": "عملاء غير راضين بانتظار المتابعة",
+    "up": "ارتفاع {value}",
+    "down": "انخفاض {value}",
+    "same": "بدون تغيير",
+    "points": "{value} نقطة",
+    "topBranch": "الفرع الأفضل: {name}، بنسبة رضا {percent}.",
+    "lowestBranch": "يحتاج انتباهك: {name}، بنسبة رضا {percent}.",
+    "aiLabel": "ملخص الأسبوع بالذكاء الاصطناعي",
+    "button": "افتح لوحة التحكم"
   }
 }
