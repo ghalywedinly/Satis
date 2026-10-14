@@ -29,6 +29,7 @@ export function RatingSlices({
   max = 5,
   size = "md",
   onDark = false,
+  label,
   onChange,
   className,
 }: {
@@ -36,23 +37,33 @@ export function RatingSlices({
   max?: number;
   size?: "sm" | "md" | "lg";
   onDark?: boolean;
+  /** Accessible name for the scale, e.g. the question text (translated by the caller). */
+  label: string;
   onChange?: (v: number) => void;
   className?: string;
 }) {
   const h = { sm: "h-2.5", md: "h-3.5", lg: "h-[18px]" }[size];
   const clip = { sm: "slice-sm", md: "slice-md", lg: "slice-lg" }[size];
   return (
-    <div role={onChange ? "radiogroup" : "img"} aria-label={`Rating ${value} of ${max}`} className={cn("flex gap-1", className)}>
+    <div role={onChange ? "radiogroup" : "img"} aria-label={label} className={cn("flex gap-1", className)}>
       {Array.from({ length: max }, (_, i) => {
         const n = i + 1;
         const color = n === value ? "bg-zest" : n < value ? "bg-ultramarine" : onDark ? "bg-ink-700" : "bg-ink-100";
-        const El = onChange ? "button" : "div";
+        const slice = <span className={cn("block transition-colors duration-[140ms] ease-[var(--ease-standard)]", h, clip, color)} />;
+        if (!onChange) return <div key={n} className="flex-1">{slice}</div>;
+        // The visible slice is thin; the button's vertical padding gives a 44px-class touch target.
         return (
-          <El
+          <button
             key={n}
-            {...(onChange ? { type: "button", role: "radio", "aria-checked": n === value, "aria-label": `${n}`, onClick: () => onChange(n) } : {})}
-            className={cn("flex-1 transition-colors duration-[140ms] ease-[var(--ease-standard)]", h, clip, color)}
-          />
+            type="button"
+            role="radio"
+            aria-checked={n === value}
+            aria-label={`${n}`}
+            onClick={() => onChange(n)}
+            className="-my-4 flex-1 cursor-pointer rounded-xs py-4 outline-none focus-visible:shadow-focus"
+          >
+            {slice}
+          </button>
         );
       })}
     </div>
@@ -86,7 +97,7 @@ export function OutlinedCard({ children, className }: { children: React.ReactNod
 /** Pill tag with ink outline, for floating labels such as "Top rated store". */
 export function OutlinedPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white py-1.5 pl-2.5 pr-3.5 text-sm font-semibold text-ink", className)}>
+    <span className={cn("inline-flex items-center gap-2 rounded-full border-2 border-ink bg-white py-1.5 ps-2.5 pe-3.5 text-sm font-semibold text-ink", className)}>
       {children}
     </span>
   );
