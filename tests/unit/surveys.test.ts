@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { publishIssues, textIn, unansweredRequired, type Question, type SurveyDraft } from "@/modules/surveys/definition";
+import { DEFAULT_THEME, THEME_PRESETS, publishIssues, textIn, themeOf, unansweredRequired, type Question, type SurveyDraft } from "@/modules/surveys/definition";
 import { newPublicCode } from "@/modules/surveys/links";
 import { answersSchema, draftSchema } from "@/modules/surveys/schemas";
 
@@ -16,7 +16,7 @@ const choice: Question = {
     { id: id(4), label: { ar: "ب" } },
   ],
 };
-const draft: SurveyDraft = { name: "S", locales: ["ar", "en"], defaultLocale: "ar", questions: [rating, choice], thankYou: {} };
+const draft: SurveyDraft = { name: "S", locales: ["ar", "en"], defaultLocale: "ar", questions: [rating, choice], thankYou: {}, theme: DEFAULT_THEME };
 
 describe("publishing rules", () => {
   it("requires text in every enabled language", () => {
@@ -63,5 +63,18 @@ describe("draft validation", () => {
 describe("public codes", () => {
   it("are 8 unambiguous characters", () => {
     for (let i = 0; i < 200; i++) expect(newPublicCode()).toMatch(/^[2-9a-km-zA-HJ-NP-Z]{8}$/);
+  });
+});
+
+describe("survey design", () => {
+  it("fills in defaults for versions published before themes existed", () => {
+    expect(themeOf(undefined)).toEqual(DEFAULT_THEME);
+    expect(themeOf({ accent: "mint" })).toEqual({ ...DEFAULT_THEME, accent: "mint" });
+  });
+
+  it("accepts every preset and rejects unknown values", () => {
+    for (const theme of Object.values(THEME_PRESETS)) expect(draftSchema.safeParse({ ...draft, theme }).success).toBe(true);
+    expect(draftSchema.safeParse({ ...draft, theme: { ...DEFAULT_THEME, accent: "pink" } }).success).toBe(false);
+    expect(draftSchema.safeParse({ ...draft, theme: { ...DEFAULT_THEME, ratingStyle: "thumbs" } }).success).toBe(false);
   });
 });

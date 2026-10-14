@@ -59,6 +59,41 @@
       "missingTitle": "السؤال {number}: اكتب النص باللغة {language}.",
       "tooFewOptions": "السؤال {number}: أضف خيارين على الأقل.",
       "missingOption": "السؤال {number}، الخيار {option}: اكتب النص باللغة {language}."
+    },
+    "design": {
+      "title": "التصميم",
+      "hint": "اختر شكل الاستبيان لعملائك. تظهر التغييرات في المعاينة مباشرة.",
+      "presets": "تصاميم جاهزة",
+      "preset": {
+        "classic": "كلاسيكي",
+        "warm": "دافئ",
+        "fresh": "منعش",
+        "night": "ليلي",
+        "playful": "مرح"
+      },
+      "accent": "اللون",
+      "accents": {
+        "ultramarine": "أزرق",
+        "ember": "مرجاني",
+        "mint": "أخضر",
+        "grape": "بنفسجي",
+        "ink": "أسود"
+      },
+      "background": "الخلفية",
+      "backgrounds": {
+        "sand": "رملي",
+        "white": "أبيض",
+        "ink": "داكن",
+        "tint": "ملوّن"
+      },
+      "ratingStyle": "شكل التقييم",
+      "ratingStyles": {
+        "slices": "شرائح",
+        "stars": "نجوم",
+        "faces": "وجوه",
+        "numbers": "أرقام",
+        "hearts": "قلوب"
+      }
     }
   },
   "types": {

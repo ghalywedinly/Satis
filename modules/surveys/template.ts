@@ -2,7 +2,7 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import { getTranslations } from "next-intl/server";
 import type { Locale } from "@/lib/i18n/routing";
-import type { SurveyDraft } from "./definition";
+import { DEFAULT_THEME, type SurveyDraft } from "./definition";
 
 const OPTION_KEYS = ["service", "staff", "speed", "cleanliness", "value"] as const;
 
@@ -31,5 +31,6 @@ export async function buildTemplateDraft(defaultLocale: Locale): Promise<SurveyD
       { id: randomUUID(), type: "text", required: false, title: both("comment") },
     ],
     thankYou: both("thankYou"),
+    theme: DEFAULT_THEME,
   };
 }

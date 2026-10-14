@@ -24,6 +24,34 @@ export type Question =
   | (Base & { type: "text" });
 export type ChoiceQuestion = Extract<Question, { type: "single_choice" | "multiple_choice" }>;
 
+/** Brand accents a survey can use for its buttons, selections and rating scale. */
+export const ACCENTS = ["ultramarine", "ember", "mint", "grape", "ink"] as const;
+/** Page grounds: brand Sand, plain white, dark Ink, or a soft tint of the accent. */
+export const BACKGROUNDS = ["sand", "white", "ink", "tint"] as const;
+/** How 1–5 rating questions look. All of them answer with the same 1–5 number. */
+export const RATING_STYLES = ["slices", "stars", "faces", "numbers", "hearts"] as const;
+
+export type SurveyTheme = {
+  accent: (typeof ACCENTS)[number];
+  background: (typeof BACKGROUNDS)[number];
+  ratingStyle: (typeof RATING_STYLES)[number];
+};
+
+export const DEFAULT_THEME: SurveyTheme = { accent: "ultramarine", background: "sand", ratingStyle: "slices" };
+
+/** Ready-made looks the builder offers as a starting point. */
+export const THEME_PRESETS = {
+  classic: DEFAULT_THEME,
+  warm: { accent: "ember", background: "tint", ratingStyle: "faces" },
+  fresh: { accent: "mint", background: "white", ratingStyle: "stars" },
+  night: { accent: "ultramarine", background: "ink", ratingStyle: "numbers" },
+  playful: { accent: "grape", background: "tint", ratingStyle: "hearts" },
+} as const satisfies Record<string, SurveyTheme>;
+export type ThemePreset = keyof typeof THEME_PRESETS;
+
+/** The theme to render, filling gaps from older versions published before themes existed. */
+export const themeOf = (theme: Partial<SurveyTheme> | undefined): SurveyTheme => ({ ...DEFAULT_THEME, ...theme });
+
 /** What the builder saves. Text may be incomplete while editing; publishing checks completeness. */
 export type SurveyDraft = {
   name: string;
@@ -31,6 +59,7 @@ export type SurveyDraft = {
   defaultLocale: Locale;
   questions: Question[];
   thankYou: LocalizedText;
+  theme: SurveyTheme;
 };
 
 /** The frozen, published form of a survey (survey_versions.definition). */
@@ -39,6 +68,8 @@ export type SurveyDefinition = {
   thankYou: LocalizedText;
   locales: Locale[];
   defaultLocale: Locale;
+  /** Absent on versions published before survey design existed. */
+  theme?: Partial<SurveyTheme>;
 };
 
 export type PublishIssue =

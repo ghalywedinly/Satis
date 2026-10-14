@@ -191,6 +191,7 @@ export type Database = {
           locales: Database["public"]["Enums"]["app_locale"][];
           questions: Json;
           thank_you: Json;
+          theme: Json;
           current_version_id: string | null;
           has_unpublished_changes: boolean;
           created_by: string | null;
@@ -204,6 +205,7 @@ export type Database = {
           locales?: Database["public"]["Enums"]["app_locale"][];
           questions?: Json;
           thank_you?: Json;
+          theme?: Json;
           current_version_id?: string | null;
           has_unpublished_changes?: boolean;
           created_by?: string | null;
@@ -217,6 +219,7 @@ export type Database = {
           locales?: Database["public"]["Enums"]["app_locale"][];
           questions?: Json;
           thank_you?: Json;
+          theme?: Json;
           current_version_id?: string | null;
           has_unpublished_changes?: boolean;
           created_by?: string | null;

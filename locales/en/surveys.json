@@ -59,6 +59,41 @@
       "missingTitle": "Question {number}: write the text in {language}.",
       "tooFewOptions": "Question {number}: add at least two options.",
       "missingOption": "Question {number}, option {option}: write the text in {language}."
+    },
+    "design": {
+      "title": "Design",
+      "hint": "Choose how the survey looks to customers. Changes appear in the preview straight away.",
+      "presets": "Ready-made looks",
+      "preset": {
+        "classic": "Classic",
+        "warm": "Warm",
+        "fresh": "Fresh",
+        "night": "Night",
+        "playful": "Playful"
+      },
+      "accent": "Colour",
+      "accents": {
+        "ultramarine": "Blue",
+        "ember": "Coral",
+        "mint": "Green",
+        "grape": "Purple",
+        "ink": "Black"
+      },
+      "background": "Background",
+      "backgrounds": {
+        "sand": "Sand",
+        "white": "White",
+        "ink": "Dark",
+        "tint": "Tinted"
+      },
+      "ratingStyle": "Rating style",
+      "ratingStyles": {
+        "slices": "Slices",
+        "stars": "Stars",
+        "faces": "Faces",
+        "numbers": "Numbers",
+        "hearts": "Hearts"
+      }
     }
   },
   "types": {

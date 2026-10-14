@@ -3,7 +3,7 @@ import { cache } from "react";
 import type { Locale } from "@/lib/i18n/routing";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { loadMessages } from "@/locales";
-import type { LocalizedText, Question, SurveyDraft } from "./definition";
+import { themeOf, type LocalizedText, type Question, type SurveyDraft, type SurveyTheme } from "./definition";
 import type { SurveyLabels } from "./components/survey-form";
 
 /** A survey of the given business (RLS also guarantees the caller belongs to it). */
@@ -12,7 +12,7 @@ export const getSurvey = cache(async (organizationId: string, surveyId: string) 
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from("surveys")
-    .select("id, name, status, default_locale, locales, questions, thank_you, current_version_id, has_unpublished_changes")
+    .select("id, name, status, default_locale, locales, questions, thank_you, theme, current_version_id, has_unpublished_changes")
     .eq("id", surveyId)
     .eq("organization_id", organizationId)
     .maybeSingle();
@@ -28,6 +28,7 @@ export const toDraft = (survey: SurveyRow): SurveyDraft => ({
   defaultLocale: survey.default_locale,
   questions: survey.questions as Question[],
   thankYou: survey.thank_you as LocalizedText,
+  theme: themeOf(survey.theme as Partial<SurveyTheme>),
 });
 
 /** Customer-facing survey text in both languages, for previews in any language. */

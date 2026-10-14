@@ -21,6 +21,7 @@ import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import { publishSurvey, saveSurveyDraft } from "../actions";
 import { LIMITS, QUESTION_TYPES, type PublishIssue, type Question, type QuestionType, type SurveyDraft } from "../definition";
+import { DesignPanel } from "./design-panel";
 import { SurveyForm, type SurveyLabels } from "./survey-form";
 
 const LOCALES: Locale[] = ["ar", "en"];
@@ -110,7 +111,7 @@ export function SurveyBuilder({
     });
 
   const previewDefinition = useMemo(
-    () => ({ questions: draft.questions, thankYou: draft.thankYou, locales: draft.locales, defaultLocale: draft.defaultLocale }),
+    () => ({ questions: draft.questions, thankYou: draft.thankYou, locales: draft.locales, defaultLocale: draft.defaultLocale, theme: draft.theme }),
     [draft],
   );
   const languageName = (locale: Locale) => tl(locale);
@@ -168,6 +169,8 @@ export function SurveyBuilder({
             )}
           </CardContent>
         </Card>
+
+        <DesignPanel theme={draft.theme} disabled={disabled} onChange={(theme) => update({ theme })} />
 
         <section className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">{t("builder.questions")}</h2>
@@ -293,7 +296,7 @@ export function SurveyBuilder({
         <div
           lang={previewLocale}
           dir={previewLocale === "ar" ? "rtl" : "ltr"}
-          className="h-[720px] overflow-y-auto rounded-[36px] border-[8px] border-ink bg-sand"
+          className="h-[720px] overflow-y-auto rounded-[36px] border-[8px] border-ink"
         >
           <SurveyForm
             key={`${previewLocale}-${draft.questions.length}`}

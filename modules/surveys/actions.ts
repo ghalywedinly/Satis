@@ -42,6 +42,7 @@ async function createFromTemplate(locale: Locale) {
       default_locale: draft.defaultLocale,
       questions: draft.questions,
       thank_you: draft.thankYou,
+      theme: draft.theme,
     })
     .select("id")
     .single();
@@ -82,6 +83,7 @@ export async function saveSurveyDraft(locale: Locale, surveyId: string, draft: S
       default_locale: parsed.data.defaultLocale,
       questions: parsed.data.questions,
       thank_you: parsed.data.thankYou,
+      theme: parsed.data.theme,
     })
     .eq("id", surveyId)
     .eq("organization_id", auth.organizationId)

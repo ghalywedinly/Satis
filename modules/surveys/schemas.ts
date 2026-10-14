@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { LIMITS, type Answers, type Question, type SurveyDraft } from "./definition";
+import { ACCENTS, BACKGROUNDS, LIMITS, RATING_STYLES, type Answers, type Question, type SurveyDraft } from "./definition";
 
 const localized = (max: number) =>
   z.object({ ar: z.string().max(max).optional(), en: z.string().max(max).optional() }).strict();
@@ -17,6 +17,10 @@ export const questionSchema: z.ZodType<Question> = z.discriminatedUnion("type", 
 
 const localeSchema = z.enum(["ar", "en"]);
 
+export const themeSchema = z
+  .object({ accent: z.enum(ACCENTS), background: z.enum(BACKGROUNDS), ratingStyle: z.enum(RATING_STYLES) })
+  .strict();
+
 export const draftSchema: z.ZodType<SurveyDraft> = z
   .object({
     name: z.string().trim().min(1).max(120),
@@ -24,6 +28,7 @@ export const draftSchema: z.ZodType<SurveyDraft> = z
     defaultLocale: localeSchema,
     questions: z.array(questionSchema).max(LIMITS.questions),
     thankYou: localized(LIMITS.thankYou),
+    theme: themeSchema,
   })
   .refine((d) => d.locales.includes(d.defaultLocale), { path: ["defaultLocale"] })
   .refine((d) => new Set(d.questions.map((q) => q.id)).size === d.questions.length, { path: ["questions"] });
