@@ -2,7 +2,7 @@
   "eyebrow": "Customer satisfaction platform",
   "headline": "Customer satisfaction, <hl>measured.</hl>",
   "body": "Customers scan a QR code and rate their visit in seconds. You see how every branch is doing, and what to fix first.",
-  "primaryCta": "Start free",
+  "primaryCta": "Book a meeting",
   "secondaryCta": "See how it works",
   "nav": {
     "label": "Page sections",
@@ -11,7 +11,7 @@
     "pricing": "Pricing",
     "faq": "FAQ",
     "logIn": "Log in",
-    "start": "Start free",
+    "start": "Book a meeting",
     "home": "Satis home"
   },
   "mock": {
@@ -165,7 +165,7 @@
       "team": "Invite your team with roles",
       "support": "Arabic-first experience"
     },
-    "cta": "Start free",
+    "cta": "Book a meeting",
     "note": "Early access: start free now. We'll tell you before billing starts."
   },
   "faq": {
@@ -200,8 +200,8 @@
   },
   "finalCta": {
     "title": "Start listening to your customers today",
-    "body": "Create your account and publish your first survey in minutes.",
-    "primary": "Start free",
+    "body": "Book a 30-minute call and we'll set up your first survey with you.",
+    "primary": "Book a meeting",
     "secondary": "Log in"
   },
   "footer": {
@@ -212,7 +212,7 @@
   },
   "tagline": "Satisfaction, measured.",
   "heroPoints": {
-    "noCard": "No card needed",
+    "noCard": "Free 30-minute call",
     "fast": "Set up in minutes",
     "bilingual": "Arabic and English"
   }

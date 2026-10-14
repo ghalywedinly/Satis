@@ -31,6 +31,8 @@ export const serverEnvSchema = z.object({
   ANTHROPIC_API_KEY: optional(z.string().min(1)),
   /** Shared secret Vercel Cron sends to /api/cron/* routes. */
   CRON_SECRET: optional(z.string().min(16)),
+  /** Where "Book a meeting" requests are sent. Without it, bookings are only stored. */
+  BOOKING_NOTIFY_EMAIL: optional(z.email()),
   EMAIL_OUTBOX_DIR: optional(z.string()),
   /** Development only: turns off rate limiting for automated tests. Rejected in staging/production. */
   RATE_LIMIT_DISABLED: z.preprocess((v) => v === "true", z.boolean()).default(false),

@@ -18,6 +18,8 @@ export const RATE_LIMITS = {
   aiManual: { limit: 5, windowSeconds: 3600 },
   // Unhappy-customer emails per business, so a burst of bad ratings can't flood an inbox.
   negativeAlert: { limit: 20, windowSeconds: 3600 },
+  // "Book a meeting" on the public site, per visitor address.
+  meetingBooking: { limit: 5, windowSeconds: 3600 },
 } satisfies Record<string, RateLimitRule>;
 
 /**

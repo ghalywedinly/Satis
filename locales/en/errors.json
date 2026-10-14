@@ -32,5 +32,6 @@
   "couponAlreadyRedeemed": "This code has already been used.",
   "couponExpired": "This code has expired.",
   "offerActiveExists": "This survey already has an active reward. Pause it before starting another.",
-  "aiNotConfigured": "AI analysis isn't set up yet."
+  "aiNotConfigured": "AI analysis isn't set up yet.",
+  "slotTaken": "Someone just booked that time. Pick another one."
 }

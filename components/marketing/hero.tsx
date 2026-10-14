@@ -28,7 +28,7 @@ export function Hero() {
           <p className="max-w-[460px] text-lg leading-relaxed text-ink-200 sm:text-xl">{t("body")}</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="h-14 rounded-[12px] bg-zest px-8 text-[17px] font-bold text-ink hover:bg-zest-500">
-              <Link href="/signup">{t("primaryCta")}</Link>
+              <Link href="/book">{t("primaryCta")}</Link>
             </Button>
             <Button
               asChild

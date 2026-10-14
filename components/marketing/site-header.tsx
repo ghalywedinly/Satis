@@ -52,7 +52,7 @@ export function SiteHeader() {
             <Link href="/login">{t("logIn")}</Link>
           </Button>
           <Button asChild className="hidden h-[42px] bg-sand text-ink hover:bg-sand-200 sm:inline-flex">
-            <Link href="/signup">{t("start")}</Link>
+            <Link href="/book">{t("start")}</Link>
           </Button>
         </div>
       </div>

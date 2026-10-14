@@ -68,5 +68,39 @@
     "lowestBranch": "Needs attention: {name}, {percent} satisfied.",
     "aiLabel": "AI summary of the week",
     "button": "Open the dashboard"
+  },
+  "booking": {
+    "visitor": {
+      "subject": "Your Satis meeting: {date}",
+      "eyebrow": "Meeting booked",
+      "heading": "See you soon, {name}",
+      "intro": "Thanks for booking a call with Satis. Here are the details.",
+      "when": "When",
+      "length": "Length",
+      "lengthValue": "{minutes} minutes, video call",
+      "company": "Company",
+      "link": "We'll email you the video link before the call.",
+      "button": "Add to Google Calendar",
+      "footer": "You booked this meeting on the Satis website."
+    },
+    "team": {
+      "subject": "New meeting: {company}, {date}",
+      "eyebrow": "Book a meeting",
+      "heading": "{name} booked a call",
+      "intro": "A visitor booked a meeting from the website.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Mobile",
+      "company": "Company",
+      "when": "When",
+      "language": "Language",
+      "button": "Add to Google Calendar",
+      "calendarTitle": "Satis meeting: {company}",
+      "footer": "Sent because someone booked a meeting on the Satis website.",
+      "languages": {
+        "ar": "Arabic",
+        "en": "English"
+      }
+    }
   }
 }

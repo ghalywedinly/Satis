@@ -9,5 +9,7 @@
   "percentRange": "Enter a percentage from 1 to 100.",
   "amountRange": "Enter an amount from 1 to 10,000 SAR.",
   "daysRange": "Enter a number of days from 1 to 365.",
-  "limitRange": "Enter a whole number, or leave it empty for no limit."
+  "limitRange": "Enter a whole number, or leave it empty for no limit.",
+  "pickTime": "Pick a day and time.",
+  "phone": "Enter a valid mobile number."
 }

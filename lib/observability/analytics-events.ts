@@ -20,5 +20,6 @@ export type AnalyticsEvent =
   | "inbox_viewed"
   | "response_triaged"
   | "response_tagged"
+  | "meeting_booked"
   | "upgrade_clicked"
   | "subscription_started";

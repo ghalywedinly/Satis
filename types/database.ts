@@ -431,6 +431,12 @@ export type Database = {
         Update: never;
         Relationships: [];
       };
+      meeting_requests: {
+        Row: { id: string; starts_at: string; full_name: string; email: string; phone: string; company: string; locale: Database["public"]["Enums"]["app_locale"]; created_at: string };
+        Insert: { id?: string; starts_at: string; full_name: string; email: string; phone: string; company: string; locale?: Database["public"]["Enums"]["app_locale"] };
+        Update: never;
+        Relationships: [];
+      };
       notification_preferences: {
         Row: { organization_id: string; user_id: string; negative_alerts: boolean; weekly_report: boolean; updated_at: string };
         Insert: { organization_id: string; user_id: string; negative_alerts: boolean; weekly_report: boolean; updated_at?: string };
@@ -606,6 +612,7 @@ export type Database = {
       };
       add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
       issue_coupon: { Args: { p_response_id: string }; Returns: Json };
+      booked_meeting_slots: { Args: { p_from: string; p_to: string }; Returns: string[] };
       notification_recipients: {
         Args: { p_organization_id: string; p_kind: "negative_alert" | "weekly_report" };
         Returns: { user_id: string; email: string; locale: Database["public"]["Enums"]["app_locale"]; full_name: string | null }[];

@@ -1,6 +1,6 @@
 import { Body, Button, Column, Container, Head, Heading, Html, Link, Preview, Row, Section, Text } from "@react-email/components";
 
-export type Stat = { label: string; value: string; change?: { text: string; tone: "good" | "bad" | "neutral" } };
+export type Stat = { label: string; value: string; /** For emails, phone numbers and codes inside Arabic. */ ltr?: boolean; change?: { text: string; tone: "good" | "bad" | "neutral" } };
 
 export type NotificationEmailProps = {
   locale: "ar" | "en";
@@ -63,7 +63,7 @@ export function NotificationEmail({ locale, appName, eyebrow, heading, tone, lin
                     <Row key={stat.label} style={{ borderBottom: `1px solid ${colors.border}` }}>
                       <Column style={{ padding: "10px 0", fontSize: 14, color: colors.muted, textAlign: align }}>{stat.label}</Column>
                       <Column style={{ padding: "10px 0", fontSize: 16, fontWeight: 700, color: colors.ink, textAlign: rtl ? "left" : "right" }}>
-                        {stat.value}
+                        {stat.ltr ? <span dir="ltr">{stat.value}</span> : stat.value}
                         {stat.change && (
                           <span
                             style={{

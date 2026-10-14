@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.describe("landing page", () => {
-  test("Arabic landing page: sections, pricing and sign-up", async ({ page }) => {
+  test("Arabic landing page: sections, pricing and booking", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("رضا عملائك، بالأرقام.");
     for (const heading of ["من رمز QR إلى قرار، في أربع خطوات", "كل ما تحتاجه لتسمع عملاءك", "امسح. أجب. انتهى.", "سعر واحد واضح", "أسئلة يطرحها أصحاب الأعمال"]) {
@@ -11,8 +11,8 @@ test.describe("landing page", () => {
     // FAQ answers open on demand.
     await page.getByText("هل يحتاج عملائي إلى تنزيل تطبيق؟").click();
     await expect(page.getByText("لا. يمسح العميل رمز QR بكاميرا الجوال")).toBeVisible();
-    await page.locator("main").getByRole("link", { name: "ابدأ مجانًا" }).first().click();
-    await expect(page).toHaveURL(/\/signup$/);
+    await page.locator("main").getByRole("link", { name: "احجز موعدًا" }).first().click();
+    await expect(page).toHaveURL(/\/book$/);
   });
 
   test("English landing page links to sections and log in", async ({ page }) => {

@@ -41,6 +41,11 @@ Besides sign-in emails, Resend sends team notifications (`modules/notifications`
 Owners, admins and managers get both by default; each member can change their own choice on the
 Notifications page (account menu).
 
+- **Book a meeting**: visitors book a 30-minute call from the website (`/book`, `modules/meetings`).
+  They get a confirmation email; set `BOOKING_NOTIFY_EMAIL` to receive each booking too. Bookings
+  are stored in `meeting_requests` (server-only; view them in the Supabase table editor). Times
+  offered are Sunday to Thursday, 10:00–17:00 Saudi time (`modules/meetings/slots.ts`).
+
 ## 3. Sentry and PostHog
 
 - Sentry: create a Next.js project; set `NEXT_PUBLIC_SENTRY_DSN`. For readable stack traces, also set

@@ -504,7 +504,7 @@ export function Pricing() {
               ))}
             </ul>
             <Button asChild size="lg" className="h-14 rounded-[12px] text-base">
-              <Link href="/signup">{t("cta")}</Link>
+              <Link href="/book">{t("cta")}</Link>
             </Button>
             <p className="rounded-[12px] bg-sand-100 px-4 py-3 text-sm">{t("note")}</p>
           </div>
@@ -559,7 +559,7 @@ export function FinalCta() {
           <p className="text-lg">{t("body")}</p>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="h-14 rounded-[12px] bg-ink px-7 text-[17px] font-bold text-sand hover:bg-ink-800">
-              <Link href="/signup">{t("primary")}</Link>
+              <Link href="/book">{t("primary")}</Link>
             </Button>
             <Button asChild variant="outline" className="h-14 rounded-[12px] border-[1.5px] border-ink bg-transparent px-6 text-base hover:bg-ember-600/30">
               <Link href="/login">{t("secondary")}</Link>
