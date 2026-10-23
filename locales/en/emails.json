@@ -1,0 +1,106 @@
+{
+  "footer": "If you didn't request this email, you can safely ignore it.",
+  "linkFallback": "If the button doesn't work, copy and paste this link into your browser:",
+  "signup": {
+    "subject": "Activate your Satis account",
+    "heading": "Welcome to Satis",
+    "body": "Click the button to verify your email and get started.",
+    "button": "Activate my account"
+  },
+  "recovery": {
+    "subject": "Reset your Satis password",
+    "heading": "Reset your password",
+    "body": "You asked to set a new password. This link expires in one hour.",
+    "button": "Set a new password"
+  },
+  "emailChange": {
+    "subject": "Confirm your new email",
+    "heading": "Confirm your new email",
+    "body": "Click the button to confirm the change of your Satis email address.",
+    "button": "Confirm email"
+  },
+  "magicLink": {
+    "subject": "Your Satis sign-in link",
+    "heading": "Log in to Satis",
+    "body": "Click the button to log in. This link expires in one hour.",
+    "button": "Log in"
+  },
+  "reauthentication": {
+    "subject": "Your Satis verification code",
+    "heading": "Verification code",
+    "body": "Use this code to confirm the action:"
+  },
+  "invitation": {
+    "subject": "Join {organization} on Satis",
+    "heading": "Join {organization}",
+    "body": "{inviter} invited you to join {organization} on Satis as {role}. The invitation expires in 7 days.",
+    "button": "Accept invitation"
+  },
+  "notifications": {
+    "footer": "You get this email as a member of {business} on Satis.",
+    "manage": "Change your notification settings"
+  },
+  "negativeAlert": {
+    "subject": "Unhappy customer at {location}",
+    "eyebrow": "Alert · {business}",
+    "heading": "An unhappy customer at {location}",
+    "rating": "They rated their visit {score} out of 5.",
+    "nps": "They gave a recommendation score of {score} out of 10.",
+    "when": "Answered {time}.",
+    "comment": "What they wrote",
+    "button": "Open the feedback"
+  },
+  "weeklyReport": {
+    "subject": "Your week at {business}: {count} responses",
+    "eyebrow": "Weekly report · {from} – {to}",
+    "heading": "Your week at {business}",
+    "intro": "Here is how customers felt over the last 7 days, compared with the week before.",
+    "responses": "Responses",
+    "csat": "Customer satisfaction (CSAT)",
+    "nps": "Net Promoter Score (NPS)",
+    "comments": "Written comments",
+    "openUnhappy": "Unhappy customers waiting",
+    "up": "up {value}",
+    "down": "down {value}",
+    "same": "no change",
+    "points": "{value} pts",
+    "topBranch": "Top branch: {name}, {percent} satisfied.",
+    "lowestBranch": "Needs attention: {name}, {percent} satisfied.",
+    "aiLabel": "AI summary of the week",
+    "button": "Open the dashboard"
+  },
+  "booking": {
+    "visitor": {
+      "subject": "Your Satis meeting: {date}",
+      "eyebrow": "Meeting booked",
+      "heading": "See you soon, {name}",
+      "intro": "Thanks for booking a call with Satis. Here are the details.",
+      "when": "When",
+      "length": "Length",
+      "lengthValue": "{minutes} minutes, video call",
+      "company": "Company",
+      "link": "We'll email you the video link before the call.",
+      "button": "Add to Google Calendar",
+      "footer": "You booked this meeting on the Satis website."
+    },
+    "team": {
+      "subject": "New meeting: {company}, {date}",
+      "eyebrow": "Book a meeting",
+      "heading": "{name} booked a call",
+      "intro": "A visitor booked a meeting from the website.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Mobile",
+      "company": "Company",
+      "when": "When",
+      "language": "Language",
+      "button": "Add to Google Calendar",
+      "calendarTitle": "Satis meeting: {company}",
+      "footer": "Sent because someone booked a meeting on the Satis website.",
+      "languages": {
+        "ar": "Arabic",
+        "en": "English"
+      }
+    }
+  }
+}
