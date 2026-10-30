@@ -1,0 +1,25 @@
+{
+  "metaTitle": "Locations",
+  "title": "Locations",
+  "subtitle": "Each location gets its own QR code, so you can see how customers feel at every place.",
+  "add": "Add location",
+  "edit": "Edit location",
+  "editNamed": "Edit {name}",
+  "save": "Save changes",
+  "create": "Add location",
+  "cancel": "Cancel",
+  "archive": "Archive",
+  "archiveNamed": "Archive {name}",
+  "restore": "Restore",
+  "restoreNamed": "Restore {name}",
+  "archived": "Archived",
+  "showArchived": "Archived locations ({count})",
+  "archiveConfirm": "Feedback collection stops at this location, and its past feedback is kept. You can restore it at any time.",
+  "fields": {
+    "name": "Location name",
+    "city": "City",
+    "address": "Address"
+  },
+  "empty": "No locations yet.",
+  "readOnly": "You need the manager role or higher to change locations."
+}

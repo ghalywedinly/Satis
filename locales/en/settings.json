@@ -1,0 +1,13 @@
+{
+  "metaTitle": "Settings",
+  "title": "Business settings",
+  "fields": {
+    "name": "Business name",
+    "businessType": "Business type",
+    "defaultLocale": "Default survey language",
+    "defaultLocaleHint": "The language customers see surveys in first. They can switch."
+  },
+  "save": "Save changes",
+  "saved": "Changes saved.",
+  "readOnly": "Owners and admins edit business settings."
+}
