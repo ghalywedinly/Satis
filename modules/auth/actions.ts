@@ -84,6 +84,8 @@ export async function signUp(locale: Locale, _prev: FormState<SignupField>, form
   }
 
   if (data.user) captureServerEvent("signup_completed", data.user.id, { locale });
+  // With email confirmation turned off in Supabase Auth, the account is signed in right away.
+  if (data.session) redirect(path(locale, HOME_PATH));
   await setPendingEmail(parsed.data.email);
   redirect(path(locale, "/verify-email"));
 }
