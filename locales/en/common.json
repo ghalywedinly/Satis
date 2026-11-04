@@ -18,7 +18,8 @@
     "unreadBadge": "unread",
     "collapse": "Collapse menu",
     "expand": "Expand menu",
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "studies": "Studies"
   },
   "actions": {
     "logIn": "Log in",

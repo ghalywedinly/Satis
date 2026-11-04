@@ -20,7 +20,7 @@ import { formatCount } from "@/lib/i18n/format";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import { publishSurvey, saveSurveyDraft } from "../actions";
-import { LIMITS, QUESTION_TYPES, type PublishIssue, type Question, type QuestionType, type SurveyDraft } from "../definition";
+import { LIMITS, QUESTION_TYPES, type PublishIssue, type Question, type QuestionType, type SurveyDraft , type SurveyStudy } from "../definition";
 import { DesignPanel } from "./design-panel";
 import { SurveyForm, type SurveyLabels } from "./survey-form";
 
@@ -48,6 +48,7 @@ export function SurveyBuilder({
   canManage,
   organizationName,
   labels,
+  study,
 }: {
   surveyId: string;
   initialDraft: SurveyDraft;
@@ -55,6 +56,8 @@ export function SurveyBuilder({
   canManage: boolean;
   organizationName: string;
   labels: Record<Locale, SurveyLabels>;
+  /** For a study's pre- or post-survey: the preview shows the participant code field too. */
+  study?: SurveyStudy | null;
 }) {
   const t = useTranslations("surveys");
   const tl = useTranslations("common.language");
@@ -305,6 +308,7 @@ export function SurveyBuilder({
             organizationName={organizationName}
             labels={labels[previewLocale]}
             mode={{ kind: "preview" }}
+            study={study}
           />
         </div>
       </aside>

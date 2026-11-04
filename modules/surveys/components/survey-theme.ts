@@ -1,3 +1,4 @@
+import { isDarkColor, isHex } from "../color";
 import type { SurveyTheme } from "../definition";
 
 /*
@@ -20,7 +21,7 @@ type AccentStyle = {
   link: string;
 };
 
-const LIGHT: Record<SurveyTheme["accent"], AccentStyle> = {
+const LIGHT: Record<Exclude<SurveyTheme["accent"], "custom">, AccentStyle> = {
   ultramarine: {
     solid: "bg-ultramarine text-white hover:bg-ultra-600",
     soft: "bg-ultra-50",
@@ -68,6 +69,17 @@ const LIGHT: Record<SurveyTheme["accent"], AccentStyle> = {
   },
 };
 
+/** A colour the business picked: values come from CSS variables set by themeVars(). */
+const CUSTOM: AccentStyle = {
+  solid: "bg-[var(--sv-accent)] text-[var(--sv-accent-fg)] hover:bg-[var(--sv-accent-hover)]",
+  soft: "bg-[var(--sv-accent-soft)]",
+  border: "border-[var(--sv-accent-on-light)]",
+  bar: "bg-[var(--sv-accent)]",
+  icon: "fill-[var(--sv-accent)] text-[var(--sv-accent)]",
+  tint: "bg-[var(--sv-accent-soft)]",
+  link: "text-[var(--sv-accent-on-light)]",
+};
+
 /** On dark cards an Ink accent would disappear, so it turns to Sand there. */
 const INK_ON_DARK: AccentStyle = {
   solid: "bg-sand text-ink hover:bg-sand-200",
@@ -81,20 +93,25 @@ const INK_ON_DARK: AccentStyle = {
 
 export function accentStyle(accent: SurveyTheme["accent"], dark: boolean): AccentStyle {
   if (dark && accent === "ink") return INK_ON_DARK;
+  if (accent === "custom") {
+    return dark ? { ...CUSTOM, soft: "bg-white/10", border: "border-[var(--sv-accent-on-dark)]", link: "text-[var(--sv-accent-on-dark)]" } : CUSTOM;
+  }
   const style = LIGHT[accent];
   return dark ? { ...style, soft: "bg-white/10" } : style;
 }
 
 /** The page, its question cards, and which cards are dark. */
 export function surfaceStyle(theme: SurveyTheme) {
-  const darkPage = theme.background === "ink";
+  const custom = theme.background === "custom" && isHex(theme.backgroundColor);
+  const darkPage = theme.background === "ink" || (custom && isDarkColor(theme.backgroundColor!));
   return {
     darkPage,
     page: {
       sand: "bg-sand text-ink",
       white: "bg-white text-ink",
       ink: "bg-ink text-sand",
-      tint: `${LIGHT[theme.accent].tint} text-ink`,
+      tint: `${accentStyle(theme.accent, false).tint} text-ink`,
+      custom: custom ? "bg-[var(--sv-page)] text-[var(--sv-page-fg)]" : "bg-sand text-ink",
     }[theme.background],
     /** The first question stands out: dark on Sand (the brand look), otherwise like the rest. */
     heroDark: theme.background === "sand" || darkPage,

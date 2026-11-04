@@ -17,11 +17,13 @@ export async function sendNegativeAlert(responseId: string): Promise<void> {
     if (!supabase) return;
     const { data: response, error } = await supabase
       .from("survey_responses")
-      .select("id, organization_id, csat_score, nps_score, rating_sentiment, comment_text, submitted_at, location:locations(name)")
+      .select("id, organization_id, csat_score, nps_score, rating_sentiment, comment_text, submitted_at, location:locations(name), survey:surveys(study_id)")
       .eq("id", responseId)
       .maybeSingle();
     if (error) throw error;
     if (!response || response.rating_sentiment !== "negative") return;
+    // Research participants aren't unhappy customers: study answers don't raise alerts.
+    if (response.survey?.study_id) return;
     if (!(await consumeRateLimit("negativeAlert", response.organization_id))) return;
 
     const { data: recipients, error: recipientsError } = await supabase.rpc("notification_recipients", {

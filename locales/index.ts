@@ -24,6 +24,7 @@ const load = {
     coupons: (await import("./ar/coupons.json")).default,
     ai: (await import("./ar/ai.json")).default,
     notifications: (await import("./ar/notifications.json")).default,
+    studies: (await import("./ar/studies.json")).default,
     booking: (await import("./ar/booking.json")).default,
   }),
   en: async () => ({
@@ -48,6 +49,7 @@ const load = {
     coupons: (await import("./en/coupons.json")).default,
     ai: (await import("./en/ai.json")).default,
     notifications: (await import("./en/notifications.json")).default,
+    studies: (await import("./en/studies.json")).default,
     booking: (await import("./en/booking.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;

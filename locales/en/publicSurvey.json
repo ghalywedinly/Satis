@@ -26,5 +26,9 @@
   "couponHowTo": "Show this code to the team on your next visit.",
   "couponKeep": "Take a screenshot to keep it.",
   "couponCopy": "Copy code",
-  "couponCopied": "Copied"
+  "couponCopied": "Copied",
+  "participantCode": "Your participant code",
+  "participantCodeHint": "Use the code the research team gave you, for example P-014. It links your answers before and after.",
+  "participantCodeInvalid": "Enter your participant code: letters, numbers and dashes only.",
+  "errorAlreadyAnswered": "This participant code has already answered this survey."
 }

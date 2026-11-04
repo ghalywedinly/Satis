@@ -26,5 +26,9 @@
   "couponHowTo": "اعرض هذا الرمز للفريق في زيارتك القادمة.",
   "couponKeep": "التقط صورة للشاشة لتحتفظ به.",
   "couponCopy": "انسخ الرمز",
-  "couponCopied": "تم النسخ"
+  "couponCopied": "تم النسخ",
+  "participantCode": "رمز المشارك",
+  "participantCodeHint": "استخدم الرمز الذي أعطاك إياه فريق البحث، مثل P-014. يربط إجاباتك قبل وبعد.",
+  "participantCodeInvalid": "أدخل رمز المشارك: حروف وأرقام وشرطات فقط.",
+  "errorAlreadyAnswered": "أجاب رمز المشارك هذا على الاستبيان من قبل."
 }

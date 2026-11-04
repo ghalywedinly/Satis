@@ -21,5 +21,7 @@ export type AnalyticsEvent =
   | "response_triaged"
   | "response_tagged"
   | "meeting_booked"
+  | "study_created"
+  | "study_exported"
   | "upgrade_clicked"
   | "subscription_started";

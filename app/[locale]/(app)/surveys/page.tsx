@@ -28,6 +28,8 @@ export default async function SurveysPage({ params }: PageProps<"/[locale]/surve
     .select("id, name, status, questions, has_unpublished_changes, updated_at")
     .eq("organization_id", membership.organization.id)
     .neq("status", "archived")
+    // A study's surveys live on the study's page.
+    .is("study_id", null)
     .order("updated_at", { ascending: false });
   const surveys = data ?? [];
 

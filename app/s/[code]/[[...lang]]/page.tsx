@@ -3,6 +3,7 @@ import { SatisMark } from "@/components/brand/satis-mark";
 import { captureServerEvent } from "@/lib/observability/analytics";
 import { loadMessages } from "@/locales";
 import { SurveyForm } from "@/modules/surveys/components/survey-form";
+import { normalizeParticipantCode } from "@/modules/surveys/definition";
 import { getPublicSurvey, resolveSurveyLocale } from "@/modules/surveys/public-data";
 
 export async function generateMetadata({ params }: PageProps<"/s/[code]/[[...lang]]">): Promise<Metadata> {
@@ -12,8 +13,10 @@ export async function generateMetadata({ params }: PageProps<"/s/[code]/[[...lan
   return { title: survey?.organizationName ?? "Satis", robots: { index: false, follow: false } };
 }
 
-export default async function PublicSurveyPage({ params }: PageProps<"/s/[code]/[[...lang]]">) {
+export default async function PublicSurveyPage({ params, searchParams }: PageProps<"/s/[code]/[[...lang]]">) {
   const { code, lang } = await params;
+  // Researchers can put a participant's code in the link: /s/{code}?p=P-014.
+  const { p } = await searchParams;
   const survey = await getPublicSurvey(code);
   const locale = resolveSurveyLocale(survey, lang);
   const labels = (await loadMessages(locale ?? "ar")).publicSurvey;
@@ -41,7 +44,9 @@ export default async function PublicSurveyPage({ params }: PageProps<"/s/[code]/
 
   const { definition } = survey;
   const other = definition.locales.find((l) => l !== locale);
-  const otherLanguageHref = other ? (other === definition.defaultLocale ? `/s/${code}` : `/s/${code}/${other}`) : undefined;
+  const participant = typeof p === "string" ? (normalizeParticipantCode(p) ?? "") : "";
+  const query = participant ? `?p=${encodeURIComponent(participant)}` : "";
+  const otherLanguageHref = other ? (other === definition.defaultLocale ? `/s/${code}` : `/s/${code}/${other}`) + query : undefined;
   captureServerEvent("survey_started", `link:${survey.linkId}`, { locale });
 
   return (
@@ -54,6 +59,8 @@ export default async function PublicSurveyPage({ params }: PageProps<"/s/[code]/
         labels={labels}
         mode={{ kind: "live", code, versionId: survey.versionId }}
         otherLanguageHref={otherLanguageHref}
+        study={survey.study}
+        initialParticipantCode={participant}
       />
     </main>
   );

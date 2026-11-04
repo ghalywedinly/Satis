@@ -18,7 +18,7 @@ export async function SurveyHeader({
   active: "edit" | "share";
   canManage: boolean;
 }) {
-  const t = await getTranslations({ locale, namespace: "surveys" });
+  const [t, ts] = await Promise.all([getTranslations({ locale, namespace: "surveys" }), getTranslations({ locale, namespace: "studies" })]);
   const tabs = [
     { key: "edit", href: `/surveys/${survey.id}`, label: t("tabs.edit") },
     { key: "share", href: `/surveys/${survey.id}/share`, label: t("tabs.share") },
@@ -26,12 +26,20 @@ export async function SurveyHeader({
 
   return (
     <div className="flex flex-col gap-4 print:hidden">
-      <Link href="/surveys" className="flex items-center gap-1 self-start rounded-control text-sm font-semibold text-muted-foreground outline-none hover:text-ink focus-visible:shadow-focus">
+      <Link
+        href={survey.study_id ? `/studies/${survey.study_id}` : "/surveys"}
+        className="flex items-center gap-1 self-start rounded-control text-sm font-semibold text-muted-foreground outline-none hover:text-ink focus-visible:shadow-focus"
+      >
         <ChevronLeft aria-hidden strokeWidth={1.75} className="size-4 rtl:-scale-x-100" />
-        {t("builder.backToSurveys")}
+        {survey.study ? survey.study.name : t("builder.backToSurveys")}
       </Link>
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="me-auto text-3xl font-extrabold">{survey.name}</h1>
+        {survey.study_phase && (
+          <span className={cn("slice-sm px-2.5 py-1 text-xs font-bold", survey.study_phase === "pre" ? "bg-ink text-sand" : "bg-ultramarine text-white")}>
+            {ts(`phaseLong.${survey.study_phase}`)}
+          </span>
+        )}
         <SurveyStatusBadge status={survey.status} />
         {survey.has_unpublished_changes && <span className="text-xs font-medium text-muted-foreground">{t("unpublishedChanges")}</span>}
         {canManage && (survey.status === "published" || survey.status === "paused") && (

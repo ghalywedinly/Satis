@@ -77,14 +77,16 @@
         "ember": "مرجاني",
         "mint": "أخضر",
         "grape": "بنفسجي",
-        "ink": "أسود"
+        "ink": "أسود",
+        "custom": "مخصص"
       },
       "background": "الخلفية",
       "backgrounds": {
         "sand": "رملي",
         "white": "أبيض",
         "ink": "داكن",
-        "tint": "ملوّن"
+        "tint": "ملوّن",
+        "custom": "مخصصة"
       },
       "ratingStyle": "شكل التقييم",
       "ratingStyles": {
@@ -93,7 +95,44 @@
         "faces": "وجوه",
         "numbers": "أرقام",
         "hearts": "قلوب"
-      }
+      },
+      "customAccent": "لونك الخاص",
+      "customBackground": "لون الخلفية",
+      "font": "الخط",
+      "fontSample": "رضا Aa",
+      "fonts": {
+        "satis": "ساتيس (الافتراضي)",
+        "cairo": "خط Cairo",
+        "tajawal": "خط Tajawal",
+        "plex": "خط IBM Plex",
+        "almarai": "خط Almarai",
+        "kufi": "خط Noto Kufi",
+        "naskh": "خط Noto Naskh"
+      },
+      "logo": "الشعار",
+      "logoHint": "صورة PNG أو JPG أو WebP أو SVG بحجم لا يتجاوز 5 ميجابايت. يظهر أعلى الاستبيان.",
+      "logoPreview": "معاينة الشعار",
+      "uploadLogo": "ارفع الشعار",
+      "replaceLogo": "استبدل الشعار",
+      "removeLogo": "احذف الشعار",
+      "logoPosition": "الموضع",
+      "logoPositions": {
+        "start": "البداية",
+        "center": "الوسط",
+        "end": "النهاية"
+      },
+      "logoSize": "الحجم",
+      "logoSizes": {
+        "sm": "صغير",
+        "md": "متوسط",
+        "lg": "كبير"
+      },
+      "logoErrors": {
+        "type": "اختر صورة PNG أو JPG أو WebP أو SVG.",
+        "size": "الصورة كبيرة جدًا. اختر صورة أقل من 5 ميجابايت.",
+        "read": "تعذّرت قراءة الصورة. جرّب ملفًا آخر."
+      },
+      "hexCode": "رمز اللون"
     }
   },
   "types": {

@@ -11,7 +11,9 @@ import type { Coupon } from "@/modules/coupons/definition";
 import { sendNegativeAlert } from "@/modules/notifications/alerts";
 import { answersSchema } from "./schemas";
 
-export type SubmitResult = { ok: true; coupon?: Coupon } | { error: "generic" | "changed" | "rateLimited" | "unavailable" };
+export type SubmitResult =
+  | { ok: true; coupon?: Coupon }
+  | { error: "generic" | "changed" | "rateLimited" | "unavailable" | "participant" | "alreadyAnswered" };
 
 const inputSchema = z.object({
   code: z.string().regex(/^[A-Za-z0-9]{8,16}$/),
@@ -19,6 +21,8 @@ const inputSchema = z.object({
   submissionId: z.uuid(),
   locale: z.enum(["ar", "en"]),
   answers: answersSchema,
+  // Research studies that match participants: the code the participant entered.
+  participantCode: z.string().max(60).optional(),
   // Honeypot: a hidden field people never fill in, but naive bots do.
   website: z.string().max(200),
 });
@@ -56,10 +60,13 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
     p_locale: data.locale,
     p_answers: data.answers,
     p_device_type: device,
+    p_participant_code: data.participantCode,
   });
   if (error) {
     if (error.message === "survey_changed") return { error: "changed" };
     if (error.message === "survey_unavailable") return { error: "unavailable" };
+    if (error.message === "invalid_participant") return { error: "participant" };
+    if (error.message === "already_answered") return { error: "alreadyAnswered" };
     if (!["missing_answer", "invalid_answer"].includes(error.message)) reportError(error, { area: "public-survey" });
     return { error: "generic" };
   }

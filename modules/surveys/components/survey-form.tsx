@@ -6,11 +6,23 @@ import { SatisLogo, SatisMark } from "@/components/brand/satis-mark";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { Messages } from "@/locales";
-import { textIn, themeOf, unansweredRequired, type Answers, type Question, type SurveyDefinition, type SurveyTheme } from "../definition";
+import {
+  normalizeParticipantCode,
+  textIn,
+  themeOf,
+  unansweredRequired,
+  type Answers,
+  type Question,
+  type SurveyDefinition,
+  type SurveyStudy,
+  type SurveyTheme,
+} from "../definition";
 import { CouponTicket } from "@/modules/coupons/components/coupon-ticket";
 import { discountAmount, type Coupon } from "@/modules/coupons/definition";
 import { submitSurveyResponse, type SubmitResult } from "../public-actions";
 import { RatingScale } from "./rating-scale";
+import { themeVars } from "../color";
+import { SurveyLogoImage } from "./survey-logo";
 import { accentStyle, surfaceStyle } from "./survey-theme";
 
 export type SurveyLabels = Messages["publicSurvey"];
@@ -30,6 +42,8 @@ export function SurveyForm({
   labels,
   mode,
   otherLanguageHref,
+  study,
+  initialParticipantCode = "",
 }: {
   definition: SurveyDefinition;
   locale: Locale;
@@ -38,8 +52,16 @@ export function SurveyForm({
   labels: SurveyLabels;
   mode: Mode;
   otherLanguageHref?: string;
+  /** Set when this is the pre- or post-survey of a research study. */
+  study?: SurveyStudy | null;
+  /** A participant code that came in the link (?p=…), so participants don't have to type it. */
+  initialParticipantCode?: string;
 }) {
   const [answers, setAnswers] = useState<Answers>({});
+  const askCode = !!study?.matchParticipants;
+  const [participantCode, setParticipantCode] = useState(initialParticipantCode);
+  const [codeError, setCodeError] = useState(false);
+  const codeRef = useRef<HTMLInputElement>(null);
   const [missing, setMissing] = useState<string[]>([]);
   const [error, setError] = useState<Exclude<SubmitResult, { ok: true }>["error"] | null>(null);
   const [done, setDone] = useState(false);
@@ -64,6 +86,12 @@ export function SurveyForm({
   };
 
   const submit = () => {
+    const code = askCode ? normalizeParticipantCode(participantCode) : null;
+    if (askCode && !code) {
+      setCodeError(true);
+      codeRef.current?.focus();
+      return;
+    }
     const unanswered = unansweredRequired(definition.questions, answers);
     setMissing(unanswered);
     if (unanswered.length > 0) {
@@ -86,20 +114,25 @@ export function SurveyForm({
         locale,
         answers: cleaned,
         website: honeypot.current?.value ?? "",
+        participantCode: code ?? undefined,
       });
       if ("ok" in result) {
         setCoupon(result.coupon ?? null);
         setDone(true);
       }
-      else setError(result.error);
+      else {
+        setError(result.error);
+        if (result.error === "participant") setCodeError(true);
+      }
     });
   };
 
   const thanksBody = textIn(definition.thankYou, locale, fallback) || labels.thanksBody;
 
   return (
-    <div className={cn("flex min-h-dvh w-full flex-col", surface.page)}>
+    <div className={cn("flex min-h-dvh w-full flex-col font-sans", surface.page)} style={themeVars(theme)} data-survey-font={theme.font ?? "satis"}>
     <div className="mx-auto flex w-full max-w-[460px] flex-1 flex-col gap-4 px-4 pt-6 pb-8">
+      {theme.logo && <SurveyLogoImage logo={theme.logo} alt={organizationName} className="pb-1" />}
       <header className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col">
           <span className="truncate font-display text-lg font-bold">{organizationName}</span>
@@ -169,6 +202,42 @@ export function SurveyForm({
           {/* Honeypot for bots: hidden from people and assistive technology. */}
           <input ref={honeypot} name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
 
+          {askCode && (
+            <div className={cn("flex flex-col gap-2 rounded-card border p-5", surface.card(surface.darkPage), codeError && "border-ember-600 ring-1 ring-ember-600")}>
+              <label htmlFor="participant-code" className="font-display text-lg font-bold">
+                {labels.participantCode}
+              </label>
+              <p id="participant-code-hint" className={cn("text-sm", surface.muted(surface.darkPage))}>
+                {labels.participantCodeHint}
+              </p>
+              <input
+                ref={codeRef}
+                id="participant-code"
+                dir="ltr"
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                maxLength={40}
+                value={participantCode}
+                aria-invalid={codeError || undefined}
+                aria-describedby={codeError ? "participant-code-hint participant-code-error" : "participant-code-hint"}
+                onChange={(e) => {
+                  setParticipantCode(e.target.value);
+                  setCodeError(false);
+                }}
+                className={cn(
+                  "h-12 w-full rounded-control border px-3 font-mono text-base tracking-wider uppercase outline-none transition-[border-color,box-shadow] duration-[140ms] focus-visible:border-ultramarine focus-visible:shadow-focus",
+                  surface.darkPage ? "border-ink-600 bg-white/5 text-sand" : "border-input bg-white",
+                )}
+              />
+              {codeError && (
+                <p id="participant-code-error" className={cn("text-sm font-medium", surface.darkPage ? "text-ember-200" : "text-ember-700")}>
+                  {labels.participantCodeInvalid}
+                </p>
+              )}
+            </div>
+          )}
+
           {definition.questions.map((question, index) => (
             <QuestionCard
               key={question.id}
@@ -192,13 +261,16 @@ export function SurveyForm({
 
           {error && (
             <p role="alert" className="rounded-control bg-ember-50 px-3 py-2.5 text-sm text-ember-700">
-              {error === "changed"
-                ? labels.errorChanged
-                : error === "rateLimited"
-                  ? labels.errorRateLimited
-                  : error === "unavailable"
-                    ? labels.unavailableTitle
-                    : labels.errorGeneric}
+              {
+                {
+                  changed: labels.errorChanged,
+                  alreadyAnswered: labels.errorAlreadyAnswered,
+                  participant: labels.participantCodeInvalid,
+                  rateLimited: labels.errorRateLimited,
+                  unavailable: labels.unavailableTitle,
+                  generic: labels.errorGeneric,
+                }[error]
+              }
             </p>
           )}
 

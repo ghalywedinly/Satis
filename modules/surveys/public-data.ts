@@ -2,7 +2,7 @@ import "server-only";
 import { cache } from "react";
 import type { Locale } from "@/lib/i18n/routing";
 import { createSupabaseAnonClient } from "@/lib/supabase/anon";
-import type { SurveyDefinition } from "./definition";
+import type { SurveyDefinition, SurveyStudy } from "./definition";
 
 export type PublicSurvey = {
   linkId: string;
@@ -10,6 +10,8 @@ export type PublicSurvey = {
   locationName: string;
   versionId: string;
   definition: SurveyDefinition;
+  /** Present for the pre- and post-survey of a research study. */
+  study: SurveyStudy | null;
 };
 
 /** The live survey behind a public code, or null when it doesn't exist or isn't accepting answers. */

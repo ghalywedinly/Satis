@@ -12,7 +12,9 @@ export const getSurvey = cache(async (organizationId: string, surveyId: string) 
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase
     .from("surveys")
-    .select("id, name, status, default_locale, locales, questions, thank_you, theme, current_version_id, has_unpublished_changes")
+    .select(
+      "id, name, status, default_locale, locales, questions, thank_you, theme, current_version_id, has_unpublished_changes, study_id, study_phase, study:studies(name, match_participants)",
+    )
     .eq("id", surveyId)
     .eq("organization_id", organizationId)
     .maybeSingle();

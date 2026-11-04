@@ -77,14 +77,16 @@
         "ember": "Coral",
         "mint": "Green",
         "grape": "Purple",
-        "ink": "Black"
+        "ink": "Black",
+        "custom": "Custom"
       },
       "background": "Background",
       "backgrounds": {
         "sand": "Sand",
         "white": "White",
         "ink": "Dark",
-        "tint": "Tinted"
+        "tint": "Tinted",
+        "custom": "Custom"
       },
       "ratingStyle": "Rating style",
       "ratingStyles": {
@@ -93,7 +95,44 @@
         "faces": "Faces",
         "numbers": "Numbers",
         "hearts": "Hearts"
-      }
+      },
+      "customAccent": "Your colour",
+      "customBackground": "Background colour",
+      "font": "Font",
+      "fontSample": "رضا Aa",
+      "fonts": {
+        "satis": "Satis (default)",
+        "cairo": "Cairo",
+        "tajawal": "Tajawal",
+        "plex": "IBM Plex Arabic",
+        "almarai": "Almarai",
+        "kufi": "Noto Kufi",
+        "naskh": "Noto Naskh"
+      },
+      "logo": "Logo",
+      "logoHint": "PNG, JPG, WebP or SVG, up to 5 MB. It shows at the top of the survey.",
+      "logoPreview": "Logo preview",
+      "uploadLogo": "Upload logo",
+      "replaceLogo": "Replace logo",
+      "removeLogo": "Remove logo",
+      "logoPosition": "Position",
+      "logoPositions": {
+        "start": "Start",
+        "center": "Centre",
+        "end": "End"
+      },
+      "logoSize": "Size",
+      "logoSizes": {
+        "sm": "Small",
+        "md": "Medium",
+        "lg": "Large"
+      },
+      "logoErrors": {
+        "type": "Choose a PNG, JPG, WebP or SVG image.",
+        "size": "This image is too large. Choose one under 5 MB.",
+        "read": "We couldn't read this image. Try another file."
+      },
+      "hexCode": "Hex code"
     }
   },
   "types": {

@@ -33,6 +33,7 @@ export default async function SurveyEditPage({ params }: PageProps<"/[locale]/su
         canManage={canManage}
         organizationName={membership.organization.name}
         labels={await surveyLabels()}
+        study={survey.study_phase && survey.study ? { phase: survey.study_phase, matchParticipants: survey.study.match_participants } : null}
       />
     </div>
   );

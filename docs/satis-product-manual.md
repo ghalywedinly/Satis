@@ -97,6 +97,20 @@ restaurants, cafés, retail stores, clinics, beauty salons and spas, hotels, gym
 - **Presets:** Classic, Warm, Fresh, Night, Playful.
 - Every style records the same 1–5 number, so analytics never depend on the look.
 
+- **Custom branding:** a custom accent colour and custom background (any hex colour; text colours are chosen automatically for contrast), 7 fonts that cover Arabic and English (Satis default, Cairo, Tajawal, IBM Plex Arabic, Almarai, Noto Kufi, Noto Naskh), and an uploaded logo (PNG, JPG, WebP or SVG) placed at the start, centre or end at small, medium or large size.
+
+### 5.2b Research studies (before and after) [Live]
+- **What it is:** a study pairs a pre-survey ("before") and a post-survey ("after") with the same questions, to measure the effect of a training, a new service or a campaign.
+- **Creating:** Studies → New study. Choose a name, a description, starting questions ("Before and after" research questions or the customer-satisfaction survey) and whether to match participants. Both surveys are created together and edited in the normal survey builder.
+- **Matching participants:** each participant enters a code (e.g. P-014) in both surveys, or it is filled in from the link (`/s/CODE?p=P-014`). A code can answer each survey once.
+- **Report (one page):**
+  - before and after answer counts, matched participants and follow-up rate
+  - for 1–5 and 0–10 questions: before and after averages, change, distribution, how many improved / stayed the same / declined, and a significance test (paired t-test for matched participants, otherwise Welch's t-test) with p-value and effect size
+  - for choice questions: the share choosing each option before and after
+  - for comments: counts and the latest comments
+- **Export:** a CSV of every answer (phase, participant code, time, language, location, one column per question), ready for Excel, SPSS or R.
+- Study answers don't trigger unhappy-customer alerts and study surveys don't appear in the normal survey list.
+
 ### 5.3 QR codes and sharing [Live]
 - A unique QR code and short link per location (and per survey).
 - Download or print from the share page.

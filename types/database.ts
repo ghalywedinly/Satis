@@ -181,6 +181,20 @@ export type Database = {
         };
         Relationships: [];
       };
+      studies: {
+        Row: Timestamps & {
+          id: string;
+          organization_id: string;
+          name: string;
+          description: string | null;
+          match_participants: boolean;
+          archived_at: string | null;
+          created_by: string | null;
+        };
+        Insert: never;
+        Update: { name?: string; description?: string | null; match_participants?: boolean; archived_at?: string | null };
+        Relationships: [];
+      };
       surveys: {
         Row: Timestamps & {
           id: string;
@@ -195,6 +209,8 @@ export type Database = {
           current_version_id: string | null;
           has_unpublished_changes: boolean;
           created_by: string | null;
+          study_id: string | null;
+          study_phase: "pre" | "post" | null;
         };
         Insert: OptionalTimestamps & {
           id?: string;
@@ -209,6 +225,8 @@ export type Database = {
           current_version_id?: string | null;
           has_unpublished_changes?: boolean;
           created_by?: string | null;
+          study_id?: string | null;
+          study_phase?: "pre" | "post" | null;
         };
         Update: OptionalTimestamps & {
           id?: string;
@@ -224,7 +242,15 @@ export type Database = {
           has_unpublished_changes?: boolean;
           created_by?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "surveys_study_id_fkey";
+            columns: ["study_id"];
+            isOneToOne: false;
+            referencedRelation: "studies";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       survey_versions: {
         Row: {
@@ -293,6 +319,7 @@ export type Database = {
       };
       survey_responses: {
         Row: {
+          participant_code: string | null;
           id: string;
           organization_id: string;
           survey_id: string;
@@ -599,6 +626,23 @@ export type Database = {
         Returns: undefined;
       };
       get_public_survey: { Args: { p_code: string }; Returns: Json };
+      create_study: {
+        Args: {
+          p_organization_id: string;
+          p_name: string;
+          p_description: string;
+          p_match_participants: boolean;
+          p_pre_name: string;
+          p_post_name: string;
+          p_locales: Database["public"]["Enums"]["app_locale"][];
+          p_default_locale: Database["public"]["Enums"]["app_locale"];
+          p_questions: Json;
+          p_thank_you: Json;
+          p_theme: Json;
+        };
+        Returns: string;
+      };
+      get_study_responses: { Args: { p_study_id: string }; Returns: Json };
       submit_survey_response: {
         Args: {
           p_code: string;
@@ -607,6 +651,7 @@ export type Database = {
           p_locale: Database["public"]["Enums"]["app_locale"];
           p_answers: Json;
           p_device_type: string;
+          p_participant_code?: string;
         };
         Returns: string;
       };

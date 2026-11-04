@@ -24,22 +24,37 @@ export type Question =
   | (Base & { type: "text" });
 export type ChoiceQuestion = Extract<Question, { type: "single_choice" | "multiple_choice" }>;
 
-/** Brand accents a survey can use for its buttons, selections and rating scale. */
+/** Brand accents a survey can use for its buttons, selections and rating scale, or a custom colour. */
 export const ACCENTS = ["ultramarine", "ember", "mint", "grape", "ink"] as const;
-/** Page grounds: brand Sand, plain white, dark Ink, or a soft tint of the accent. */
+/** Page grounds: brand Sand, plain white, dark Ink, a soft tint of the accent, or a custom colour. */
 export const BACKGROUNDS = ["sand", "white", "ink", "tint"] as const;
 /** How 1–5 rating questions look. All of them answer with the same 1–5 number. */
 export const RATING_STYLES = ["slices", "stars", "faces", "numbers", "hearts"] as const;
+/** Typefaces for the survey, each covering Arabic and English. "satis" is the brand pairing. */
+export const SURVEY_FONTS = ["satis", "cairo", "tajawal", "plex", "almarai", "kufi", "naskh"] as const;
+export const LOGO_POSITIONS = ["start", "center", "end"] as const;
+export const LOGO_SIZES = ["sm", "md", "lg"] as const;
+/** A logo is embedded in the survey as a small image (resized in the browser before saving). */
+export const LOGO_MAX_LENGTH = 400_000;
+
+export type SurveyFont = (typeof SURVEY_FONTS)[number];
+export type SurveyLogo = { src: string; position: (typeof LOGO_POSITIONS)[number]; size: (typeof LOGO_SIZES)[number] };
 
 export type SurveyTheme = {
-  accent: (typeof ACCENTS)[number];
-  background: (typeof BACKGROUNDS)[number];
+  accent: (typeof ACCENTS)[number] | "custom";
+  background: (typeof BACKGROUNDS)[number] | "custom";
   ratingStyle: (typeof RATING_STYLES)[number];
+  /** "#RRGGBB", used when accent is "custom". */
+  accentColor?: string;
+  /** "#RRGGBB", used when background is "custom". */
+  backgroundColor?: string;
+  font?: SurveyFont;
+  logo?: SurveyLogo | null;
 };
 
 export const DEFAULT_THEME: SurveyTheme = { accent: "ultramarine", background: "sand", ratingStyle: "slices" };
 
-/** Ready-made looks the builder offers as a starting point. */
+/** Ready-made looks the builder offers as a starting point. They keep the survey's font and logo. */
 export const THEME_PRESETS = {
   classic: DEFAULT_THEME,
   warm: { accent: "ember", background: "tint", ratingStyle: "faces" },
@@ -100,6 +115,22 @@ export function publishIssues(draft: SurveyDraft): PublishIssue[] {
 
 /** Text in the requested language, falling back to the survey's default. */
 export const textIn = (text: LocalizedText, locale: Locale, fallback: Locale) => text[locale]?.trim() || text[fallback]?.trim() || "";
+
+/** Pre- or post-survey of a research study; matched studies ask each participant for a code. */
+export type SurveyStudy = { phase: "pre" | "post"; matchParticipants: boolean };
+
+/**
+ * A participant code as stored ("p-014 " → "P-014"): Western digits, no spaces, upper case.
+ * Returns null when it can't be a code (letters, digits, "-" and "_", up to 40 characters).
+ */
+export function normalizeParticipantCode(raw: string): string | null {
+  const code = raw
+    .replace(/[٠-٩]/g, (c) => String(c.charCodeAt(0) - 0x660))
+    .replace(/[۰-۹]/g, (c) => String(c.charCodeAt(0) - 0x6f0))
+    .replace(/\s+/g, "")
+    .toUpperCase();
+  return /^[A-Z0-9_-]{1,40}$/.test(code) ? code : null;
+}
 
 /** One answer per question id, in the shape submit_survey_response expects. */
 export type Answer = { number: number } | { options: string[] } | { text: string };
