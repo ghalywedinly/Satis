@@ -1,0 +1,27 @@
+{
+  "businessTypes": {
+    "restaurant": "Restaurant",
+    "cafe": "Café",
+    "retail": "Retail",
+    "clinic": "Clinic",
+    "beauty": "Beauty",
+    "hotel": "Hotel",
+    "gym": "Gym",
+    "entertainment": "Entertainment",
+    "other": "Other"
+  },
+  "roles": {
+    "owner": "Owner",
+    "admin": "Admin",
+    "manager": "Manager",
+    "staff": "Staff",
+    "viewer": "Viewer"
+  },
+  "roleDescriptions": {
+    "owner": "Full access, including billing and deleting the business.",
+    "admin": "Manages the team, settings and everything else.",
+    "manager": "Manages locations, surveys and customer feedback.",
+    "staff": "Follows up on customer feedback.",
+    "viewer": "Read-only access."
+  }
+}

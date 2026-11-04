@@ -1,0 +1,97 @@
+{
+  "metaTitle": "Feedback",
+  "title": "Feedback",
+  "subtitle": "Every answer from your customers, newest first. Read it, flag what matters and follow up.",
+  "readOnly": "You can read feedback. Ask an admin to give you the staff role to update it.",
+  "total": "Responses: {count}",
+  "unread": "Unread",
+  "important": "Important",
+  "markImportant": "Mark as important",
+  "unmarkImportant": "Remove important mark",
+  "markUnread": "Mark as unread",
+  "noComment": "No comment",
+  "noScore": "No score",
+  "csat": "{score}/5",
+  "nps": "NPS {score}",
+  "empty": {
+    "title": "No feedback yet",
+    "body": "When customers answer your survey, their responses appear here.",
+    "action": "Share your QR codes"
+  },
+  "noMatches": {
+    "title": "No responses match these filters",
+    "action": "Clear filters"
+  },
+  "filters": {
+    "label": "Filter feedback",
+    "search": "Search comments",
+    "searchPlaceholder": "Search what customers wrote",
+    "searchButton": "Search",
+    "status": "Status",
+    "sentiment": "Sentiment",
+    "survey": "Survey",
+    "location": "Location",
+    "tag": "Tag",
+    "period": "Period",
+    "all": "All",
+    "allSurveys": "All surveys",
+    "allLocations": "All locations",
+    "allTags": "All tags",
+    "periods": {
+      "7": "Last 7 days",
+      "30": "Last 30 days",
+      "90": "Last 90 days",
+      "all": "All time"
+    },
+    "unread": "Unread only",
+    "important": "Important only",
+    "comments": "With comments only",
+    "apply": "Apply filters",
+    "clear": "Clear filters",
+    "theme": "Topic",
+    "allThemes": "All topics"
+  },
+  "status": {
+    "new": "New",
+    "in_progress": "In progress",
+    "resolved": "Resolved"
+  },
+  "sentiment": {
+    "positive": "Positive",
+    "neutral": "Neutral",
+    "negative": "Negative",
+    "hint": "Based on the customer's score"
+  },
+  "pagination": {
+    "label": "Pages",
+    "previous": "Newer",
+    "next": "Older",
+    "page": "Page {page} of {pages}"
+  },
+  "detail": {
+    "metaTitle": "Response",
+    "back": "Back to feedback",
+    "answers": "Answers",
+    "noAnswer": "No answer",
+    "details": "Details",
+    "survey": "Survey",
+    "location": "Location",
+    "submitted": "Submitted",
+    "language": "Language",
+    "device": "Device",
+    "devices": {
+      "mobile": "Phone",
+      "tablet": "Tablet",
+      "desktop": "Computer"
+    },
+    "triage": "Follow-up",
+    "statusLabel": "Status",
+    "tags": "Tags",
+    "noTags": "No tags yet",
+    "addTag": "Add tag",
+    "tagName": "Tag name",
+    "tagPlaceholder": "For example: waiting time",
+    "removeTag": "Remove tag {tag}",
+    "saved": "Saved"
+  }
+}

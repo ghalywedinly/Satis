@@ -1,0 +1,27 @@
+{
+  "metaTitle": "Team",
+  "title": "Team",
+  "subtitle": "Invite your colleagues and choose what each of them can do.",
+  "you": "You",
+  "roleFor": "Role for {name}",
+  "remove": "Remove",
+  "removeNamed": "Remove {name}",
+  "removeConfirm": "{name} will lose access to this business immediately.",
+  "cancel": "Cancel",
+  "leave": "Leave business",
+  "leaveConfirm": "You will lose access to this business immediately.",
+  "invite": {
+    "title": "Invite a team member",
+    "email": "Email",
+    "role": "Role",
+    "submit": "Send invitation",
+    "sent": "We sent the invitation to <email>{address}</email>."
+  },
+  "pending": {
+    "title": "Pending invitations",
+    "expires": "Expires {date}",
+    "revoke": "Revoke invitation",
+    "revokeNamed": "Revoke invitation for {email}"
+  },
+  "readOnly": "Owners and admins manage the team."
+}

@@ -1,0 +1,59 @@
+{
+  "metaTitle": "Book a meeting",
+  "backHome": "Back to the home page",
+  "eyebrow": "{minutes}-minute call",
+  "title": "Let's talk about your <hl>customers</hl>.",
+  "body": "Pick a time that suits you. We'll show you Satis on a real survey, answer your questions and plan your first branch with you.",
+  "agendaLabel": "In the call",
+  "agenda": {
+    "tour": "A live tour of the dashboard and inbox",
+    "setup": "Your first survey, set up together",
+    "pricing": "Plans and pricing for your branches"
+  },
+  "details": {
+    "duration": "{minutes} minutes",
+    "where": "Video call",
+    "language": "Arabic or English",
+    "timezone": "Saudi time (GMT+3)"
+  },
+  "steps": {
+    "label": "Booking steps",
+    "time": "Choose a time",
+    "details": "Your details",
+    "of": "Step {current} of {total}"
+  },
+  "day": "Day",
+  "time": "Time",
+  "today": "Today",
+  "tomorrow": "Tomorrow",
+  "open": "{count} open",
+  "full": "Fully booked",
+  "taken": "Booked",
+  "empty": {
+    "title": "Every time is booked for now",
+    "body": "New times open each day. Try again tomorrow."
+  },
+  "pickHint": "Pick a day, then a time.",
+  "continue": "Continue to details",
+  "yourMeeting": "Your meeting",
+  "when": "{day} at {time}",
+  "change": "Change time",
+  "fields": {
+    "fullName": "Full name",
+    "email": "Email",
+    "phone": "Mobile number",
+    "phoneHint": "Saudi numbers can start with 05.",
+    "company": "Company",
+    "companyHint": "The business name your customers know."
+  },
+  "submit": "Book the meeting",
+  "privacy": "We use your details only to arrange this meeting.",
+  "success": {
+    "eyebrow": "Booked",
+    "title": "You're booked, {name}.",
+    "body": "We sent the details to <email></email>. We'll email you the video link before the call.",
+    "addToCalendar": "Add to Google Calendar",
+    "calendarTitle": "Satis meeting",
+    "calendarDetails": "A {minutes}-minute video call with the Satis team."
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "label": "AI analysis",
+  "disclaimer": "AI can make mistakes. Check the comments themselves before acting on it.",
+  "themes": {
+    "staff": "Staff",
+    "speed": "Speed and waiting",
+    "cleanliness": "Cleanliness",
+    "quality": "Quality",
+    "price": "Price",
+    "atmosphere": "Atmosphere",
+    "facilities": "Facilities",
+    "booking": "Booking and orders",
+    "parking": "Parking and access",
+    "other": "Other"
+  },
+  "sentiment": {
+    "positive": "Positive",
+    "neutral": "Neutral",
+    "negative": "Negative",
+    "mixed": "Mixed"
+  },
+  "praised": "Praised",
+  "complained": "Complaints",
+  "noThemes": "No specific topic",
+  "insights": {
+    "title": "This week's insights",
+    "period": "{from} to {to}",
+    "basedOn": "From {count} analysed comments",
+    "actions": "Suggested actions",
+    "evidence": "Based on these comments",
+    "openComment": "Open comment",
+    "empty": "No summary for this week yet. It's written automatically once a week, when there are at least {min} analysed comments.",
+    "themesTitle": "What customers talk about",
+    "complaints": "Complaints",
+    "praise": "Praise",
+    "noAnalysed": "No analysed comments in this period yet.",
+    "pending": "Comments waiting for analysis: {count}",
+    "analyzeNow": "Analyze comments now",
+    "analyzing": "Analyzing…",
+    "done": "Comments analysed: {count}",
+    "notConfigured": "AI analysis isn't set up yet. Comments will be analysed once it is."
+  }
+}

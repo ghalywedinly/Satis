@@ -1,0 +1,16 @@
+{
+  "metaTitle": "Notifications",
+  "title": "Notifications",
+  "subtitle": "Choose which emails you get about {business}. These settings are yours; your teammates choose their own.",
+  "emailTo": "Emails go to <email>{address}</email>.",
+  "negativeAlerts": {
+    "label": "Unhappy customer alerts",
+    "hint": "An email as soon as a customer gives a low rating (1 or 2 out of 5), with their comment and a link to follow up."
+  },
+  "weeklyReport": {
+    "label": "Weekly report",
+    "hint": "Every Sunday morning: last week's responses, satisfaction and NPS against the week before, your best and weakest branch, and the AI summary."
+  },
+  "save": "Save notification settings",
+  "saved": "Notification settings saved."
+}

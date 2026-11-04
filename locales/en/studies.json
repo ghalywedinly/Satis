@@ -1,0 +1,134 @@
+{
+  "metaTitle": "Studies",
+  "title": "Studies",
+  "subtitle": "Measure what changed: ask the same questions before and after a training, a new service or a campaign, and see the difference in one report.",
+  "create": "New study",
+  "readOnly": "You can view studies. Managers and owners can create and edit them.",
+  "empty": {
+    "title": "Run your first before-and-after study",
+    "body": "A study pairs two surveys with the same questions. Participants answer once before and once after, and Satis shows what changed.",
+    "steps": {
+      "before": "Share the before-survey",
+      "during": "Run your training, service or campaign",
+      "after": "Share the after-survey and read the report"
+    },
+    "action": "Create your first study"
+  },
+  "answers": "{count} answers",
+  "matchedOn": "Matches participants",
+  "phase": {
+    "pre": "Before",
+    "post": "After"
+  },
+  "phaseLong": {
+    "pre": "Before-survey",
+    "post": "After-survey"
+  },
+  "surveyName": "{study} · {phase}",
+  "backToStudies": "All studies",
+  "new": {
+    "metaTitle": "New study",
+    "title": "New study",
+    "body": "Name the study and choose starting questions. You can edit both surveys afterwards.",
+    "name": "Study name",
+    "namePlaceholder": "For example: Customer service training, March",
+    "description": "Description",
+    "descriptionHint": "Optional. What you're measuring and why.",
+    "template": "Starting questions",
+    "templates": {
+      "research": {
+        "title": "Before and after",
+        "body": "Knowledge, confidence and how often, rated 1 to 5, plus a comment."
+      },
+      "satisfaction": {
+        "title": "Customer satisfaction",
+        "body": "The post-visit survey: rating, what they liked, recommendation and a comment."
+      }
+    },
+    "match": "Match each participant's answers",
+    "matchHint": "Participants enter a code (for example P-014) in both surveys, so the report compares each person's before and after. Turn off for anonymous studies.",
+    "submit": "Create study"
+  },
+  "details": {
+    "edit": "Edit details",
+    "save": "Save details",
+    "saved": "Details saved.",
+    "cancel": "Cancel"
+  },
+  "surveys": {
+    "title": "Surveys",
+    "status": "Status",
+    "edit": "Edit questions",
+    "share": "Share and QR codes",
+    "differ": "The after-survey asks different questions from the before-survey. Only matching questions are compared.",
+    "copy": "Copy questions from the before-survey",
+    "copied": "Questions copied. Publish the after-survey to use them.",
+    "codesTitle": "Participant codes",
+    "codesBody": "Give each participant a code, such as P-001, and ask them to use it in both surveys. To fill it in for them, add it to the survey link:",
+    "codesExample": "For example: …/s/{code}?p=P-001"
+  },
+  "report": {
+    "title": "Results",
+    "export": "Download CSV",
+    "before": "Before",
+    "after": "After",
+    "responsesBefore": "Before answers",
+    "responsesAfter": "After answers",
+    "matched": "Matched participants",
+    "followUp": "Follow-up rate",
+    "followUpHint": "Share of before-participants who also answered after",
+    "empty": "No answers yet. Share the before-survey to start collecting.",
+    "noAnswers": "No answers to this question yet.",
+    "onlyIn": {
+      "pre": "Only in the before-survey",
+      "post": "Only in the after-survey"
+    },
+    "average": "Average",
+    "outOf": "out of {max}",
+    "change": "Change",
+    "noChange": "No change",
+    "n": "{count} answers",
+    "distribution": "How people answered",
+    "beforeShare": "Before {percent}",
+    "afterShare": "After {percent}",
+    "points": "{value} pts",
+    "paired": "Paired t-test on {count} matched participants",
+    "welch": "Welch's t-test on all answers",
+    "testLine": "t({df}) = {t}, p {p}",
+    "effect": "Effect size {value} ({label})",
+    "effects": {
+      "negligible": "negligible",
+      "small": "small",
+      "medium": "medium",
+      "large": "large"
+    },
+    "significant": "Likely a real change (p below 0.05)",
+    "notSignificant": "Could be chance (p of 0.05 or more)",
+    "notEnough": "Needs at least 2 answers before and after to test.",
+    "movement": "{improved} improved · {same} same · {declined} declined",
+    "answered": "Answered by {pre} before and {post} after",
+    "latest": "Latest comments",
+    "noComments": "No comments yet."
+  },
+  "csv": {
+    "phase": "Phase",
+    "participant": "Participant code",
+    "submittedAt": "Submitted at",
+    "language": "Language",
+    "location": "Location"
+  },
+  "template": {
+    "name": "Study survey",
+    "knowledge": "How would you rate your knowledge of the topic?",
+    "confidence": "How confident do you feel putting it into practice?",
+    "frequency": "How often do you use it today?",
+    "options": {
+      "never": "Never",
+      "sometimes": "Sometimes",
+      "often": "Often",
+      "always": "Always"
+    },
+    "comment": "Is there anything you'd like to add?",
+    "thankYou": "Thank you for taking part. Your answers help us measure what works."
+  }
+}

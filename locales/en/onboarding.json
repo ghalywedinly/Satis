@@ -1,0 +1,52 @@
+{
+  "metaTitle": "Set up your business",
+  "progress": "Step {current} of {total}",
+  "back": "Back",
+  "next": "Next",
+  "welcome": {
+    "title": "Welcome to Satis",
+    "body": "In about a minute we'll set up your business and first location, so you can start hearing from your customers.",
+    "start": "Start setup"
+  },
+  "name": {
+    "title": "What's your business called?",
+    "hint": "The name your customers know it by.",
+    "label": "Business name",
+    "placeholder": "For example: Nora Café"
+  },
+  "type": {
+    "title": "What kind of business is it?",
+    "hint": "We use this to suggest questions that suit your customers.",
+    "required": "Choose your business type."
+  },
+  "location": {
+    "title": "Where is your first location?",
+    "hint": "You can add more locations later.",
+    "nameLabel": "Location name",
+    "namePlaceholder": "For example: Jeddah - Tahlia",
+    "cityLabel": "City",
+    "cityPlaceholder": "For example: Jeddah",
+    "submit": "Create my business"
+  },
+  "survey": {
+    "title": "Create your first survey",
+    "body": "We've prepared a short survey customers can answer in under a minute. You can edit it any time.",
+    "create": "Create and publish survey",
+    "skip": "Skip for now"
+  },
+  "qr": {
+    "title": "Your QR code is ready",
+    "body": "This is the code for {location}. Download or print it.",
+    "next": "Next"
+  },
+  "done": {
+    "title": "Put your QR code where it's easy to see",
+    "body": "Place this QR code where your customers can easily see it.",
+    "tips": {
+      "counter": "Next to the cashier or payment point",
+      "tables": "On tables or menus",
+      "exit": "Near the exit or on the receipt"
+    },
+    "finish": "Go to dashboard"
+  }
+}
