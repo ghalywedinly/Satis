@@ -19,7 +19,8 @@
     "collapse": "Collapse menu",
     "expand": "Expand menu",
     "notifications": "Notifications",
-    "studies": "Studies"
+    "studies": "Studies",
+    "bookings": "Bookings"
   },
   "actions": {
     "logIn": "Log in",

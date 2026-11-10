@@ -1,13 +1,13 @@
 "use client";
 
-import { ClipboardList, FlaskConical, LayoutDashboard, MapPin, MessageSquareText, Settings, TicketPercent, UsersRound, type LucideIcon } from "lucide-react";
+import { CalendarCheck, ClipboardList, FlaskConical, LayoutDashboard, MapPin, MessageSquareText, Settings, TicketPercent, UsersRound, type LucideIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 export type NavItem = {
-  href: "/dashboard" | "/inbox" | "/surveys" | "/studies" | "/coupons" | "/locations" | "/team" | "/settings";
-  label: "dashboard" | "inbox" | "surveys" | "studies" | "coupons" | "locations" | "team" | "settings";
+  href: "/dashboard" | "/inbox" | "/surveys" | "/studies" | "/coupons" | "/locations" | "/team" | "/settings" | "/admin/bookings";
+  label: "dashboard" | "inbox" | "surveys" | "studies" | "coupons" | "locations" | "team" | "settings" | "bookings";
   /** Pre-formatted count shown next to the label (e.g. unread feedback). */
   badge?: string;
 };
@@ -17,6 +17,7 @@ const ICONS: Record<NavItem["label"], LucideIcon> = {
   inbox: MessageSquareText,
   surveys: ClipboardList,
   studies: FlaskConical,
+  bookings: CalendarCheck,
   coupons: TicketPercent,
   locations: MapPin,
   team: UsersRound,

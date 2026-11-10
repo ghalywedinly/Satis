@@ -132,3 +132,23 @@ export async function onboardWithSurvey(page: Page, localePrefix: "" | "/en", bu
   const url = (await page.locator("main bdi").first().textContent())!.trim();
   return url;
 }
+
+/** Reads a value from .env.local (written for the local stack, as in CI). */
+async function localEnv(name: string): Promise<string> {
+  const text = await readFile(path.join(process.cwd(), ".env.local"), "utf8");
+  const value = text.match(new RegExp(`^${name}=(.*)$`, "m"))?.[1]?.trim();
+  if (!value) throw new Error(`${name} is missing from .env.local`);
+  return value;
+}
+
+/** Puts an account on the Satis team (platform_admins), as an operator would in the SQL editor. */
+export async function makePlatformAdmin(email: string) {
+  const { createClient } = await import("@supabase/supabase-js");
+  const admin = createClient(await localEnv("NEXT_PUBLIC_SUPABASE_URL"), await localEnv("SUPABASE_SECRET_KEY"), { auth: { persistSession: false } });
+  const { data, error } = await admin.auth.admin.listUsers({ perPage: 1000 });
+  if (error) throw error;
+  const user = data.users.find((u) => u.email === email);
+  if (!user) throw new Error(`No user ${email}`);
+  const { error: insertError } = await admin.from("platform_admins").insert({ user_id: user.id });
+  if (insertError) throw insertError;
+}
