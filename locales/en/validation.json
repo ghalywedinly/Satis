@@ -11,5 +11,6 @@
   "daysRange": "Enter a number of days from 1 to 365.",
   "limitRange": "Enter a whole number, or leave it empty for no limit.",
   "pickTime": "Pick a day and time.",
-  "phone": "Enter a valid mobile number."
+  "phone": "Enter a valid mobile number.",
+  "meetingLink": "Enter a link starting with https://"
 }

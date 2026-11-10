@@ -459,9 +459,22 @@ export type Database = {
         Relationships: [];
       };
       meeting_requests: {
-        Row: { id: string; starts_at: string; full_name: string; email: string; phone: string; company: string; locale: Database["public"]["Enums"]["app_locale"]; created_at: string };
+        Row: {
+          id: string;
+          starts_at: string;
+          full_name: string;
+          email: string;
+          phone: string;
+          company: string;
+          locale: Database["public"]["Enums"]["app_locale"];
+          created_at: string;
+          status: "new" | "confirmed" | "held" | "customer" | "not_now" | "cancelled";
+          meeting_link: string | null;
+          notes: string | null;
+          updated_at: string;
+        };
         Insert: { id?: string; starts_at: string; full_name: string; email: string; phone: string; company: string; locale?: Database["public"]["Enums"]["app_locale"] };
-        Update: never;
+        Update: { status?: "new" | "confirmed" | "held" | "customer" | "not_now" | "cancelled"; meeting_link?: string | null; notes?: string | null };
         Relationships: [];
       };
       notification_preferences: {
@@ -657,6 +670,7 @@ export type Database = {
       };
       add_response_tag: { Args: { p_response_id: string; p_name: string }; Returns: string };
       issue_coupon: { Args: { p_response_id: string }; Returns: Json };
+      is_platform_admin: { Args: Record<string, never>; Returns: boolean };
       booked_meeting_slots: { Args: { p_from: string; p_to: string }; Returns: string[] };
       notification_recipients: {
         Args: { p_organization_id: string; p_kind: "negative_alert" | "weekly_report" };

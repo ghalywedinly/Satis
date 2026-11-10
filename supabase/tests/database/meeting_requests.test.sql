@@ -40,7 +40,7 @@ reset role;
 
 set local role authenticated;
 select set_config('request.jwt.claims', json_build_object('sub', gen_random_uuid(), 'role', 'authenticated')::text, true);
-select throws_ok($$select * from public.meeting_requests$$, '42501', null, 'signed-in teams cannot read bookings either');
+select is_empty($$select * from public.meeting_requests$$, 'signed-in teams cannot read bookings either');
 reset role;
 
 select ok(

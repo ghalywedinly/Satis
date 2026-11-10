@@ -1,0 +1,96 @@
+{
+  "metaTitle": "Bookings",
+  "team": "Satis team",
+  "teamOnly": "Only the Satis team can see this area.",
+  "nav": {
+    "label": "Bookings views",
+    "calendar": "Calendar",
+    "pipeline": "Pipeline",
+    "backToApp": "Back to Satis"
+  },
+  "statuses": {
+    "new": "New",
+    "confirmed": "Confirmed",
+    "held": "Call held",
+    "customer": "Customer",
+    "not_now": "Not now",
+    "cancelled": "Cancelled"
+  },
+  "statusHints": {
+    "new": "Confirm and send the link",
+    "confirmed": "Link sent, call coming up",
+    "held": "Follow up within 2 days",
+    "customer": "Signed up",
+    "not_now": "Lost or postponed"
+  },
+  "week": {
+    "title": "{count} calls this week",
+    "range": "{from} – {to} · Sunday to Thursday, Saudi time",
+    "previous": "Previous week",
+    "next": "Next week",
+    "thisWeek": "This week",
+    "today": "Today",
+    "legendNew": "New, needs a reply",
+    "legendConfirmed": "Confirmed",
+    "legendDone": "Held or closed",
+    "legendFree": "Empty rows are free times visitors can still book.",
+    "calendar": "Week calendar"
+  },
+  "upNext": {
+    "title": "Up next",
+    "in": "in {time}",
+    "now": "Happening now",
+    "join": "Join the call",
+    "addLink": "Add a meeting link",
+    "whatsapp": "WhatsApp",
+    "details": "Open details",
+    "none": "No upcoming calls yet. Share the booking page to get some."
+  },
+  "reply": {
+    "title": "Needs your reply",
+    "confirm": "Confirm",
+    "none": "All caught up. Nothing waiting for a reply."
+  },
+  "pipeline": {
+    "title": "From demo call to customer",
+    "booked": "Booked this month",
+    "held": "Calls held",
+    "customers": "Became customers",
+    "rate": "{percent} of calls",
+    "moveTo": "Move to",
+    "empty": "Nothing here",
+    "dragHint": "Drag a card to another column, or use its menu."
+  },
+  "details": {
+    "back": "Back to calendar",
+    "booked": "Booked {when}",
+    "email": "Email",
+    "mobile": "Mobile",
+    "language": "Language",
+    "languages": {
+      "ar": "Arabic",
+      "en": "English"
+    },
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "emailAction": "Email",
+    "status": "Status",
+    "meetingLink": "Meeting link",
+    "meetingLinkHint": "A Google Meet or Zoom link, starting with https://",
+    "sendLink": "Send the link on WhatsApp",
+    "notes": "Notes",
+    "notesHint": "Only the Satis team sees these.",
+    "save": "Save changes",
+    "saved": "Saved.",
+    "calendar": "Add to Google Calendar",
+    "calendarTitle": "Satis demo: {company}",
+    "cancel": "Cancel and free the slot",
+    "cancelTitle": "Cancel this meeting?",
+    "cancelBody": "The time becomes free for other visitors. Let {name} know yourself.",
+    "cancelConfirm": "Cancel meeting",
+    "keep": "Keep it",
+    "whatsappLink": "Hello {name}, this is the Satis team. Here's the link for your call on {when}: {link}",
+    "whatsappHello": "Hello {name}, this is the Satis team about your call on {when}."
+  },
+  "duration": "{minutes} min"
+}

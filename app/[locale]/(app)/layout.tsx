@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { isPlatformAdmin } from "@/modules/bookings/queries";
 import { getTranslations } from "next-intl/server";
 import { AnalyticsIdentity } from "@/components/app-shell/analytics-identity";
 import { AppFrame } from "@/components/app-shell/app-frame";
@@ -25,6 +26,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
     countUnread(membership.organization.id),
     cookies(),
   ]);
+  const admin = await isPlatformAdmin();
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "dashboard" },
@@ -35,6 +37,8 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
     { href: "/locations", label: "locations" },
     { href: "/team", label: "team" },
     ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings" } as const] : []),
+    // The Satis team's own area (demo bookings); hidden for everyone else.
+    ...(admin ? [{ href: "/admin/bookings", label: "bookings" } as const] : []),
   ];
 
   return (
