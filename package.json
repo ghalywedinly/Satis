@@ -21,6 +21,11 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.131.0",
+    "@opentelemetry/api-logs": "^0.223.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.301.2",
+    "@opentelemetry/resources": "^3.1.1",
+    "@opentelemetry/sdk-logs": "^3.1.1",
+    "@posthog/ai": "^8.20.0",
     "@react-email/components": "^1.0.12",
     "@react-email/render": "^2.1.0",
     "@sentry/core": "^11.1.0",

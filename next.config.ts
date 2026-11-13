@@ -20,6 +20,7 @@ const contentSecurityPolicy = [
   `img-src 'self' data: blob: ${supabaseUrl}`.trim(),
   "font-src 'self'",
   `connect-src 'self' ${supabaseUrl} ${supabaseWs}`.trim(),
+  "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",
@@ -36,8 +37,7 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
 ];
 
-const posthogHost = process.env.POSTHOG_HOST ?? "https://eu.i.posthog.com";
-const posthogAssets = posthogHost.replace("://eu.i.", "://eu-assets.i.").replace("://us.i.", "://us-assets.i.");
+const posthogHost = process.env.POSTHOG_HOST;
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -47,8 +47,18 @@ const nextConfig: NextConfig = {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
   async rewrites() {
+    if (!posthogHost) {
+      if (isDev) {
+        console.warn(
+          "POSTHOG_HOST variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_HOST is configured",
+        );
+      }
+      return [];
+    }
+    const posthogAssets = posthogHost.replace("://eu.i.", "://eu-assets.i.").replace("://us.i.", "://us-assets.i.");
     return [
       { source: "/ingest/static/:path*", destination: `${posthogAssets}/static/:path*` },
+      { source: "/ingest/array/:path*", destination: `${posthogAssets}/array/:path*` },
       { source: "/ingest/:path*", destination: `${posthogHost}/:path*` },
     ];
   },

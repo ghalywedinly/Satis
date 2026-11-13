@@ -1,4 +1,5 @@
 import "server-only";
+import { randomUUID } from "node:crypto";
 import type { z } from "zod";
 import { serverEnv } from "@/lib/env/server";
 
@@ -6,6 +7,18 @@ import { serverEnv } from "@/lib/env/server";
  * A replaceable AI backend (spec §19). Callers describe the output with a Zod schema and get
  * validated data back; nothing else in the app knows which provider or model is used.
  */
+export type AIObservabilityContext = {
+  sessionId: string;
+  distinctId?: string;
+};
+
+export const createAIObservabilityContext = (distinctId?: string): AIObservabilityContext => ({
+  sessionId: `ai-${randomUUID()}`,
+  distinctId,
+});
+
+export const createAITraceId = () => randomUUID();
+
 export type GenerateRequest<T> = {
   /** Which job this is: for logs, and so the development stand-in knows what to return. */
   task: "analyze_comments" | "weekly_summary";
@@ -17,6 +30,8 @@ export type GenerateRequest<T> = {
   /** Classification-style work needs little reasoning; summaries a bit more. */
   effort: "low" | "medium" | "high";
   maxTokens: number;
+  /** Run-level session and turn-level trace details for AI Observability. */
+  observability: AIObservabilityContext & { traceId: string };
 };
 
 export type GenerateResult<T> = { data: T; model: string };

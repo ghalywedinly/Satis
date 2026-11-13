@@ -50,7 +50,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
         <div className="app-blob -bottom-[20vh] end-[15vw] h-[55vh] w-[50vw] bg-zest/40 [animation-delay:-15s]" />
         <div className="app-blob top-[45vh] start-[30vw] h-[40vh] w-[35vw] bg-grape/25 [animation-delay:-4s]" />
       </div>
-      <AnalyticsIdentity userId={user.id} />
+      <AnalyticsIdentity userId={user.id} email={user.email} />
       <a
         href="#content"
         className="sr-only z-50 rounded-control print:hidden bg-white px-3 py-2 focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:shadow-focus"

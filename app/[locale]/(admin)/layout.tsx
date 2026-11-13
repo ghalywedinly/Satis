@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { AnalyticsIdentity } from "@/components/app-shell/analytics-identity";
 import { SatisLogo } from "@/components/brand/satis-mark";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { requireUser } from "@/lib/auth/session";
@@ -12,12 +13,13 @@ import { isPlatformAdmin } from "@/modules/bookings/queries";
 /** The Satis team's own area. Anyone else gets "not found", as if it didn't exist. */
 export default async function AdminLayout({ children, params }: LayoutProps<"/[locale]">) {
   const locale = await resolveLocale(params);
-  await requireUser(locale);
+  const user = await requireUser(locale);
   if (!(await isPlatformAdmin())) notFound();
   const t = await getTranslations({ locale, namespace: "admin" });
 
   return (
     <div className="flex min-h-dvh flex-col bg-sand">
+      <AnalyticsIdentity userId={user.id} email={user.email} />
       <header className="border-b border-ink-800 bg-ink text-sand">
         <div className="mx-auto flex w-full max-w-[1440px] flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3 sm:px-8">
           <Link href="/admin/bookings" className="flex items-center gap-3 rounded-control outline-none focus-visible:shadow-focus">

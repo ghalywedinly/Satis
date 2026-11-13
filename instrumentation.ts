@@ -6,6 +6,8 @@ export async function register() {
     const { assertDeployedEnv } = await import("./lib/env/server");
     assertDeployedEnv();
     await import("./sentry.server.config");
+    const { initializePostHogLogs } = await import("./lib/observability/posthog-logs");
+    initializePostHogLogs();
   }
   if (process.env.NEXT_RUNTIME === "edge") {
     await import("./sentry.edge.config");

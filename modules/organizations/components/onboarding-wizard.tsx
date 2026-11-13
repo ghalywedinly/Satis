@@ -55,8 +55,14 @@ export function OnboardingWizard({ skipWelcome }: { skipWelcome: boolean }) {
   const [type, setType] = useState<BusinessType | "">("");
   const [touched, setTouched] = useState(false);
   const headings = useRef<(HTMLHeadingElement | null)[]>([]);
+  const onboardingStarted = useRef(false);
 
-  useEffect(() => trackClient("onboarding_started"), []);
+  const startOnboarding = () => {
+    if (!onboardingStarted.current) {
+      trackClient("onboarding_started");
+      onboardingStarted.current = true;
+    }
+  };
 
   // After a failed submit, go back to the first step with an error (adjusted during render, not in an effect).
   const [handledState, setHandledState] = useState(state);
@@ -78,6 +84,7 @@ export function OnboardingWizard({ skipWelcome }: { skipWelcome: boolean }) {
 
   const stepValid = step === 1 ? name.trim().length > 0 : step === 2 ? type !== "" : true;
   const next = () => {
+    startOnboarding();
     setTouched(true);
     if (!stepValid) return;
     setTouched(false);
@@ -109,7 +116,15 @@ export function OnboardingWizard({ skipWelcome }: { skipWelcome: boolean }) {
         <section hidden={step !== 0} className="flex flex-col gap-4">
           {heading(0, t("welcome.title"))}
           <p className="text-lg text-muted-foreground">{t("welcome.body")}</p>
-          <Button type="button" size="lg" className="self-start" onClick={() => setStep(1)}>
+          <Button
+            type="button"
+            size="lg"
+            className="self-start"
+            onClick={() => {
+              startOnboarding();
+              setStep(1);
+            }}
+          >
             {t("welcome.start")}
           </Button>
         </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import posthog from "posthog-js";
 import * as Sentry from "@sentry/nextjs";
 import arCommon from "@/locales/ar/common.json";
 import arErrors from "@/locales/ar/errors.json";
@@ -11,6 +12,7 @@ import "./globals.css";
 /** Last-resort error page when the root layout itself fails. Bilingual, no providers available. */
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.captureException(error);
     Sentry.captureException(error);
   }, [error]);
 

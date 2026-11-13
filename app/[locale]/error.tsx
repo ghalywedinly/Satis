@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import posthog from "posthog-js";
 import * as Sentry from "@sentry/nextjs";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   const t = useTranslations();
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.captureException(error);
     Sentry.captureException(error);
   }, [error]);
 
