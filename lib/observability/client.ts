@@ -21,20 +21,6 @@ export function initClientObservability() {
       beforeSend: scrubEvent,
     });
   }
-
-  const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  if (key) {
-    posthog.init(key, {
-      api_host: "/ingest",
-      ui_host: "https://eu.posthog.com",
-      defaults: "2025-05-24",
-      person_profiles: "identified_only",
-      // Explicit events only: autocapture and recordings could pick up customer feedback text.
-      autocapture: false,
-      disable_session_recording: true,
-      capture_pageleave: false,
-    });
-  }
 }
 
 export function trackClient(event: AnalyticsEvent, properties?: Record<string, string | number | boolean>) {
@@ -42,9 +28,9 @@ export function trackClient(event: AnalyticsEvent, properties?: Record<string, s
 }
 
 /** Links analytics to our internal user id (never an email). */
-export function identifyClient(userId: string) {
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.identify(userId);
-  Sentry.setUser({ id: userId });
+export function identifyClient(userId: string, email: string | null) {
+  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.identify(userId, email ? { email } : undefined);
+  Sentry.setUser({ id: userId, email: email ?? undefined });
 }
 
 export function resetClientIdentity() {

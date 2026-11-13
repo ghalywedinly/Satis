@@ -1,6 +1,6 @@
 import "server-only";
 import { redactForAI } from "@/lib/ai/redact";
-import { AIOutputError, getAIProvider } from "@/lib/ai/provider";
+import { AIOutputError, createAIObservabilityContext, createAITraceId, getAIProvider, type AIObservabilityContext } from "@/lib/ai/provider";
 import { reportError } from "@/lib/observability/errors";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { parseDashboardFilters, rangeFor } from "@/modules/analytics/period";
@@ -17,10 +17,11 @@ const BATCH = 40;
 export type AnalyzeResult = { analysed: number; failed: number } | { error: "notConfigured" };
 
 /** Analyses written comments that haven't been analysed yet, in batches. */
-export async function analyzePending({ organizationId, limit = 200 }: { organizationId?: string; limit?: number } = {}): Promise<AnalyzeResult> {
+export async function analyzePending({ organizationId, limit = 200, observability }: { organizationId?: string; limit?: number; observability?: AIObservabilityContext } = {}): Promise<AnalyzeResult> {
   const provider = await getAIProvider();
   const supabase = createSupabaseAdminClient();
   if (!provider || !supabase) return { error: "notConfigured" };
+  const context = observability ?? createAIObservabilityContext();
 
   let analysed = 0;
   let failed = 0;
@@ -36,6 +37,7 @@ export async function analyzePending({ organizationId, limit = 200 }: { organiza
         schema: analysisSchema,
         effort: "low",
         maxTokens: 8000,
+        observability: { ...context, traceId: createAITraceId() },
       });
       const rows = data.results
         .filter((r) => r.index >= 0 && r.index < pending.length)
@@ -69,10 +71,11 @@ export async function analyzePending({ organizationId, limit = 200 }: { organiza
 export type SummaryResult = { created: number; skipped: number } | { error: "notConfigured" };
 
 /** Writes the weekly summary (last 7 Saudi days) for one business, or every business with comments. */
-export async function generateWeeklySummaries({ organizationId }: { organizationId?: string } = {}): Promise<SummaryResult> {
+export async function generateWeeklySummaries({ organizationId, observability }: { organizationId?: string; observability?: AIObservabilityContext } = {}): Promise<SummaryResult> {
   const provider = await getAIProvider();
   const supabase = createSupabaseAdminClient();
   if (!provider || !supabase) return { error: "notConfigured" };
+  const context = observability ?? createAIObservabilityContext();
 
   const range = rangeFor(parseDashboardFilters({ period: "7" }));
   const from = range.from.toISOString();
@@ -93,7 +96,7 @@ export async function generateWeeklySummaries({ organizationId }: { organization
   let skipped = 0;
   for (const org of organizations) {
     try {
-      const ok = await summarizeOne(provider, supabase, org, from, to);
+      const ok = await summarizeOne(provider, supabase, org, from, to, context);
       if (ok) created += 1;
       else skipped += 1;
     } catch (e) {
@@ -107,7 +110,7 @@ export async function generateWeeklySummaries({ organizationId }: { organization
 type Admin = NonNullable<ReturnType<typeof createSupabaseAdminClient>>;
 type Provider = NonNullable<Awaited<ReturnType<typeof getAIProvider>>>;
 
-async function summarizeOne(provider: Provider, supabase: Admin, organizationId: string, from: string, to: string): Promise<boolean> {
+async function summarizeOne(provider: Provider, supabase: Admin, organizationId: string, from: string, to: string, context: AIObservabilityContext): Promise<boolean> {
   const { data: observed, error } = await supabase.rpc("ai_weekly_observed", { p_organization_id: organizationId, p_from: from, p_to: to });
   if (error) throw error;
   const facts = observed as { comments: number };
@@ -130,6 +133,7 @@ async function summarizeOne(provider: Provider, supabase: Admin, organizationId:
     .slice(0, 30);
   if (comments.length === 0) return false;
 
+  const traceId = createAITraceId();
   const generate = () =>
     provider.generate({
       task: "weekly_summary",
@@ -138,6 +142,7 @@ async function summarizeOne(provider: Provider, supabase: Admin, organizationId:
       schema: summarySchema,
       effort: "medium",
       maxTokens: 6000,
+      observability: { ...context, traceId },
     });
   // One retry when the first draft cites numbers the data doesn't contain or has no evidence.
   let result = await generate();

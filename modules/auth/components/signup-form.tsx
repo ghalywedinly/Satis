@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { FormAlert } from "@/components/forms/form-alert";
 import { FormField } from "@/components/forms/form-field";
@@ -13,10 +13,9 @@ export function SignupForm({ next }: { next?: string }) {
   const te = useTranslations("errors");
   const locale = useLocale();
   const [state, action] = useActionState(signUp.bind(null, locale), { status: "idle" });
-  useEffect(() => trackClient("signup_started"), []);
 
   return (
-    <form action={action} noValidate className="flex flex-col gap-5">
+    <form action={action} onSubmit={() => trackClient("signup_started")} noValidate className="flex flex-col gap-5">
       {state.formError && <FormAlert tone="error">{te(state.formError)}</FormAlert>}
       {next && <input type="hidden" name="next" value={next} />}
       <FormField

@@ -23,7 +23,7 @@ export const serverEnvSchema = z.object({
   AUTH_EMAIL_HOOK_SECRET: optional(z.string().startsWith("v1,whsec_")),
   RESEND_API_KEY: optional(z.string().min(1)),
   EMAIL_FROM: optional(z.string().min(3)),
-  POSTHOG_HOST: optional(z.url()),
+  POSTHOG_HOST: optional(z.string().min(1)),
   RATE_LIMIT_SALT: optional(z.string().min(16)),
   /** AI analysis (Phase 7). "fake" is a keyword-based stand-in for development and tests only. */
   AI_PROVIDER: optional(z.enum(["anthropic", "fake"])),

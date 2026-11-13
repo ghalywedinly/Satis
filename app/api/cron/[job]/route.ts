@@ -1,6 +1,8 @@
 import { timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
+import { createAIObservabilityContext } from "@/lib/ai/provider";
 import { serverEnv } from "@/lib/env/server";
+import { flushPostHog } from "@/lib/observability/analytics";
 import { reportError } from "@/lib/observability/errors";
 import { analyzePending, generateWeeklySummaries } from "@/modules/ai/jobs";
 import { sendWeeklyReports } from "@/modules/notifications/weekly";
@@ -10,12 +12,13 @@ export const maxDuration = 60;
 
 const JOBS = {
   // Daily: analyse new comments, oldest first.
-  "ai-analyze": () => analyzePending({ limit: 120 }),
+  "ai-analyze": () => analyzePending({ limit: 120, observability: createAIObservabilityContext() }),
   // Sunday morning (Riyadh): analyse what's left, summarise the week, then email each team its report.
   // The report goes out even when AI isn't set up; it just has no AI summary then.
   "ai-weekly-summary": async () => {
-    const analyze = await analyzePending({ limit: 80 });
-    const summaries = await generateWeeklySummaries();
+    const observability = createAIObservabilityContext();
+    const analyze = await analyzePending({ limit: 80, observability });
+    const summaries = await generateWeeklySummaries({ observability });
     const reports = await sendWeeklyReports();
     return { analyze, summaries, reports };
   },
@@ -40,5 +43,7 @@ export async function GET(request: Request, { params }: RouteContext<"/api/cron/
   } catch (error) {
     reportError(error, { area: "cron", action: job });
     return NextResponse.json({ error: "failed" }, { status: 500 });
+  } finally {
+    await flushPostHog();
   }
 }
