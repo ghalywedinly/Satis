@@ -4,6 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { localeDirection, routing } from "@/lib/i18n/routing";
 import { Providers } from "@/components/providers";
+import { siteOrigin } from "@/lib/seo";
 import { fontVariables } from "../fonts";
 import "../globals.css";
 
@@ -16,6 +17,8 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale });
   return {
+    // Makes relative image and alternate URLs absolute (share previews, hreflang).
+    metadataBase: new URL(siteOrigin()),
     title: { default: t("metadata.title"), template: `%s · ${t("common.appName")}` },
     description: t("metadata.description"),
     // The name under the icon when the site is added to an iPhone home screen.

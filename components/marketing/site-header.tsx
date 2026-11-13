@@ -21,11 +21,13 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Section links point at the home page so they also work from the blog.
   const links = [
-    { href: "#how", label: t("how") },
-    { href: "#features", label: t("features") },
-    { href: "#pricing", label: t("pricing") },
-    { href: "#faq", label: t("faq") },
+    { href: "/#how", label: t("how") },
+    { href: "/#features", label: t("features") },
+    { href: "/#pricing", label: t("pricing") },
+    { href: "/#faq", label: t("faq") },
+    { href: "/blog", label: t("blog") },
   ];
 
   return (
@@ -41,9 +43,9 @@ export function SiteHeader() {
         </Link>
         <nav aria-label={t("label")} className="hidden items-center gap-7 text-[15px] font-medium text-ink-200 lg:flex">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="rounded-xs outline-none transition-colors hover:text-sand focus-visible:shadow-focus">
+            <Link key={link.href} href={link.href} className="rounded-xs outline-none transition-colors hover:text-sand focus-visible:shadow-focus">
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="flex items-center gap-2">

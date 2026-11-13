@@ -1,0 +1,45 @@
+{
+  "metaTitle": "Blog",
+  "metaDescription": "Practical guides and ready-made templates for measuring and understanding customer satisfaction, from the Satis team.",
+  "eyebrow": "Satis blog",
+  "title": "Your guide to understanding customers <hl>and measuring satisfaction</hl>",
+  "intro": "Practical guides and ready-made templates for restaurants, cafés, clinics and stores that want to hear from customers every day.",
+  "searchLabel": "Search articles",
+  "searchPlaceholder": "For example: how to calculate NPS",
+  "searchSubmit": "Search",
+  "categoriesLabel": "Topics",
+  "all": "All",
+  "categories": {
+    "nps": "NPS guide",
+    "experience": "Customer experience",
+    "restaurants": "Restaurants and cafés",
+    "stories": "Customer stories",
+    "product": "New in Satis"
+  },
+  "featured": "Featured article",
+  "latest": "Latest articles",
+  "results": "{count} results",
+  "empty": {
+    "title": "No matching articles",
+    "body": "Try another word or topic.",
+    "action": "See all articles"
+  },
+  "readTime": "{minutes} min read",
+  "author": "The Satis team",
+  "authorInitial": "S",
+  "breadcrumb": "Breadcrumb",
+  "backToBlog": "Blog",
+  "contents": "In this article",
+  "share": {
+    "whatsapp": "Share on WhatsApp",
+    "linkedin": "Share on LinkedIn",
+    "copy": "Copy link",
+    "copied": "Link copied"
+  },
+  "cta": {
+    "title": "See Satis with your own business",
+    "body": "A 30-minute call where we set up your first branch survey, in Arabic and English.",
+    "action": "Book a meeting"
+  },
+  "related": "Read next"
+}
