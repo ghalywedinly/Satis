@@ -27,6 +27,7 @@ const load = {
     studies: (await import("./ar/studies.json")).default,
     admin: (await import("./ar/admin.json")).default,
     booking: (await import("./ar/booking.json")).default,
+    blog: (await import("./ar/blog.json")).default,
   }),
   en: async () => ({
     common: (await import("./en/common.json")).default,
@@ -53,6 +54,7 @@ const load = {
     studies: (await import("./en/studies.json")).default,
     admin: (await import("./en/admin.json")).default,
     booking: (await import("./en/booking.json")).default,
+    blog: (await import("./en/blog.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;
 

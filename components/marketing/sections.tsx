@@ -595,18 +595,21 @@ export function SiteFooter() {
           <div className="grid grid-cols-2 gap-10 text-sm">
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-sand">{t("footer.product")}</span>
-              <a href="#how" className="hover:text-sand">
+              <Link href="/#how" className="hover:text-sand">
                 {t("nav.how")}
-              </a>
-              <a href="#features" className="hover:text-sand">
+              </Link>
+              <Link href="/#features" className="hover:text-sand">
                 {t("nav.features")}
-              </a>
-              <a href="#pricing" className="hover:text-sand">
+              </Link>
+              <Link href="/#pricing" className="hover:text-sand">
                 {t("nav.pricing")}
-              </a>
-              <a href="#faq" className="hover:text-sand">
+              </Link>
+              <Link href="/#faq" className="hover:text-sand">
                 {t("nav.faq")}
-              </a>
+              </Link>
+              <Link href="/blog" className="hover:text-sand">
+                {t("nav.blog")}
+              </Link>
             </div>
             <div className="flex flex-col gap-3">
               <span className="font-semibold text-sand">{t("footer.account")}</span>
