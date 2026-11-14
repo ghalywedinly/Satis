@@ -233,6 +233,18 @@
   letter-spacing: 0;
 }
 
+/*
+ * Arabic letters reach higher and lower than Latin ones, so the tight leading that suits
+ * English headings makes Arabic lines touch. Outside any layer so it wins over leading-* utilities.
+ */
+:lang(ar) :is(h1, h2, h3, h4) {
+  line-height: 1.4;
+}
+/* A highlight plate on a heading's second line gets its own clearance from the line above. */
+:lang(ar) :is(h1, h2, h3, h4) .slice {
+  margin-block: 0.12em;
+}
+
 /* Slice: the parallelogram from the mark. Use on chips, highlights, rating bars. */
 @utility slice {
   clip-path: polygon(0.3em 0, 100% 0, calc(100% - 0.3em) 100%, 0 100%);

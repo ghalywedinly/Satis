@@ -23,6 +23,7 @@ Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual referen
 ## Always
 - Stack: Next.js App Router, TypeScript, Tailwind v4, shadcn/ui. Tokens live in `app/globals.css` (`@theme`) — use token classes (`bg-ink`, `text-ultramarine`, `bg-zest`, `font-display`, `rounded-card`), never raw hex in components.
 - Logo: `<SatisLogo />` / `<SatisMark />` from `components/brand/satis-mark.tsx`. Never retype "Satis" as a logo, never stretch, outline, rotate, recolour outside the listed tones, or add effects.
+- Arabic headings keep line-height ≥ 1.4 so lines never touch (enforced in `globals.css`; don't override it with `leading-*` on Arabic text).
 - Headings, numerals, logo: `font-display` (Bricolage Grotesque 700/800, negative tracking). Body/UI: `font-sans` (Instrument Sans). Arabic: Readex Pro with tracking 0, applied automatically to anything inside `lang="ar"` (see `globals.css`).
 - Sentence case everywhere. Buttons are verb + object ("Send feedback", "Book a demo"). No emoji. Digits with commas (2,140). Percent with no space (92.4%).
 - Say **customers** (the brand's shoppers) and **teams** (merchant users). Never "users" in UI copy.
