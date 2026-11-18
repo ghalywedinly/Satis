@@ -8,6 +8,12 @@ const isDev = process.env.NODE_ENV === "development";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseWs = supabaseUrl.replace(/^http/, "ws");
 
+/** Google Tag Manager and Google Analytics, loaded on marketing pages only (see GoogleTagManager). */
+const GOOGLE_TAGS = {
+  script: "https://www.googletagmanager.com",
+  connect: "https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
+};
+
 /**
  * Static CSP (no nonces) so marketing pages and the public survey can stay statically
  * rendered and CDN-cached. Analytics and error reporting are proxied through our own
@@ -15,11 +21,11 @@ const supabaseWs = supabaseUrl.replace(/^http/, "ws");
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' ${GOOGLE_TAGS.script}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  `img-src 'self' data: blob: ${supabaseUrl}`.trim(),
+  `img-src 'self' data: blob: ${supabaseUrl} ${GOOGLE_TAGS.connect}`,
   "font-src 'self'",
-  `connect-src 'self' ${supabaseUrl} ${supabaseWs}`.trim(),
+  `connect-src 'self' ${supabaseUrl} ${supabaseWs} ${GOOGLE_TAGS.connect}`,
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",

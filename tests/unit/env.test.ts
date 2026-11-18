@@ -14,4 +14,11 @@ describe("env schema", () => {
     expect(env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY).toBe("sb_publishable_abc");
     expect(env.NEXT_PUBLIC_POSTHOG_KEY).toBeUndefined();
   });
+
+  it("accepts a Tag Manager container id, treats empty as off, rejects anything else", () => {
+    const base = { NEXT_PUBLIC_SITE_URL: "https://example.com" };
+    expect(publicEnvSchema.parse({ ...base, NEXT_PUBLIC_GTM_ID: "GTM-MLQV8C9D" }).NEXT_PUBLIC_GTM_ID).toBe("GTM-MLQV8C9D");
+    expect(publicEnvSchema.parse({ ...base, NEXT_PUBLIC_GTM_ID: "" }).NEXT_PUBLIC_GTM_ID).toBeUndefined();
+    expect(() => publicEnvSchema.parse({ ...base, NEXT_PUBLIC_GTM_ID: "');alert(1);('" })).toThrow();
+  });
 });
