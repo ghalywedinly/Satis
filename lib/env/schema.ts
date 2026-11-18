@@ -15,6 +15,8 @@ export const publicEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: optional(z.string().min(1)),
   NEXT_PUBLIC_SENTRY_DSN: optional(z.url()),
   NEXT_PUBLIC_POSTHOG_KEY: optional(z.string().min(1)),
+  /** Google Tag Manager container for the public marketing pages only. */
+  NEXT_PUBLIC_GTM_ID: optional(z.string().regex(/^GTM-[A-Z0-9]+$/)),
 });
 
 export const serverEnvSchema = z.object({
