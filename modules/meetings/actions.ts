@@ -41,18 +41,16 @@ export async function bookMeeting(locale: Locale, _prev: FormState<BookingField>
     return { status: "error", formError: "generic", values };
   }
   const startsAt = new Date(booking.startsAt).toISOString();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("meeting_requests")
-    .insert({ starts_at: startsAt, full_name: booking.fullName, email: booking.email, phone: booking.phone, company: booking.company, locale: lang })
-    .select("id")
-    .single();
+    .insert({ starts_at: startsAt, full_name: booking.fullName, email: booking.email, phone: booking.phone, company: booking.company, locale: lang });
   if (error) {
     if (error.code === "23505") return { status: "error", formError: "slotTaken", values };
     reportError(error, { area: "meetings", action: "book" });
     return { status: "error", formError: "generic", values };
   }
 
-  captureServerEvent("meeting_booked", data.id, { locale: lang });
+  captureServerEvent("meeting_booked", undefined, { locale: lang });
   after(() => sendBookingEmails({ ...booking, startsAt, locale: lang }));
   return { status: "success", values: { ...values, startsAt } };
 }

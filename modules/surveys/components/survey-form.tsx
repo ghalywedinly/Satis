@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { Check, Loader2 } from "lucide-react";
 import { SatisLogo, SatisMark } from "@/components/brand/satis-mark";
 import type { Locale } from "@/lib/i18n/routing";
+import { trackClient } from "@/lib/observability/client";
 import { cn } from "@/lib/utils";
 import type { Messages } from "@/locales";
 import {
@@ -69,6 +70,7 @@ export function SurveyForm({
   const [pending, startTransition] = useTransition();
   const [submissionId] = useState(() => crypto.randomUUID());
   const honeypot = useRef<HTMLInputElement>(null);
+  const surveyStarted = useRef(false);
   const questionRefs = useRef<Record<string, HTMLFieldSetElement | null>>({});
   const fallback = definition.defaultLocale;
   const theme = themeOf(definition.theme);
@@ -76,6 +78,10 @@ export function SurveyForm({
   const pageAccent = accentStyle(theme.accent, surface.darkPage);
 
   const setAnswer = (question: Question, value: Answers[string] | null) => {
+    if (mode.kind === "live" && value !== null && !surveyStarted.current) {
+      surveyStarted.current = true;
+      trackClient("survey_started", { locale });
+    }
     setAnswers((prev) => {
       const next = { ...prev };
       if (value === null) delete next[question.id];

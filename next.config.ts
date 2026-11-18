@@ -27,6 +27,7 @@ const contentSecurityPolicy = [
   `img-src 'self' data: blob: ${supabaseUrl} ${GOOGLE_TAGS.connect}`,
   "font-src 'self'",
   `connect-src 'self' ${supabaseUrl} ${supabaseWs} ${GOOGLE_TAGS.connect}`,
+  "worker-src 'self' blob:",
   "frame-ancestors 'none'",
   "form-action 'self'",
   "base-uri 'self'",
@@ -43,8 +44,8 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
 ];
 
-const posthogHost = process.env.POSTHOG_HOST ?? "https://eu.i.posthog.com";
-const posthogAssets = posthogHost.replace("://eu.i.", "://eu-assets.i.").replace("://us.i.", "://us-assets.i.");
+const posthogHost = process.env.NEXT_PUBLIC_POSTHOG_HOST;
+const posthogAssets = posthogHost?.replace(".i.", "-assets.i.");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -54,8 +55,10 @@ const nextConfig: NextConfig = {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
   async rewrites() {
+    if (!posthogHost || !posthogAssets) return [];
     return [
       { source: "/ingest/static/:path*", destination: `${posthogAssets}/static/:path*` },
+      { source: "/ingest/array/:path*", destination: `${posthogAssets}/array/:path*` },
       { source: "/ingest/:path*", destination: `${posthogHost}/:path*` },
     ];
   },

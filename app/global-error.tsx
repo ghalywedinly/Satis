@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
+import posthog from "posthog-js";
 import arCommon from "@/locales/ar/common.json";
 import arErrors from "@/locales/ar/errors.json";
 import enCommon from "@/locales/en/common.json";
@@ -12,6 +13,7 @@ import "./globals.css";
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     Sentry.captureException(error);
+    posthog.captureException(error);
   }, [error]);
 
   return (
