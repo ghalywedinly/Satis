@@ -9,9 +9,10 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
 const supabaseWs = supabaseUrl.replace(/^http/, "ws");
 
 /** Google Tag Manager and Google Analytics, loaded on marketing pages only (see GoogleTagManager). */
+// Hosts from Google's CSP guide for Tag Manager + GA4 (GA4 also sends hits to www.google.com/g/collect).
 const GOOGLE_TAGS = {
-  script: "https://www.googletagmanager.com",
-  connect: "https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
+  script: "https://*.googletagmanager.com",
+  connect: "https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net",
 };
 
 /**

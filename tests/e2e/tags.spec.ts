@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 test.describe("third-party tags", () => {
   test("Tag Manager loads on marketing pages and is allowed by the CSP", async ({ page }) => {
     const response = await page.goto("/");
-    expect(response?.headers()["content-security-policy"]).toContain("https://www.googletagmanager.com");
+    expect(response?.headers()["content-security-policy"]).toContain("googletagmanager.com");
     await expect(page.locator("script#gtm")).toHaveCount(1);
     await page.goto("/en/blog");
     await expect(page.locator("script#gtm")).toHaveCount(1);
