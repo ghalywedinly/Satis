@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/nextjs";
 import posthog from "posthog-js";
 import type { AnalyticsEvent } from "./analytics-events";
 import { scrubEvent } from "./scrub";
+import { posthogKey } from "./posthog-key";
 import { sentryDataCollection } from "./sentry-options";
 
 let started = false;
@@ -22,7 +23,7 @@ export function initClientObservability() {
     });
   }
 
-  const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+  const key = posthogKey;
   if (key) {
     posthog.init(key, {
       api_host: "/ingest",
@@ -38,16 +39,16 @@ export function initClientObservability() {
 }
 
 export function trackClient(event: AnalyticsEvent, properties?: Record<string, string | number | boolean>) {
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.capture(event, properties);
+  if (posthogKey) posthog.capture(event, properties);
 }
 
 /** Links analytics to our internal user id (never an email). */
 export function identifyClient(userId: string) {
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.identify(userId);
+  if (posthogKey) posthog.identify(userId);
   Sentry.setUser({ id: userId });
 }
 
 export function resetClientIdentity() {
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.reset();
+  if (posthogKey) posthog.reset();
   Sentry.setUser(null);
 }
