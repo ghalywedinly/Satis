@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { SatisMark } from "@/components/brand/satis-mark";
-import { captureServerEvent } from "@/lib/observability/analytics";
 import { loadMessages } from "@/locales";
 import { SurveyForm } from "@/modules/surveys/components/survey-form";
 import { normalizeParticipantCode } from "@/modules/surveys/definition";
@@ -47,7 +46,6 @@ export default async function PublicSurveyPage({ params, searchParams }: PagePro
   const participant = typeof p === "string" ? (normalizeParticipantCode(p) ?? "") : "";
   const query = participant ? `?p=${encodeURIComponent(participant)}` : "";
   const otherLanguageHref = other ? (other === definition.defaultLocale ? `/s/${code}` : `/s/${code}/${other}`) + query : undefined;
-  captureServerEvent("survey_started", `link:${survey.linkId}`, { locale });
 
   return (
     <main>

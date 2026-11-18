@@ -15,6 +15,7 @@ export const publicEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: optional(z.string().min(1)),
   NEXT_PUBLIC_SENTRY_DSN: optional(z.url()),
   NEXT_PUBLIC_POSTHOG_KEY: optional(z.string().min(1)),
+  NEXT_PUBLIC_POSTHOG_HOST: optional(z.string().min(1)),
   /** Google Tag Manager container for the public marketing pages only. */
   NEXT_PUBLIC_GTM_ID: optional(z.string().regex(/^GTM-[A-Z0-9]+$/)),
 });
@@ -25,7 +26,7 @@ export const serverEnvSchema = z.object({
   AUTH_EMAIL_HOOK_SECRET: optional(z.string().startsWith("v1,whsec_")),
   RESEND_API_KEY: optional(z.string().min(1)),
   EMAIL_FROM: optional(z.string().min(3)),
-  POSTHOG_HOST: optional(z.url()),
+  POSTHOG_HOST: optional(z.string().min(1)),
   RATE_LIMIT_SALT: optional(z.string().min(16)),
   /** AI analysis (Phase 7). "fake" is a keyword-based stand-in for development and tests only. */
   AI_PROVIDER: optional(z.enum(["anthropic", "fake"])),
@@ -50,5 +51,4 @@ export const requiredInDeployedEnvs = [
   "RESEND_API_KEY",
   "EMAIL_FROM",
   "NEXT_PUBLIC_SENTRY_DSN",
-  "NEXT_PUBLIC_POSTHOG_KEY",
 ] as const;

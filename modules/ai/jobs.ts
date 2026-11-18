@@ -1,6 +1,7 @@
 import "server-only";
+import { randomUUID } from "node:crypto";
 import { redactForAI } from "@/lib/ai/redact";
-import { AIOutputError, getAIProvider } from "@/lib/ai/provider";
+import { AIOutputError, getAIProvider, type AIObservabilityContext } from "@/lib/ai/provider";
 import { reportError } from "@/lib/observability/errors";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { parseDashboardFilters, rangeFor } from "@/modules/analytics/period";
@@ -14,10 +15,14 @@ import { analysisSchema, analyzePrompt, ANALYZE_SYSTEM, checkSummary, PROMPT_VER
 
 const BATCH = 40;
 
+/** One process run is the AI session when the product has no user conversation. */
+export type AIJobObservability = Pick<AIObservabilityContext, "sessionId" | "distinctId">;
+
 export type AnalyzeResult = { analysed: number; failed: number } | { error: "notConfigured" };
 
 /** Analyses written comments that haven't been analysed yet, in batches. */
-export async function analyzePending({ organizationId, limit = 200 }: { organizationId?: string; limit?: number } = {}): Promise<AnalyzeResult> {
+export async function analyzePending({ organizationId, limit = 200, observability }: { organizationId?: string; limit?: number; observability?: AIJobObservability } = {}): Promise<AnalyzeResult> {
+  const aiSession = observability ?? { sessionId: `ai-analysis:${randomUUID()}` };
   const provider = await getAIProvider();
   const supabase = createSupabaseAdminClient();
   if (!provider || !supabase) return { error: "notConfigured" };
@@ -36,6 +41,7 @@ export async function analyzePending({ organizationId, limit = 200 }: { organiza
         schema: analysisSchema,
         effort: "low",
         maxTokens: 8000,
+        observability: { ...aiSession, traceId: randomUUID() },
       });
       const rows = data.results
         .filter((r) => r.index >= 0 && r.index < pending.length)
@@ -69,7 +75,8 @@ export async function analyzePending({ organizationId, limit = 200 }: { organiza
 export type SummaryResult = { created: number; skipped: number } | { error: "notConfigured" };
 
 /** Writes the weekly summary (last 7 Saudi days) for one business, or every business with comments. */
-export async function generateWeeklySummaries({ organizationId }: { organizationId?: string } = {}): Promise<SummaryResult> {
+export async function generateWeeklySummaries({ organizationId, observability }: { organizationId?: string; observability?: AIJobObservability } = {}): Promise<SummaryResult> {
+  const aiSession = observability ?? { sessionId: `ai-weekly-summary:${randomUUID()}` };
   const provider = await getAIProvider();
   const supabase = createSupabaseAdminClient();
   if (!provider || !supabase) return { error: "notConfigured" };
@@ -93,7 +100,7 @@ export async function generateWeeklySummaries({ organizationId }: { organization
   let skipped = 0;
   for (const org of organizations) {
     try {
-      const ok = await summarizeOne(provider, supabase, org, from, to);
+      const ok = await summarizeOne(provider, supabase, org, from, to, aiSession);
       if (ok) created += 1;
       else skipped += 1;
     } catch (e) {
@@ -107,7 +114,7 @@ export async function generateWeeklySummaries({ organizationId }: { organization
 type Admin = NonNullable<ReturnType<typeof createSupabaseAdminClient>>;
 type Provider = NonNullable<Awaited<ReturnType<typeof getAIProvider>>>;
 
-async function summarizeOne(provider: Provider, supabase: Admin, organizationId: string, from: string, to: string): Promise<boolean> {
+async function summarizeOne(provider: Provider, supabase: Admin, organizationId: string, from: string, to: string, aiSession: AIJobObservability): Promise<boolean> {
   const { data: observed, error } = await supabase.rpc("ai_weekly_observed", { p_organization_id: organizationId, p_from: from, p_to: to });
   if (error) throw error;
   const facts = observed as { comments: number };
@@ -130,6 +137,8 @@ async function summarizeOne(provider: Provider, supabase: Admin, organizationId:
     .slice(0, 30);
   if (comments.length === 0) return false;
 
+  // A retry is part of the same summary turn, so both generations share its trace.
+  const generationObservability = { ...aiSession, traceId: randomUUID() };
   const generate = () =>
     provider.generate({
       task: "weekly_summary",
@@ -138,6 +147,7 @@ async function summarizeOne(provider: Provider, supabase: Admin, organizationId:
       schema: summarySchema,
       effort: "medium",
       maxTokens: 6000,
+      observability: generationObservability,
     });
   // One retry when the first draft cites numbers the data doesn't contain or has no evidence.
   let result = await generate();

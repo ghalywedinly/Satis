@@ -2,12 +2,12 @@ import * as Sentry from "@sentry/nextjs";
 import posthog from "posthog-js";
 import type { AnalyticsEvent } from "./analytics-events";
 import { scrubEvent } from "./scrub";
-import { posthogKey } from "./posthog-key";
+import { posthogConfigured } from "./posthog-key";
 import { sentryDataCollection } from "./sentry-options";
 
 let started = false;
 
-/** Starts error reporting and product analytics in the browser. Both are no-ops without keys. */
+/** Starts browser error reporting. */
 export function initClientObservability() {
   if (started) return;
   started = true;
@@ -22,33 +22,19 @@ export function initClientObservability() {
       beforeSend: scrubEvent,
     });
   }
-
-  const key = posthogKey;
-  if (key) {
-    posthog.init(key, {
-      api_host: "/ingest",
-      ui_host: "https://eu.posthog.com",
-      defaults: "2025-05-24",
-      person_profiles: "identified_only",
-      // Explicit events only: autocapture and recordings could pick up customer feedback text.
-      autocapture: false,
-      disable_session_recording: true,
-      capture_pageleave: false,
-    });
-  }
 }
 
 export function trackClient(event: AnalyticsEvent, properties?: Record<string, string | number | boolean>) {
-  if (posthogKey) posthog.capture(event, properties);
+  if (posthogConfigured) posthog.capture(event, properties);
 }
 
-/** Links analytics to our internal user id (never an email). */
-export function identifyClient(userId: string) {
-  if (posthogKey) posthog.identify(userId);
+/** Links analytics to our internal user id; contact details remain person properties. */
+export function identifyClient(userId: string, properties?: { email?: string; name?: string }) {
+  if (posthogConfigured) posthog.identify(userId, properties);
   Sentry.setUser({ id: userId });
 }
 
 export function resetClientIdentity() {
-  if (posthogKey) posthog.reset();
+  if (posthogConfigured) posthog.reset();
   Sentry.setUser(null);
 }

@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { SatisLogo } from "@/components/brand/satis-mark";
+import { AnalyticsIdentity } from "@/components/app-shell/analytics-identity";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { UserMenu } from "@/components/app-shell/user-menu";
 import { getProfile, requireUser } from "@/lib/auth/session";
@@ -13,6 +14,7 @@ export default async function OnboardingLayout({ children, params }: LayoutProps
   const t = await getTranslations({ locale, namespace: "common" });
   return (
     <div className="flex min-h-dvh flex-col bg-sand">
+      <AnalyticsIdentity userId={user.id} email={user.email ?? undefined} name={profile?.full_name ?? undefined} />
       <header className="mx-auto flex w-full max-w-3xl items-center justify-between px-4 py-5 sm:px-6">
         <span aria-label={t("appName")}>
           <SatisLogo size={24} tone="ink-ultra" locale={locale} />

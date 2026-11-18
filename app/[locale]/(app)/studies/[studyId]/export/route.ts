@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { requireUser } from "@/lib/auth/session";
 import { routing, type Locale } from "@/lib/i18n/routing";
 import { captureServerEvent } from "@/lib/observability/analytics";
 import { getActiveMembership } from "@/lib/org/context";
@@ -15,6 +16,7 @@ const cell = (value: string) => {
 export async function GET(_request: Request, { params }: RouteContext<"/[locale]/studies/[studyId]/export">) {
   const { locale: rawLocale, studyId } = await params;
   const locale: Locale = routing.locales.includes(rawLocale as Locale) ? (rawLocale as Locale) : routing.defaultLocale;
+  const user = await requireUser(locale);
   const membership = await getActiveMembership();
   if (!membership) return new Response(null, { status: 404 });
   const study = await getStudy(membership.organization.id, studyId);
@@ -46,7 +48,7 @@ export async function GET(_request: Request, { params }: RouteContext<"/[locale]
     }),
   ]);
 
-  captureServerEvent("study_exported", membership.organization.id, { rows: rows.length });
+  captureServerEvent("study_exported", user.id, { rows: rows.length });
   // A byte-order mark so Excel opens Arabic text correctly.
   const csv = "﻿" + [header, ...rows].map((row) => row.map(cell).join(",")).join("\r\n") + "\r\n";
   const filename = `${study.name.replace(/[\\/:*?"<>|]+/g, " ").trim() || "study"}.csv`;

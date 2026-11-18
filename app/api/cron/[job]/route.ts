@@ -1,8 +1,11 @@
-import { timingSafeEqual } from "node:crypto";
-import { NextResponse } from "next/server";
+import { randomUUID, timingSafeEqual } from "node:crypto";
+import { SeverityNumber } from "@opentelemetry/api-logs";
+import { NextResponse, after } from "next/server";
+import { flushPostHogLogs, getPostHogLogger } from "@/instrumentation";
 import { serverEnv } from "@/lib/env/server";
+import { flushPostHog } from "@/lib/observability/analytics";
 import { reportError } from "@/lib/observability/errors";
-import { analyzePending, generateWeeklySummaries } from "@/modules/ai/jobs";
+import { analyzePending, generateWeeklySummaries, type AIJobObservability } from "@/modules/ai/jobs";
 import { sendWeeklyReports } from "@/modules/notifications/weekly";
 
 // AI calls can take a while; Vercel stops the function at this limit.
@@ -10,12 +13,12 @@ export const maxDuration = 60;
 
 const JOBS = {
   // Daily: analyse new comments, oldest first.
-  "ai-analyze": () => analyzePending({ limit: 120 }),
+  "ai-analyze": (observability: AIJobObservability) => analyzePending({ limit: 120, observability }),
   // Sunday morning (Riyadh): analyse what's left, summarise the week, then email each team its report.
   // The report goes out even when AI isn't set up; it just has no AI summary then.
-  "ai-weekly-summary": async () => {
-    const analyze = await analyzePending({ limit: 80 });
-    const summaries = await generateWeeklySummaries();
+  "ai-weekly-summary": async (observability: AIJobObservability) => {
+    const analyze = await analyzePending({ limit: 80, observability });
+    const summaries = await generateWeeklySummaries({ observability });
     const reports = await sendWeeklyReports();
     return { analyze, summaries, reports };
   },
@@ -34,11 +37,19 @@ export async function GET(request: Request, { params }: RouteContext<"/api/cron/
   const { job } = await params;
   if (!authorized(request)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!(job in JOBS)) return NextResponse.json({ error: "not_found" }, { status: 404 });
+  const logger = getPostHogLogger();
+  logger?.emit({ body: "AI cron job started", severityNumber: SeverityNumber.INFO, attributes: { job } });
   try {
-    const result = await JOBS[job as keyof typeof JOBS]();
+    const result = await JOBS[job as keyof typeof JOBS]({ sessionId: `cron-ai:${job}:${randomUUID()}` });
+    logger?.emit({ body: "AI cron job completed", severityNumber: SeverityNumber.INFO, attributes: { job } });
     return NextResponse.json({ ok: true, result });
   } catch (error) {
+    logger?.emit({ body: "AI cron job failed", severityNumber: SeverityNumber.ERROR, attributes: { job } });
     reportError(error, { area: "cron", action: job });
     return NextResponse.json({ error: "failed" }, { status: 500 });
+  } finally {
+    // Route handlers can be terminated as soon as their response is returned.
+    await flushPostHog();
+    after(flushPostHogLogs);
   }
 }

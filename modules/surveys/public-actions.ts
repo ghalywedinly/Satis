@@ -71,7 +71,7 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
     return { error: "generic" };
   }
 
-  captureServerEvent("survey_completed", data.submissionId, { locale: data.locale, device_type: device });
+  captureServerEvent("survey_completed", undefined, { locale: data.locale, device_type: device });
   // Unhappy customer? Tell the team, after the customer's thank-you screen is on its way.
   if (typeof responseId === "string") after(() => sendNegativeAlert(responseId));
 
@@ -82,6 +82,6 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
     return { ok: true };
   }
   if (!coupon) return { ok: true };
-  captureServerEvent("coupon_claimed", data.submissionId, { locale: data.locale });
+  captureServerEvent("coupon_claimed", undefined, { locale: data.locale });
   return { ok: true, coupon: coupon as unknown as Coupon };
 }

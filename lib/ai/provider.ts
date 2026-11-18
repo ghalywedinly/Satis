@@ -6,6 +6,15 @@ import { serverEnv } from "@/lib/env/server";
  * A replaceable AI backend (spec §19). Callers describe the output with a Zod schema and get
  * validated data back; nothing else in the app knows which provider or model is used.
  */
+export type AIObservabilityContext = {
+  /** One AI session per manual analysis or cron run. */
+  sessionId: string;
+  /** One trace per generation turn; retries of a turn reuse its trace. */
+  traceId: string;
+  /** The authenticated user for an on-demand run; cron work remains anonymous. */
+  distinctId?: string;
+};
+
 export type GenerateRequest<T> = {
   /** Which job this is: for logs, and so the development stand-in knows what to return. */
   task: "analyze_comments" | "weekly_summary";
@@ -17,6 +26,8 @@ export type GenerateRequest<T> = {
   /** Classification-style work needs little reasoning; summaries a bit more. */
   effort: "low" | "medium" | "high";
   maxTokens: number;
+  /** Trace/session attribution for the production provider; ignored by the local fake. */
+  observability?: AIObservabilityContext;
 };
 
 export type GenerateResult<T> = { data: T; model: string };

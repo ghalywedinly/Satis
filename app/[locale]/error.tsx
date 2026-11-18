@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import * as Sentry from "@sentry/nextjs";
+import posthog from "posthog-js";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
@@ -10,6 +11,7 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
   const t = useTranslations();
   useEffect(() => {
     Sentry.captureException(error);
+    posthog.captureException(error);
   }, [error]);
 
   return (
