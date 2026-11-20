@@ -1,9 +1,11 @@
 name: CI
 
+# Tests run once per change, on the pull request, before it is merged. They are not repeated
+# after merging (main only receives tested pull requests), which halves Actions minutes.
+# Run them by hand from the Actions tab when needed.
 on:
   pull_request:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
