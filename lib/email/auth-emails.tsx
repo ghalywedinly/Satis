@@ -16,6 +16,7 @@ export async function buildAuthEmail(
 ): Promise<EmailMessage> {
   const t = await getTranslations({ locale, namespace: "emails" });
   const tc = await getTranslations({ locale, namespace: "common" });
+  const th = await getTranslations({ locale, namespace: "home" });
 
   const action =
     kind === "reauthentication" || !("url" in target)
@@ -26,6 +27,7 @@ export async function buildAuthEmail(
     <ActionEmail
       locale={locale}
       appName={tc("appName")}
+      tagline={th("tagline")}
       heading={t(`${kind}.heading`)}
       body={t(`${kind}.body`)}
       action={action}

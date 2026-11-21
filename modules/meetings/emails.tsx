@@ -32,24 +32,23 @@ export async function sendBookingEmails(booking: Booking): Promise<void> {
   tasks.push(
     (async () => {
       const { locale } = booking;
-      const [t, tc, tb] = await Promise.all([
+      const [t, tc, tb, th] = await Promise.all([
         getTranslations({ locale, namespace: "emails.booking.visitor" }),
         getTranslations({ locale, namespace: "common" }),
         getTranslations({ locale, namespace: "booking.success" }),
+        getTranslations({ locale, namespace: "home" }),
       ]);
       const minutes = formatCount(locale, MEETING_MINUTES);
       await send(booking.email, locale, t("subject", { date: when(locale, booking.startsAt) }), {
         locale,
         appName: tc("appName"),
+        tagline: th("tagline"),
         eyebrow: t("eyebrow"),
         heading: t("heading", { name: booking.fullName }),
         tone: "report",
         lines: [t("intro"), t("link")],
-        stats: [
-          { label: t("when"), value: when(locale, booking.startsAt) },
-          { label: t("length"), value: t("lengthValue", { minutes }) },
-          { label: t("company"), value: booking.company },
-        ],
+        highlight: { label: t("when"), value: when(locale, booking.startsAt), detail: t("lengthValue", { minutes }) },
+        stats: [{ label: t("company"), value: booking.company }],
         action: { label: t("button"), url: googleCalendarUrl(booking.startsAt, tb("calendarTitle"), tb("calendarDetails", { minutes })) },
         footer: { text: t("footer"), linkLabel: new URL(site).host, url: new URL(getPathname({ locale, href: "/" }), site).toString() },
       });
@@ -61,17 +60,24 @@ export async function sendBookingEmails(booking: Booking): Promise<void> {
     tasks.push(
       (async () => {
         const locale = TEAM_LOCALE;
-        const [t, tc] = await Promise.all([getTranslations({ locale, namespace: "emails.booking.team" }), getTranslations({ locale, namespace: "common" })]);
+        const [t, tc, th] = await Promise.all([
+          getTranslations({ locale, namespace: "emails.booking.team" }),
+          getTranslations({ locale, namespace: "common" }),
+          getTranslations({ locale, namespace: "home" }),
+        ]);
         const date = when(locale, booking.startsAt);
+        const whatsappNumber = booking.phone.replace(/\D/g, "");
         await send(teamAddress, locale, t("subject", { company: booking.company, date }), {
           locale,
           appName: tc("appName"),
+          tagline: th("tagline"),
+          badge: t("badge"),
           eyebrow: t("eyebrow"),
           heading: t("heading", { name: booking.fullName }),
           tone: "report",
           lines: [t("intro")],
+          highlight: { label: t("when"), value: date },
           stats: [
-            { label: t("when"), value: date },
             { label: t("name"), value: booking.fullName },
             { label: t("company"), value: booking.company },
             { label: t("email"), value: booking.email, ltr: true },
@@ -82,6 +88,7 @@ export async function sendBookingEmails(booking: Booking): Promise<void> {
             label: t("button"),
             url: googleCalendarUrl(booking.startsAt, t("calendarTitle", { company: booking.company }), `${booking.fullName} · ${booking.email} · ${booking.phone}`),
           },
+          secondaryAction: whatsappNumber ? { label: t("whatsapp"), url: `https://wa.me/${whatsappNumber}` } : undefined,
           footer: { text: t("footer"), linkLabel: new URL(site).host, url: site },
         });
       })(),

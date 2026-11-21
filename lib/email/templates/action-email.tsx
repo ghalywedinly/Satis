@@ -1,8 +1,11 @@
-import { Body, Button, Container, Head, Heading, Html, Link, Preview, Section, Text } from "@react-email/components";
+import { Heading, Link, Section, Text } from "@react-email/components";
+import { EmailButton, emailColors, EmailFrame } from "./frame";
 
 export type ActionEmailProps = {
   locale: "ar" | "en";
   appName: string;
+  /** Brand line in the footer ("Satisfaction, measured."). */
+  tagline: string;
   heading: string;
   body: string;
   /** Either a button with a link, or a one-time code. */
@@ -10,61 +13,32 @@ export type ActionEmailProps = {
   footer: string;
 };
 
-const colors = { ink: "#0B0D12", sand: "#FAF8F4", ultramarine: "#2B3AF3", muted: "#5A606E", border: "#E6E2DA" };
-
-/** Single-action transactional email (verify, reset, confirm). Direction and fonts follow the locale. */
-export function ActionEmail({ locale, appName, heading, body, action, footer }: ActionEmailProps) {
-  const rtl = locale === "ar";
-  const font = rtl
-    ? "'Readex Pro', Tahoma, 'Segoe UI', Arial, sans-serif"
-    : "'Instrument Sans', -apple-system, 'Segoe UI', Arial, sans-serif";
-  const align = rtl ? "right" : "left";
-
+/** Single-action transactional email (verify, reset, confirm, invite). Direction follows the locale. */
+export function ActionEmail({ locale, appName, tagline, heading, body, action, footer }: ActionEmailProps) {
   return (
-    <Html lang={locale} dir={rtl ? "rtl" : "ltr"}>
-      <Head />
-      <Preview>{heading}</Preview>
-      <Body style={{ backgroundColor: colors.sand, fontFamily: font, margin: 0, padding: "32px 0" }}>
-        {/* Gmail and Outlook drop dir on <html>/<body>; it must also sit on the content itself. */}
-        <Container dir={rtl ? "rtl" : "ltr"} style={{ maxWidth: 520, margin: "0 auto", padding: "0 16px", direction: rtl ? "rtl" : "ltr" }}>
-          <Text style={{ fontSize: 20, fontWeight: 700, color: colors.ink, margin: "0 0 24px", textAlign: align }}>{appName}</Text>
-          <Section
-            style={{ backgroundColor: "#FFFFFF", border: `1px solid ${colors.border}`, borderRadius: 20, padding: 32, textAlign: align }}
-          >
-            <Heading as="h1" style={{ fontSize: 24, lineHeight: "1.3", color: colors.ink, margin: "0 0 12px" }}>
-              {heading}
-            </Heading>
-            <Text style={{ fontSize: 16, lineHeight: "1.6", color: colors.ink, margin: "0 0 24px" }}>{body}</Text>
-            {action.kind === "link" ? (
-              <>
-                <Button
-                  href={action.url}
-                  style={{
-                    backgroundColor: colors.ultramarine,
-                    color: "#FFFFFF",
-                    borderRadius: 10,
-                    padding: "14px 24px",
-                    fontSize: 15,
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
-                >
-                  {action.label}
-                </Button>
-                <Text style={{ fontSize: 13, color: colors.muted, margin: "24px 0 4px" }}>{action.fallbackLabel}</Text>
-                <Link href={action.url} dir="ltr" style={{ fontSize: 13, color: colors.ultramarine, wordBreak: "break-all" }}>
-                  {action.url}
-                </Link>
-              </>
-            ) : (
-              <Text dir="ltr" style={{ fontSize: 32, fontWeight: 700, letterSpacing: 6, color: colors.ink, margin: 0, textAlign: align }}>
-                {action.code}
-              </Text>
-            )}
+    <EmailFrame locale={locale} appName={appName} tagline={tagline} preview={heading} footer={{ text: footer }}>
+      <Heading as="h1" style={{ fontSize: 26, lineHeight: "1.4", fontWeight: 700, color: emailColors.ink, margin: "0 0 14px" }}>
+        {heading}
+      </Heading>
+      <Text style={{ fontSize: 16, lineHeight: "1.75", color: emailColors.body, margin: "0 0 24px" }}>{body}</Text>
+
+      {action.kind === "link" ? (
+        <>
+          <EmailButton href={action.url} label={action.label} />
+          <Section style={{ backgroundColor: emailColors.quote, borderRadius: 14, padding: "14px 16px", marginTop: 20 }}>
+            <Text style={{ fontSize: 13, color: emailColors.muted, margin: "0 0 4px" }}>{action.fallbackLabel}</Text>
+            <Link href={action.url} dir="ltr" style={{ fontSize: 13, color: emailColors.ultramarine, wordBreak: "break-all" }}>
+              {action.url}
+            </Link>
           </Section>
-          <Text style={{ fontSize: 12, color: colors.muted, margin: "24px 0 0", textAlign: align }}>{footer}</Text>
-        </Container>
-      </Body>
-    </Html>
+        </>
+      ) : (
+        <Section style={{ backgroundColor: emailColors.quote, border: `1px solid ${emailColors.border}`, borderRadius: 14, padding: "16px 20px", textAlign: "center" }}>
+          <Text dir="ltr" style={{ fontSize: 34, fontWeight: 800, letterSpacing: 10, color: emailColors.ink, margin: 0, textAlign: "center" }}>
+            {action.code}
+          </Text>
+        </Section>
+      )}
+    </EmailFrame>
   );
 }

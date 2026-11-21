@@ -16,6 +16,7 @@ export async function buildInvitationEmail(input: {
 }): Promise<EmailMessage> {
   const t = await getTranslations({ locale: input.locale, namespace: "emails" });
   const tc = await getTranslations({ locale: input.locale, namespace: "common" });
+  const th = await getTranslations({ locale: input.locale, namespace: "home" });
   const tr = await getTranslations({ locale: input.locale, namespace: "organization.roles" });
   const vars = { organization: input.organization, inviter: input.inviter, role: tr(input.role) };
 
@@ -23,6 +24,7 @@ export async function buildInvitationEmail(input: {
     <ActionEmail
       locale={input.locale}
       appName={tc("appName")}
+      tagline={th("tagline")}
       heading={t("invitation.heading", vars)}
       body={t("invitation.body", vars)}
       action={{ kind: "link", label: t("invitation.button"), url: input.url, fallbackLabel: t("linkFallback") }}

@@ -100,7 +100,9 @@
       "languages": {
         "ar": "Arabic",
         "en": "English"
-      }
+      },
+      "whatsapp": "Message on WhatsApp",
+      "badge": "For the team"
     }
   }
 }
