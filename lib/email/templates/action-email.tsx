@@ -25,7 +25,8 @@ export function ActionEmail({ locale, appName, heading, body, action, footer }: 
       <Head />
       <Preview>{heading}</Preview>
       <Body style={{ backgroundColor: colors.sand, fontFamily: font, margin: 0, padding: "32px 0" }}>
-        <Container style={{ maxWidth: 520, margin: "0 auto", padding: "0 16px" }}>
+        {/* Gmail and Outlook drop dir on <html>/<body>; it must also sit on the content itself. */}
+        <Container dir={rtl ? "rtl" : "ltr"} style={{ maxWidth: 520, margin: "0 auto", padding: "0 16px", direction: rtl ? "rtl" : "ltr" }}>
           <Text style={{ fontSize: 20, fontWeight: 700, color: colors.ink, margin: "0 0 24px", textAlign: align }}>{appName}</Text>
           <Section
             style={{ backgroundColor: "#FFFFFF", border: `1px solid ${colors.border}`, borderRadius: 20, padding: 32, textAlign: align }}

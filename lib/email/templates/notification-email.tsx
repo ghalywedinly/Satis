@@ -42,7 +42,8 @@ export function NotificationEmail({ locale, appName, eyebrow, heading, tone, lin
       <Head />
       <Preview>{heading}</Preview>
       <Body style={{ backgroundColor: colors.sand, fontFamily: font, margin: 0, padding: "32px 0" }}>
-        <Container style={{ maxWidth: 560, margin: "0 auto", padding: "0 16px" }}>
+        {/* Gmail and Outlook drop dir on <html>/<body>; it must also sit on the content itself. */}
+        <Container dir={rtl ? "rtl" : "ltr"} style={{ maxWidth: 560, margin: "0 auto", padding: "0 16px", direction: rtl ? "rtl" : "ltr" }}>
           <Text style={{ fontSize: 20, fontWeight: 700, color: colors.ink, margin: "0 0 24px", textAlign: align }}>{appName}</Text>
           <Section style={{ backgroundColor: "#FFFFFF", border: `1px solid ${colors.border}`, borderRadius: 20, overflow: "hidden" }}>
             <Section style={{ backgroundColor: accent, height: 6 }} />
@@ -60,9 +61,12 @@ export function NotificationEmail({ locale, appName, eyebrow, heading, tone, lin
               {stats && stats.length > 0 && (
                 <Section style={{ margin: "20px 0 4px" }}>
                   {stats.map((stat) => (
-                    <Row key={stat.label} style={{ borderBottom: `1px solid ${colors.border}` }}>
-                      <Column style={{ padding: "10px 0", fontSize: 14, color: colors.muted, textAlign: align }}>{stat.label}</Column>
-                      <Column style={{ padding: "10px 0", fontSize: 16, fontWeight: 700, color: colors.ink, textAlign: rtl ? "left" : "right" }}>
+                    <Row key={stat.label} dir={rtl ? "rtl" : "ltr"} style={{ borderBottom: `1px solid ${colors.border}` }}>
+                      {/* Fixed widths and inner padding keep label and value apart even where a client ignores the direction. */}
+                      <Column width="40%" style={{ width: "40%", padding: "10px 0", ...(rtl ? { paddingLeft: 12 } : { paddingRight: 12 }), fontSize: 14, color: colors.muted, textAlign: align }}>
+                        {stat.label}
+                      </Column>
+                      <Column width="60%" style={{ width: "60%", padding: "10px 0", fontSize: 16, fontWeight: 700, color: colors.ink, textAlign: rtl ? "left" : "right" }}>
                         {stat.ltr ? <span dir="ltr">{stat.value}</span> : stat.value}
                         {stat.change && (
                           <span
