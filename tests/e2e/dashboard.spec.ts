@@ -24,19 +24,23 @@ test.describe("analytics dashboard", () => {
     await answer(browser, url, 2, 3);
     await page.reload();
 
-    // KPIs: 3 responses; CSAT 2 of 3 rated 4–5; NPS 1 promoter − 1 detractor = 0.
-    const kpis = page.locator("main section").first();
-    const tile = (label: string) => kpis.getByRole("group", { name: label, exact: true });
-    await expect(tile("الإجابات").locator("p.font-display")).toHaveText("3");
-    await expect(tile("رضا العملاء (CSAT)").locator("p.font-display")).toHaveText("67%");
-    await expect(tile("رضا العملاء (CSAT)")).toContainText("المتوسط 3.7 من 5");
-    await expect(tile("صافي نقاط الترويج (NPS)").locator("p.font-display")).toHaveText("0");
+    // 3 responses; ratings 5, 4, 2: average 3.7, 2 of 3 rated 4–5; NPS 1 promoter − 1 detractor = 0.
+    await expect(page.getByRole("region", { name: "تقييم ساتيس" })).toContainText("3.7");
+    const metric = (label: RegExp) => page.getByRole("tab", { name: label }).locator(".font-display");
+    await expect(metric(/^الإجابات/)).toHaveText("3");
+    await expect(metric(/^الرضا/)).toHaveText("67%");
+    await expect(metric(/^صافي نقاط الترشيح/)).toHaveText("0");
 
+    // The metric cards switch the chart.
+    await expect(page.getByRole("heading", { name: "الرضا يوميًا" })).toBeVisible();
+    await page.getByRole("tab", { name: /^الإجابات/ }).click();
     await expect(page.getByRole("heading", { name: "الإجابات يوميًا" })).toBeVisible();
+
+    await expect(page.getByRole("heading", { name: "متى يتضايق العملاء؟" })).toBeVisible();
     await expect(page.getByRole("img", { name: "توزيع NPS" })).toBeVisible();
     await expect(page.getByText("المروّجون (9–10)")).toBeVisible();
-    const location = page.getByRole("row", { name: /جدة - التحلية/ });
-    await expect(location).toContainText("3");
+    const location = page.getByRole("link", { name: /جدة - التحلية/ });
+    await expect(location).toContainText("3.7");
     await expect(location).toContainText("67%");
 
     // Pick the survey to see each question.
@@ -52,10 +56,10 @@ test.describe("analytics dashboard", () => {
     // Periods: today still counts everything; a custom range in the past is empty.
     await page.getByLabel("الفترة").selectOption("today");
     await expect(page).toHaveURL(/period=today/);
-    await expect(tile("الإجابات").locator("p.font-display")).toHaveText("3");
+    await expect(metric(/^الإجابات/)).toHaveText("3");
     await page.getByLabel("الفترة").selectOption("custom");
-    await page.getByLabel("من").fill("2026-01-01");
-    await page.getByLabel("إلى").fill("2026-01-31");
+    await page.getByLabel("من", { exact: true }).fill("2026-01-01");
+    await page.getByLabel("إلى", { exact: true }).fill("2026-01-31");
     await page.getByRole("button", { name: "طبّق" }).click();
     await expect(page).toHaveURL(/period=custom&from=2026-01-01&to=2026-01-31/);
     await expect(page.getByText("لا توجد إجابات في هذه الفترة", { exact: true })).toBeVisible();
@@ -64,8 +68,8 @@ test.describe("analytics dashboard", () => {
   test("the dashboard works in English", async ({ page }) => {
     await onboardWithSurvey(page, "/en", "Numbers Café");
     await page.goto("/en/dashboard?period=7&survey=not-a-uuid");
-    await expect(page.getByText("Net Promoter Score (NPS)")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: /^Hello/ })).toBeVisible();
     await expect(page.getByText("No responses in this period")).toBeVisible();
-    await expect(page.getByRole("row", { name: /Jeddah - Tahlia/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Share QR codes/ })).toBeVisible();
   });
 });

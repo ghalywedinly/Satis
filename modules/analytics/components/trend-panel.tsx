@@ -127,10 +127,10 @@ export function TrendPanel({ series, labels }: { series: TrendSeries[]; labels: 
         })}
       </div>
 
-      <section id="trend-panel" role="tabpanel" aria-labelledby={`trend-tab-${s.key}`} className="flex flex-col gap-3 rounded-card border border-ink-100 bg-white p-5 sm:p-6">
+      <section id="trend-panel" role="tabpanel" aria-labelledby="trend-panel-title" className="flex flex-col gap-3 rounded-card border border-ink-100 bg-white p-5 sm:p-6">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
           <div className="flex min-w-48 flex-1 flex-col gap-0.5">
-            <h2 className="font-sans text-base font-bold">{s.title}</h2>
+            <h2 id="trend-panel-title" className="font-sans text-base font-bold">{s.title}</h2>
             <p className="text-xs text-ink-500">{s.subtitle}</p>
           </div>
           <span className="inline-flex items-center gap-1.5 text-xs text-ink-600">
