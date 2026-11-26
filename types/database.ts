@@ -695,6 +695,10 @@ export type Database = {
         Args: { p_organization_id: string; p_survey_id: string; p_from: string; p_to: string; p_location_id?: string | null };
         Returns: Json;
       };
+      get_dashboard_trends: {
+        Args: { p_organization_id: string; p_from: string; p_to: string; p_location_id?: string | null; p_survey_id?: string | null };
+        Returns: Json;
+      };
     };
     Enums: {
       app_locale: "ar" | "en";

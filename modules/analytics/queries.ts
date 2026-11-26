@@ -14,6 +14,18 @@ export type Analytics = {
   locations: (Counts & { id: string; name: string; responses: number })[];
 };
 
+export type DayCounts = Counts & { day: string; responses: number; comments: number; csatSatisfied: number; csatSum: number };
+
+/** Shape of get_dashboard_trends (supabase/migrations/20261126100000_dashboard_trends.sql). */
+export type Trends = {
+  current: DayCounts[];
+  /** The period before, day by day; index i lines up with current[i]. */
+  previous: DayCounts[];
+  /** dow: 0 = Sunday … 6 = Saturday, Saudi time. Only hours with responses are listed. */
+  busyHours: { dow: number; hour: number; responses: number; negative: number }[];
+  locationScores: { id: string; csatSum: number }[];
+};
+
 /** Shape of get_question_stats: results per question id. */
 export type QuestionStats = Record<string, { answers: number; average: number | null; numbers: Record<string, number>; options: Record<string, number> }>;
 
@@ -28,6 +40,19 @@ export async function getAnalytics(organizationId: string, filters: DashboardFil
   });
   if (error) throw error;
   return data as unknown as Analytics;
+}
+
+export async function getTrends(organizationId: string, filters: DashboardFilters, range: Range): Promise<Trends> {
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase.rpc("get_dashboard_trends", {
+    p_organization_id: organizationId,
+    p_from: range.from.toISOString(),
+    p_to: range.to.toISOString(),
+    p_location_id: filters.location ?? null,
+    p_survey_id: filters.survey ?? null,
+  });
+  if (error) throw error;
+  return data as unknown as Trends;
 }
 
 export async function getQuestionStats(organizationId: string, surveyId: string, filters: DashboardFilters, range: Range): Promise<QuestionStats> {

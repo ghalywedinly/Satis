@@ -20,7 +20,12 @@
     "expand": "توسيع القائمة",
     "notifications": "التنبيهات",
     "studies": "الدراسات",
-    "bookings": "الحجوزات"
+    "bookings": "الحجوزات",
+    "groups": {
+      "feedback": "التقييمات",
+      "collect": "الجمع",
+      "setup": "الإعداد"
+    }
   },
   "actions": {
     "logIn": "تسجيل الدخول",

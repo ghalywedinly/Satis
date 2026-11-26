@@ -102,5 +102,93 @@
     "open": "{count} unhappy customers waiting for a follow-up",
     "noneOpen": "No unhappy customers waiting. Nice work.",
     "action": "Follow up now"
+  },
+  "head": {
+    "hello": "Hello, {name}",
+    "helloNoName": "Hello",
+    "shareQr": "Share QR codes"
+  },
+  "score": {
+    "eyebrow": "Satis Score",
+    "outOf": "/5",
+    "stars": "{score} out of 5",
+    "basis": "From {count} ratings in this period",
+    "noRatings": "No ratings in this period yet",
+    "distribution": "How customers rated",
+    "trendCaption": "vs previous period",
+    "linkLabel": "Collect more ratings",
+    "starsLabel": "{score}★"
+  },
+  "notes": {
+    "title": "Satis notes",
+    "subtitle": "From {count} responses in this period",
+    "open": "{count} unhappy customers are waiting for a reply.",
+    "openCta": "Reply now",
+    "lowest": "{name} has the lowest satisfaction: {percent}.",
+    "lowestCta": "Show {name} only",
+    "peak": "Most low ratings come on {day} around {time}: {count} this period.",
+    "peakCta": "Read the low ratings",
+    "top": "{name} is your best branch, at {percent} satisfied.",
+    "topCta": "See its feedback",
+    "allGood": "Nothing needs attention right now. Nice work."
+  },
+  "trend": {
+    "tablist": "Choose what the chart shows",
+    "current": "This period",
+    "previous": "Previous period",
+    "day": "Day",
+    "noValue": "No data",
+    "labels": {
+      "csat": "Satisfaction",
+      "responses": "Responses",
+      "nps": "NPS",
+      "comments": "Comments"
+    },
+    "notes": {
+      "csat": "Rated 4 or 5 out of 5",
+      "responses": "From all surveys",
+      "nps": "From {count} answers",
+      "comments": "{percent} of responses"
+    },
+    "titles": {
+      "csat": "Satisfaction per day",
+      "responses": "Responses per day",
+      "nps": "NPS per day",
+      "comments": "Comments per day"
+    },
+    "subtitles": {
+      "csat": "Share of ratings that are 4 or 5",
+      "responses": "Every survey answer, day by day",
+      "nps": "Promoters minus detractors, from −100 to 100",
+      "comments": "Responses with a written comment"
+    }
+  },
+  "busy": {
+    "title": "When are customers unhappy?",
+    "subtitle": "Share of low ratings by day and hour",
+    "summary": "Most low ratings came on {day} around {time}.",
+    "summaryNone": "No low ratings in this period.",
+    "cell": "{day}, {time}: {negative} low of {responses}",
+    "cellNone": "{day}, {time}: no responses",
+    "less": "Fewer",
+    "more": "More",
+    "none": "No responses",
+    "empty": "Busy hours appear once responses come in."
+  },
+  "top": {
+    "eyebrow": "Top branch",
+    "detail": "{percent} satisfied from {count} ratings",
+    "cta": "Read its feedback"
+  },
+  "branches": {
+    "title": "Branch comparison",
+    "subtitle": "Average rating out of 5",
+    "meta": "{percent} satisfied · {count} ratings",
+    "noRatings": "No ratings yet",
+    "status": {
+      "good": "Doing well",
+      "ok": "Okay",
+      "low": "Needs attention"
+    }
   }
 }

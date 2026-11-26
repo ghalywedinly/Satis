@@ -20,7 +20,12 @@
     "expand": "Expand menu",
     "notifications": "Notifications",
     "studies": "Studies",
-    "bookings": "Bookings"
+    "bookings": "Bookings",
+    "groups": {
+      "feedback": "Feedback",
+      "collect": "Collect",
+      "setup": "Setup"
+    }
   },
   "actions": {
     "logIn": "Log in",
