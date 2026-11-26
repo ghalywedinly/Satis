@@ -30,26 +30,20 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
 
   const nav: NavItem[] = [
     { href: "/dashboard", label: "dashboard" },
-    { href: "/inbox", label: "inbox", badge: unread > 0 ? formatCount(locale, Math.min(unread, 99)) + (unread > 99 ? "+" : "") : undefined },
-    { href: "/surveys", label: "surveys" },
-    { href: "/studies", label: "studies" },
-    { href: "/coupons", label: "coupons" },
-    { href: "/locations", label: "locations" },
-    { href: "/team", label: "team" },
-    ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings" } as const] : []),
+    { href: "/inbox", label: "inbox", group: "feedback", badge: unread > 0 ? formatCount(locale, Math.min(unread, 99)) + (unread > 99 ? "+" : "") : undefined },
+    { href: "/coupons", label: "coupons", group: "feedback" },
+    { href: "/surveys", label: "surveys", group: "collect" },
+    { href: "/studies", label: "studies", group: "collect" },
+    { href: "/locations", label: "locations", group: "collect" },
+    { href: "/team", label: "team", group: "setup" },
+    ...(can(membership.role, "organization.edit") ? [{ href: "/settings", label: "settings", group: "setup" } as const] : []),
     // The Satis team's own area (demo bookings); hidden for everyone else.
-    ...(admin ? [{ href: "/admin/bookings", label: "bookings" } as const] : []),
+    ...(admin ? [{ href: "/admin/bookings", label: "bookings", group: "setup" } as const] : []),
   ];
 
   return (
-    <div className="app-glass relative isolate flex min-h-dvh flex-col">
-      {/* Fixed brand wash behind the glass: drifting blurred colour blobs. */}
-      <div aria-hidden className="app-backdrop fixed inset-0 -z-10 overflow-hidden print:hidden">
-        <div className="app-blob -top-[18vh] -end-[10vw] h-[60vh] w-[55vw] bg-ultramarine/45" />
-        <div className="app-blob top-[25vh] -start-[15vw] h-[55vh] w-[45vw] bg-ember/35 [animation-delay:-8s]" />
-        <div className="app-blob -bottom-[20vh] end-[15vw] h-[55vh] w-[50vw] bg-zest/40 [animation-delay:-15s]" />
-        <div className="app-blob top-[45vh] start-[30vw] h-[40vh] w-[35vw] bg-grape/25 [animation-delay:-4s]" />
-      </div>
+    <div className="app-glass app-backdrop relative isolate flex min-h-dvh flex-col">
+      <div aria-hidden className="app-backdrop fixed inset-0 -z-10 print:hidden" />
       <AnalyticsIdentity userId={user.id} />
       <a
         href="#content"

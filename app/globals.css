@@ -257,42 +257,23 @@
 }
 
 /*
- * Signed-in app: a soft brand-colour wash behind frosted-glass surfaces.
- * Text never sits on the gradient itself; it sits on near-opaque glass or solid Ink.
+ * Signed-in app (identity handoff): a flat #F4F5F7 page with solid white cards,
+ * 1px #ECEEF2 borders and no shadow at rest. No gradients, no blur.
  */
-.app-backdrop {
-  background-color: var(--color-sand-50);
-  background-image: linear-gradient(135deg, #f4f5ff 0%, var(--color-sand-50) 40%, #fff4ef 75%, #fffaf0 100%);
-}
-/* Large, heavily blurred colour blobs that drift slowly behind the glass. */
-.app-blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(90px);
-  will-change: transform;
-  animation: blob-drift 26s ease-in-out infinite alternate;
-}
-@keyframes blob-drift {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(4vw, -3vh, 0) scale(1.08); }
-  100% { transform: translate3d(-3vw, 4vh, 0) scale(0.96); }
-}
+.app-backdrop { background-color: #F4F5F7; }
+/* "glass" is kept as a name for app surfaces; it is now a plain white card. */
 @utility glass {
-  background-color: rgb(255 255 255 / 0.58);
-  border-color: rgb(255 255 255 / 0.75);
-  -webkit-backdrop-filter: blur(28px) saturate(1.8);
-  backdrop-filter: blur(28px) saturate(1.8);
-  /* A thin light rim along the top edge, like real glass. */
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  background-color: #FFFFFF;
+  border-color: #ECEEF2;
 }
-/* Cards inside the app become glass too. */
 .app-glass [data-slot="card"] {
-  background-color: rgb(255 255 255 / 0.58);
-  border-color: rgb(255 255 255 / 0.75);
-  -webkit-backdrop-filter: blur(28px) saturate(1.8);
-  backdrop-filter: blur(28px) saturate(1.8);
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.8);
+  background-color: #FFFFFF;
+  border-color: #ECEEF2;
+  box-shadow: none;
 }
+/* The Satis seal's ring text turns slowly (components/brand/seal.tsx). */
+.seal-ring { transform-box: fill-box; transform-origin: center; animation: seal-spin 24s linear infinite; }
+@keyframes seal-spin { to { transform: rotate(360deg); } }
 
 /* Scroll reveal (components/marketing/motion.tsx). Hidden only once armed by script. */
 .reveal { transition: opacity 560ms var(--ease-entrance), transform 560ms var(--ease-entrance); transition-delay: calc(var(--i, 0) * 90ms); }

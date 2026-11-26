@@ -37,9 +37,7 @@ test.describe("surveys", () => {
 
     // The response reaches the business.
     await page.reload();
-    const kpis = page.locator("main section").first();
-    await expect(kpis.getByText("الإجابات", { exact: true })).toBeVisible();
-    await expect(kpis.locator("p.font-display").first()).toHaveText("1");
+    await expect(page.getByRole("tab", { name: /^الإجابات/ }).locator(".font-display")).toHaveText("1");
     await c.context.close();
   });
 

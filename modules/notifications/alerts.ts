@@ -50,6 +50,7 @@ export async function sendNegativeAlert(responseId: string): Promise<void> {
           props: {
             locale,
             appName: frame.appName,
+            tagline: frame.tagline,
             eyebrow: t("eyebrow", { business }),
             heading: t("heading", { location }),
             tone: "alert",

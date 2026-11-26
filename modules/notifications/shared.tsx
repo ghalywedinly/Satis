@@ -14,11 +14,16 @@ export type Recipient = { user_id: string; email: string; locale: Locale; full_n
 export const appUrl = (locale: Locale, href: string) =>
   new URL(getPathname({ locale, href: href as never }), publicEnv.NEXT_PUBLIC_SITE_URL).toString();
 
-/** The parts every team email shares: app name and the "why you got this" footer. */
+/** The parts every team email shares: app name, tagline and the "why you got this" footer. */
 export async function emailFrame(locale: Locale, business: string) {
-  const [t, tc] = await Promise.all([getTranslations({ locale, namespace: "emails.notifications" }), getTranslations({ locale, namespace: "common" })]);
+  const [t, tc, th] = await Promise.all([
+    getTranslations({ locale, namespace: "emails.notifications" }),
+    getTranslations({ locale, namespace: "common" }),
+    getTranslations({ locale, namespace: "home" }),
+  ]);
   return {
     appName: tc("appName"),
+    tagline: th("tagline"),
     footer: { text: t("footer", { business }), linkLabel: t("manage"), url: appUrl(locale, "/notifications") },
   };
 }

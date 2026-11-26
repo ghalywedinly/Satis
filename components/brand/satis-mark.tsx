@@ -7,9 +7,10 @@ const BOT = "66,88 8,88 37.7,62 95.7,62";
 /** The wordmark is part of the logo (a brand asset), not translatable UI copy. */
 const WORDMARK = { en: "Satis", ar: "ساتيس" } as const;
 
-export type MarkTone = "ink" | "ink-ultra" | "ultra" | "sand" | "sand-zest" | "white" | "white-zest";
+export type MarkTone = "ink" | "ink-ultra" | "ultra" | "sand" | "sand-zest" | "white" | "white-zest" | "zest";
 
-const TONES: Record<MarkTone, { band: string; mid: string }> = {
+/** band/mid colour the mark; word (if set) colours the wordmark instead of band. */
+const TONES: Record<MarkTone, { band: string; mid: string; word?: string }> = {
   ink: { band: "#0B0D12", mid: "#0B0D12" },
   "ink-ultra": { band: "#0B0D12", mid: "#2B3AF3" },
   ultra: { band: "#2B3AF3", mid: "#2B3AF3" },
@@ -17,6 +18,8 @@ const TONES: Record<MarkTone, { band: string; mid: string }> = {
   "sand-zest": { band: "#FAF8F4", mid: "#FFCF28" },
   white: { band: "#FFFFFF", mid: "#FFFFFF" },
   "white-zest": { band: "#FFFFFF", mid: "#FFCF28" },
+  /** On Ink: all-Zest mark, white wordmark (identity handoff). */
+  zest: { band: "#FFCF28", mid: "#FFCF28", word: "#FFFFFF" },
 };
 
 /** The Satis "sliced fold" S. Three slices; the middle slice may carry an accent. Aspect 90:84. */
@@ -47,7 +50,7 @@ export function SatisLogo({
   size?: number;
   className?: string;
 }) {
-  const color = TONES[tone].band;
+  const color = TONES[tone].word ?? TONES[tone].band;
   const mark = <SatisMark tone={tone} className="w-auto" />;
   if (locale === "bilingual") {
     return (

@@ -1,0 +1,24 @@
+/* Satis — final identity tokens */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=Readex+Pro:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+:root {
+  /* Brand — equal weight */
+  --zest: #FFCF28;        --zest-700: #F5B800;  --zest-50: #FFF8E0;
+  --ember: #FF6B4A;       --ember-700: #A8321F; --ember-50: #FFF0EC;
+  --mint: #0FA968;        --mint-700: #0D8B57;  --mint-50: #E6F7EF;  --mint-text: #0A6F45;
+  --ultramarine: #2B3AF3; --ultramarine-700: #1D28C9; --ultramarine-50: #EEF0FE;
+  /* Grounds */
+  --ink: #0B0D12; --ink-800: #1A1E28; --ink-600: #3C4658; --ink-400: #5B6882; --ink-300: #AEB6C4;
+  --white: #FFFFFF; --grey-50: #F4F5F7; --border-subtle: #ECEEF2; --border-default: #DCE0E8;
+  --bg-page: var(--white); --bg-feature: var(--ink); --text: var(--ink); --text-muted: var(--ink-600);
+  /* Type */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
+  --font-arabic: 'Readex Pro', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  /* Radii */
+  --r-chip: 6px; --r-control: 10px; --r-tile: 14px; --r-card: 20px; --r-media: 28px; --r-hero: 40px; --r-pill: 999px;
+  /* Motion */
+  --ease: cubic-bezier(.2,.8,.2,1); --t-fast: 140ms; --t-enter: 200ms;
+  /* Illustration shadow */
+  --hard-shadow: 22px 22px 0 var(--ink);
+}

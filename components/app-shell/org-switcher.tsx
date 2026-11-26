@@ -13,12 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "@/lib/i18n/navigation";
+import { cn } from "@/lib/utils";
 import { switchOrganization } from "@/modules/organizations/actions";
 
 type Org = { id: string; name: string };
 
 /** Shows the current business; lets people in several businesses switch, or create another. */
-export function OrgSwitcher({ current, organizations, compact = false }: { current: Org; organizations: Org[]; compact?: boolean }) {
+export function OrgSwitcher({ current, organizations, compact = false, onInk = false }: { current: Org; organizations: Org[]; compact?: boolean; onInk?: boolean }) {
   const t = useTranslations("common.orgSwitcher");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -27,18 +28,21 @@ export function OrgSwitcher({ current, organizations, compact = false }: { curre
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {compact ? (
-          <Button variant="ghost" size="icon" className="size-11" disabled={pending} aria-label={`${t("label")}: ${current.name}`} title={current.name}>
-            <span aria-hidden className="slice-sm flex size-8 items-center justify-center bg-ultramarine font-display text-sm font-bold text-white">
+          <Button variant="ghost" size="icon" className={cn("size-11", onInk && "hover:bg-ink-800")} disabled={pending} aria-label={`${t("label")}: ${current.name}`} title={current.name}>
+            <span aria-hidden className="flex size-8 items-center justify-center rounded-[9px] bg-ultramarine font-display text-sm font-bold text-white">
               {Array.from(current.name)[0]}
             </span>
           </Button>
         ) : (
-          <Button variant="ghost" className="h-auto w-full justify-start gap-2.5 px-2 py-1.5" disabled={pending} aria-label={`${t("label")}: ${current.name}`}>
-            <span aria-hidden className="slice-sm flex size-8 shrink-0 items-center justify-center bg-ultramarine font-display text-sm font-bold text-white">
+          <Button
+            variant="ghost"
+            className={cn("h-auto w-full justify-start gap-2.5 px-2 py-1.5", onInk && "border border-ink-700 bg-ink-800 text-white hover:bg-ink-700 hover:text-white")}
+            disabled={pending} aria-label={`${t("label")}: ${current.name}`}>
+            <span aria-hidden className="flex size-8 shrink-0 items-center justify-center rounded-[9px] bg-ultramarine font-display text-sm font-bold text-white">
               {Array.from(current.name)[0]}
             </span>
             <span className="flex-1 truncate text-start">{current.name}</span>
-            <ChevronsUpDown aria-hidden strokeWidth={1.75} className="text-muted-foreground" />
+            <ChevronsUpDown aria-hidden strokeWidth={1.75} className={onInk ? "text-ink-400" : "text-muted-foreground"} />
           </Button>
         )}
       </DropdownMenuTrigger>

@@ -102,7 +102,11 @@ async function reportOne(supabase: Admin, organizationId: string, from: Date, to
       const stats: Stat[] = [
         { label: t("responses"), value: formatCount(locale, totals.responses), change: change(relativeChange(totals.responses, previous.responses), (v) => plainPct(v)) },
       ];
-      if (csat !== null) stats.push({ label: t("csat"), value: plainPct(csat), change: change(delta(csat, csatRatio(previous)), (v) => t("points", { value: signed(v * 100) })) });
+      const csatStat: Stat | null =
+        csat === null ? null : { label: t("csat"), value: plainPct(csat), change: change(delta(csat, csatRatio(previous)), (v) => t("points", { value: signed(v * 100) })) };
+      // A top score (90%+) gets the Zest plate, the brand's delight moment; otherwise it is a normal row.
+      const score = csatStat && csat !== null && csat >= 0.9 ? { value: csatStat.value, label: csatStat.label, change: csatStat.change } : undefined;
+      if (csatStat && !score) stats.push(csatStat);
       if (nps !== null)
         stats.push({
           label: t("nps"),
@@ -123,10 +127,12 @@ async function reportOne(supabase: Admin, organizationId: string, from: Date, to
         props: {
           locale,
           appName: frame.appName,
+          tagline: frame.tagline,
           eyebrow: t("eyebrow", { from: formatDate(locale, from, { day: "numeric", month: "short" }), to: formatDate(locale, lastDay, { day: "numeric", month: "short" }) }),
           heading: t("heading", { business }),
           tone: "report",
           lines,
+          score,
           stats,
           quote: summary ? { label: t("aiLabel"), text: `${summary.headline}. ${summary.summary}` } : undefined,
           action: { label: t("button"), url: appUrl(locale, "/dashboard") },

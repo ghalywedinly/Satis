@@ -4,7 +4,7 @@
 
 Satis is a **customer satisfaction platform** (feedback surveys, CSAT, NPS, sentiment) for consumer brands, embedded across app, POS and web. Tagline: **"Satisfaction, measured."** / **"رضا عملائك، بالأرقام."**
 
-Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual reference: `Satis Branding/design_handoff_satis_brand/reference/Satis Brand Identity v4.dc.html`.
+**Visual identity: follow `design/satis-identity-handoff/README.md`** (tokens in `tokens.css`, logos in `logo/`, characters in `characters/`). Where older docs (`Satis Branding/…`) or code disagree with it, the handoff wins. The customer-facing score is called **Satis Score · تقييم ساتيس** (not "Satis Index").
 
 ## Engineering rules (see `docs/architecture-proposal.md`)
 - **Text:** never hardcode UI text. Every string lives in `locales/ar/*.json` and `locales/en/*.json` (same keys, enforced by `npm test` and the `react/jsx-no-literals` lint rule). Arabic is primary, not a translation afterthought.
@@ -28,20 +28,22 @@ Full spec: `Satis Branding/design_handoff_satis_brand/README.md`. Visual referen
 - Sentence case everywhere. Buttons are verb + object ("Send feedback", "Book a demo"). No emoji. Digits with commas (2,140). Percent with no space (92.4%).
 - Say **customers** (the brand's shoppers) and **teams** (merchant users). Never "users" in UI copy.
 
-## Colour roles
-- **Ink #0B0D12** leads (≈44%). **Sand #FAF8F4** page ground; cards are white.
-- **Ultramarine #2B3AF3** — primary actions, links, focus, main data series.
-- **Ember #FF6B4A** — energy: hero shapes, alerts, detractors. Text on Ember is Ink.
-- **Zest #FFCF28** — delight only: top scores, selected rating, highlight plates. Always Ink text on it, max one Zest element per view.
-- Mint = positive delta / promoters. Grape = segments / secondary data only.
-- No gradients behind text. No coloured shadows.
+## Colour roles (from the identity handoff)
+- Four brand colours at **equal weight**, rotated across sections: **Zest #FFCF28**, **Ember #FF6B4A**, **Mint #0FA968**, **Ultramarine #2B3AF3** (700 shades: #F5B800, #A8321F, #0D8B57, #1D28C9).
+- Text on Zest, Ember and Mint is Ink; text on Ultramarine and Ink is white. Mint text on white uses #0A6F45.
+- Ground: page **white #FFFFFF**, feature sections **Ink #0B0D12**, subtle fills **#F4F5F7**. **No sand.** Cards white, 20px radius, 1px #ECEEF2 border, no shadow.
+- Ultramarine stays the colour of primary buttons, links and focus.
+- Data status: Mint = good, Zest = neutral, Ember = needs attention.
+- Logo: the S-mark is all Zest. On Ink: Zest mark + white wordmark. On white: Zest mark + Ink wordmark. On Zest: all Ink.
+- Customer-facing ratings: five stars (filled Zest, empty #E5DFD5, or #3C4658 on Ink) and one decimal out of 5 (4.7). **Never percentages in customer-facing ratings**; percentages are fine in team dashboards.
+- No gradients. No coloured shadows; illustrations and tilted cards use hard Ink shadows (`drop-shadow(22px 22px 0 #0B0D12)`). Yousef is never placed on Zest.
 
 ## Brand elements (`components/brand/slice.tsx`)
 - `SliceHighlight` — slanted plate behind a word/score. `RatingSlices` — 1–5 scale in slices. `Supergraphic` — giant cropped mark (marketing only). `OutlinedCard` / `OutlinedPill` — 3px ink-outlined white cards floating over Ember/Ink (marketing hero only, not dashboard). `SpeedLines` — dividers.
 - Utilities: `slice`, `slice-sm|md|lg` (clip-path parallelogram), `eyebrow`.
 
 ## Design skill
-`.claude/skills/design-taste-frontend-v1` guides layout, motion and polish. Where it conflicts with this file, this file wins: brand colours (Ultramarine stays the primary), fonts (Bricolage Grotesque, Instrument Sans, Readex Pro), lucide-react icons, CSS motion with reduced-motion support, Arabic-first RTL, and no new dependencies without a reason.
+`.claude/skills/design-taste-frontend-v1` guides layout, motion and polish. Where it conflicts with this file, this file wins: brand colours (Ultramarine for primary actions), fonts (Bricolage Grotesque, Instrument Sans, Readex Pro), lucide-react icons, CSS motion with reduced-motion support, Arabic-first RTL, and no new dependencies without a reason.
 
 ## UI defaults
 - Controls radius 10px, cards 20px with 1px `border-border` and **no shadow at rest**; dialogs 28px.
