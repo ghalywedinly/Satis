@@ -78,7 +78,7 @@ export const getResponse = cache(async (organizationId: string, responseId: stri
   const { data } = await supabase
     .from("survey_responses")
     .select(
-      "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, locale, device_type, submitted_at, survey_id, survey:surveys(name), location:locations(name), version:survey_versions(definition), tags:response_tags(tag:feedback_tags(id, name)), analysis:response_analyses(sentiment, praise_themes, complaint_themes)",
+      "id, status, is_read, is_important, csat_score, nps_score, rating_sentiment, locale, device_type, submitted_at, survey_id, publish_consent, reviewer_name, public_reply, survey:surveys(name), location:locations(name), version:survey_versions(definition), tags:response_tags(tag:feedback_tags(id, name)), analysis:response_analyses(sentiment, praise_themes, complaint_themes)",
     )
     .eq("id", responseId)
     .eq("organization_id", organizationId)

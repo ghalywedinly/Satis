@@ -25,7 +25,8 @@
       "feedback": "Feedback",
       "collect": "Collect",
       "setup": "Setup"
-    }
+    },
+    "score": "Satis Score"
   },
   "actions": {
     "logIn": "Log in",

@@ -13,7 +13,8 @@
     "blog": "Blog",
     "logIn": "Log in",
     "start": "Book a meeting",
-    "home": "Satis home"
+    "home": "Satis home",
+    "score": "Satis Score"
   },
   "mock": {
     "store": "Nora Café · Riyadh",

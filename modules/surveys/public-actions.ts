@@ -12,7 +12,7 @@ import { sendNegativeAlert } from "@/modules/notifications/alerts";
 import { answersSchema } from "./schemas";
 
 export type SubmitResult =
-  | { ok: true; coupon?: Coupon }
+  | { ok: true; coupon?: Coupon; canPublish?: boolean }
   | { error: "generic" | "changed" | "rateLimited" | "unavailable" | "participant" | "alreadyAnswered" };
 
 const inputSchema = z.object({
@@ -75,13 +75,16 @@ export async function submitSurveyResponse(input: z.input<typeof inputSchema>): 
   // Unhappy customer? Tell the team, after the customer's thank-you screen is on its way.
   if (typeof responseId === "string") after(() => sendNegativeAlert(responseId));
 
+  // Offer to publish the comment on Satis Score when the business has its public page on.
+  const { data: canPublish } = await supabase.rpc("can_publish_review", { p_submission_id: data.submissionId });
+
   // The reward, if the business offers one. Its failure must never lose the customer's answers.
   const { data: coupon, error: couponError } = await supabase.rpc("issue_coupon", { p_response_id: responseId });
   if (couponError) {
     reportError(couponError, { area: "coupons", action: "issue" });
-    return { ok: true };
+    return { ok: true, canPublish: canPublish === true };
   }
-  if (!coupon) return { ok: true };
+  if (!coupon) return { ok: true, canPublish: canPublish === true };
   captureServerEvent("coupon_claimed", data.submissionId, { locale: data.locale });
-  return { ok: true, coupon: coupon as unknown as Coupon };
+  return { ok: true, coupon: coupon as unknown as Coupon, canPublish: canPublish === true };
 }

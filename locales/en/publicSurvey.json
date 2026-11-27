@@ -30,5 +30,11 @@
   "participantCode": "Your participant code",
   "participantCodeHint": "Use the code the research team gave you, for example P-014. It links your answers before and after.",
   "participantCodeInvalid": "Enter your participant code: letters, numbers and dashes only.",
-  "errorAlreadyAnswered": "This participant code has already answered this survey."
+  "errorAlreadyAnswered": "This participant code has already answered this survey.",
+  "publishTitle": "Publish your comment on Satis Score?",
+  "publishBody": "Your rating and comment show with your first name only, and help others choose.",
+  "publishName": "Your first name (optional)",
+  "publishButton": "Publish my comment",
+  "publishDone": "Your comment is published. Thank you.",
+  "publishError": "Couldn't publish your comment. Try again."
 }

@@ -24,4 +24,7 @@ export type AnalyticsEvent =
   | "study_created"
   | "study_exported"
   | "upgrade_clicked"
-  | "subscription_started";
+  | "subscription_started"
+  | "score_page_saved"
+  | "review_published"
+  | "review_replied";

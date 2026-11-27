@@ -12,6 +12,8 @@ import { can } from "@/lib/permissions";
 import { AiThemeChips } from "@/modules/ai/components/ai-themes";
 import { ScoreBadge, SentimentBadge, StatusBadge } from "@/modules/feedback/components/badges";
 import { TagEditor } from "@/modules/feedback/components/tag-editor";
+import { SatisSeal } from "@/components/brand/seal";
+import { PublicReplyForm } from "@/modules/score/components/public-reply-form";
 import { MarkRead, TriageControls } from "@/modules/feedback/components/triage-controls";
 import { filtersToQuery, parseFilters } from "@/modules/feedback/filters";
 import { getResponse, listTags, type ResponseAnswer } from "@/modules/feedback/queries";
@@ -28,12 +30,13 @@ export default async function ResponsePage({ params, searchParams }: PageProps<"
   const { responseId } = await params;
   const { membership } = await requireMembership(locale);
   const organizationId = membership.organization.id;
-  const [response, allTags, t, tCommon, tAi] = await Promise.all([
+  const [response, allTags, t, tCommon, tAi, tScore] = await Promise.all([
     getResponse(organizationId, responseId),
     listTags(organizationId),
     getTranslations({ locale, namespace: "inbox" }),
     getTranslations({ locale, namespace: "common" }),
     getTranslations({ locale, namespace: "ai" }),
+    getTranslations({ locale, namespace: "score.reply" }),
   ]);
   if (!response) notFound();
 
@@ -101,6 +104,20 @@ export default async function ResponsePage({ params, searchParams }: PageProps<"
               );
             })}
           </dl>
+          {response.publish_consent && response.csat_score !== null && (
+            <section aria-labelledby="public-reply-heading" className="flex flex-col gap-3 border-t border-border px-6 py-5">
+              <div className="flex items-start gap-3">
+                <SatisSeal className="size-9" />
+                <div className="flex flex-col gap-1">
+                  <h2 id="public-reply-heading" className="font-sans text-base font-bold">
+                    {tScore("title")}
+                  </h2>
+                  <p className="text-sm text-muted-foreground">{tScore("hint")}</p>
+                </div>
+              </div>
+              <PublicReplyForm responseId={response.id} reply={response.public_reply} canEdit={canTriage} />
+            </section>
+          )}
         </Card>
 
         <div className="flex flex-col gap-6">

@@ -32,6 +32,7 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
     { href: "/dashboard", label: "dashboard" },
     { href: "/inbox", label: "inbox", group: "feedback", badge: unread > 0 ? formatCount(locale, Math.min(unread, 99)) + (unread > 99 ? "+" : "") : undefined },
     { href: "/coupons", label: "coupons", group: "feedback" },
+    ...(can(membership.role, "organization.edit") ? [{ href: "/public-page", label: "score", group: "feedback" } as const] : []),
     { href: "/surveys", label: "surveys", group: "collect" },
     { href: "/studies", label: "studies", group: "collect" },
     { href: "/locations", label: "locations", group: "collect" },

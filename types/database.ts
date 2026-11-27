@@ -34,6 +34,11 @@ export type Database = {
           default_locale: Database["public"]["Enums"]["app_locale"];
           timezone: string;
           created_by: string | null;
+          public_enabled: boolean;
+          public_reviews_enabled: boolean;
+          public_slug: string | null;
+          public_about: string | null;
+          public_website: string | null;
         };
         Insert: OptionalTimestamps & {
           id?: string;
@@ -50,6 +55,11 @@ export type Database = {
           default_locale?: Database["public"]["Enums"]["app_locale"];
           timezone?: string;
           created_by?: string | null;
+          public_enabled?: boolean;
+          public_reviews_enabled?: boolean;
+          public_slug?: string | null;
+          public_about?: string | null;
+          public_website?: string | null;
         };
         Relationships: [];
       };
@@ -338,12 +348,18 @@ export type Database = {
           is_important: boolean;
           comment_text: string | null;
           rating_sentiment: RatingSentiment | null;
+          publish_consent: boolean;
+          reviewer_name: string | null;
+          public_reply: string | null;
+          public_reply_at: string | null;
+          public_hidden_at: string | null;
         };
         Insert: never;
         Update: {
           status?: Database["public"]["Enums"]["response_status"];
           is_read?: boolean;
           is_important?: boolean;
+          public_reply?: string | null;
         };
         Relationships: [
           {
@@ -698,6 +714,30 @@ export type Database = {
       get_dashboard_trends: {
         Args: { p_organization_id: string; p_from: string; p_to: string; p_location_id?: string | null; p_survey_id?: string | null };
         Returns: Json;
+      };
+      get_score_directory: {
+        Args: { p_query?: string | null; p_type?: Database["public"]["Enums"]["business_type"] | null; p_limit?: number };
+        Returns: Json;
+      };
+      get_score_profile: {
+        Args: { p_slug: string };
+        Returns: Json;
+      };
+      get_score_reviews: {
+        Args: { p_slug: string; p_stars?: number | null; p_offset?: number; p_limit?: number };
+        Returns: Json;
+      };
+      get_score_badge: {
+        Args: { p_slug: string };
+        Returns: Json;
+      };
+      can_publish_review: {
+        Args: { p_submission_id: string };
+        Returns: boolean;
+      };
+      publish_review: {
+        Args: { p_submission_id: string; p_name: string };
+        Returns: boolean;
       };
     };
     Enums: {

@@ -33,5 +33,7 @@
   "couponExpired": "This code has expired.",
   "offerActiveExists": "This survey already has an active reward. Pause it before starting another.",
   "aiNotConfigured": "AI analysis isn't set up yet.",
-  "slotTaken": "Someone just booked that time. Pick another one."
+  "slotTaken": "Someone just booked that time. Pick another one.",
+  "slugTaken": "This address is taken. Try another one.",
+  "slugRequired": "Choose an address for your page before turning it on."
 }

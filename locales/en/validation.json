@@ -12,5 +12,7 @@
   "limitRange": "Enter a whole number, or leave it empty for no limit.",
   "pickTime": "Pick a day and time.",
   "phone": "Enter a valid mobile number.",
-  "meetingLink": "Enter a link starting with https://"
+  "meetingLink": "Enter a link starting with https://",
+  "slug": "Use 3 to 40 lowercase English letters, numbers or dashes.",
+  "website": "Enter a web address like example.com"
 }

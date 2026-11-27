@@ -1,0 +1,191 @@
+{
+  "metaTitle": "Satis Score: verified ratings from real customers",
+  "metaDescription": "Before you try a café, restaurant or clinic, check its Satis Score. Every rating comes from a customer who really visited or bought.",
+  "brand": "Satis Score",
+  "nav": {
+    "label": "Satis Score",
+    "home": "Satis Score home",
+    "categories": "Categories",
+    "top": "Top rated",
+    "seal": "The Satis seal",
+    "forBusiness": "For business"
+  },
+  "outOf": "out of 5",
+  "starsLabel": "{score} out of 5",
+  "ratings": "{count} ratings",
+  "collecting": "Collecting ratings",
+  "directory": {
+    "badge": "Verified ratings only",
+    "title": "Before you try it,<br></br>ask the people who did.",
+    "body": "Every rating here comes from a customer who really visited or bought, invited by Satis after paying.",
+    "searchLabel": "Search for a brand",
+    "searchPlaceholder": "Search for a café, store, clinic…",
+    "search": "Search",
+    "stats": "<b>{ratings}</b> verified ratings from customers in {cities} cities",
+    "categoriesTitle": "Browse by category",
+    "all": "All",
+    "brands": "{count} brands",
+    "topTitle": "Top rated",
+    "resultsTitle": "Results for “{query}”",
+    "listLabel": "Brands",
+    "emptyTitle": "No brand with that name",
+    "emptyBody": "Try a shorter name or another category.",
+    "emptyAllTitle": "The first brands are on their way",
+    "emptyAllBody": "Brands that open their page on Satis Score appear here.",
+    "clear": "Show all brands",
+    "featured": "Top of the year",
+    "featuredBody": "{count} verified ratings in the last 12 months.",
+    "seal": {
+      "title": "If you see the yellow seal,",
+      "hl": "the number is real.",
+      "body": "It shows on brands' websites and next to the buy button. Tap it to land on the brand's page here and read the ratings yourself.",
+      "min": "verified ratings before it shows",
+      "refresh": "minutes between updates",
+      "edits": "manual edits by the brand"
+    },
+    "how": {
+      "title": "How a rating gets here",
+      "invite": {
+        "title": "Invited after a real visit",
+        "body": "The invitation arrives after paying, by WhatsApp or the code on the receipt. There's no “write a review” button for anyone."
+      },
+      "consent": {
+        "title": "Published with the customer's consent",
+        "body": "Only the first name shows. Stars always count; the comment is published if its writer agrees."
+      },
+      "reply": {
+        "title": "Brands reply, they don't delete",
+        "body": "A brand can answer any rating in public, but can't hide or edit it."
+      }
+    },
+    "cta": {
+      "eyebrow": "For business",
+      "title": "Let your customers' satisfaction sell for you.",
+      "body": "Collect verified ratings from WhatsApp, the till and your website, answer them in one place, and show the Satis seal next to the buy button.",
+      "primary": "Add your brand for free",
+      "secondary": "Book a demo"
+    }
+  },
+  "profile": {
+    "notFoundTitle": "This page isn't available",
+    "since": "Since {year}",
+    "branches": "{count} branches",
+    "oneBranch": "1 branch",
+    "official": "Official page on Satis Score",
+    "fallbackAbout": "Every rating here comes from a customer who visited {name} and was invited by Satis after paying.",
+    "scoreTitle": "Satis Score",
+    "window": "Last 12 months",
+    "satisfied": "<b>{count}</b> satisfied customers",
+    "from": "from {count} verified ratings",
+    "scoreSummary": "{name}'s Satis Score: {score} out of 5, from {count} verified ratings in the last 12 months.",
+    "collectingBody": "The number appears after {min} verified ratings. {count} so far.",
+    "change": "change over the year",
+    "website": "Visit website",
+    "stats": {
+      "satisfied": "of customers satisfied",
+      "answered": "of low ratings answered",
+      "reviews": "published comments"
+    },
+    "tabs": "Page sections",
+    "distribution": "Star distribution",
+    "starRow": "{stars} stars: {count}",
+    "year": "Score over the year",
+    "yearSummary": "Average of each of the last 12 months.",
+    "noYear": "The line appears after the first month with ratings.",
+    "month": "Month",
+    "monthScore": "Average",
+    "branchesTitle": "Branches",
+    "branchScore": "{score} out of 5, {count} ratings",
+    "branchFew": "Fewer than 5 ratings",
+    "how": {
+      "title": "How we verify ratings",
+      "invite": "The invitation arrives after a real visit or purchase.",
+      "consent": "Comments are published with the customer's consent, first name only.",
+      "reply": "The brand replies or reports, but never deletes."
+    },
+    "rate": {
+      "title": "Want to rate {name}?",
+      "body": "The invitation reaches you after you pay at any branch, by WhatsApp or the receipt code. No account needed."
+    },
+    "owner": {
+      "title": "Own {name}?",
+      "body": "Answer your customers and put the Satis seal on your website.",
+      "cta": "Open the team dashboard"
+    },
+    "reviews": "Ratings",
+    "reviewsCount": "Ratings · {count}",
+    "filterLabel": "Show by stars",
+    "all": "All",
+    "stars": "{n} stars",
+    "showing": "Showing {shown} of {total} comments",
+    "more": "Show more",
+    "anonymous": "Customer",
+    "verifiedVisit": "Verified visit",
+    "replyFrom": "Reply from {name}",
+    "noReviewsTitle": "No published comments yet",
+    "noReviewsBody": "Stars count from every rating. Comments appear here once their writers agree to publish them.",
+    "noFilteredTitle": "No comments with this rating"
+  },
+  "badge": {
+    "verified": "Verified by Satis",
+    "satisfied": "{count} satisfied customers",
+    "label": "{name}'s Satis Score: {score} out of 5",
+    "collectingLabel": "{name}'s Satis Score: collecting ratings"
+  },
+  "settings": {
+    "metaTitle": "Satis Score",
+    "title": "Satis Score",
+    "subtitle": "Your public page and the badge on your website.",
+    "viewPage": "View your public page",
+    "cards": {
+      "score": "Satis Score",
+      "scoreHint": "Last 12 months",
+      "collecting": "Shows after {min} ratings",
+      "collectingHint": "{count} so far",
+      "satisfied": "Satisfied customers",
+      "satisfiedHint": "from {count} ratings",
+      "published": "Published comments",
+      "waiting": "Waiting for your reply",
+      "waitingHint": "Comments with three stars or fewer"
+    },
+    "page": {
+      "title": "Public page",
+      "enabled": "Show your public page",
+      "enabledHint": "Your brand appears in Satis Score search and on Google.",
+      "reviews": "Publish customer comments",
+      "reviewsHint": "After the survey, customers are asked whether to publish their comment. It shows with their first name only, and only if they agree.",
+      "slug": "Your page address",
+      "slugHint": "Lowercase English letters, numbers and dashes, like ward-cafe.",
+      "about": "Short description",
+      "aboutHint": "Shows under your brand name. Up to 280 characters.",
+      "website": "Your website",
+      "websiteHint": "Like ward.sa",
+      "save": "Save page",
+      "saved": "Your page is saved."
+    },
+    "badge": {
+      "title": "Your website badge",
+      "body": "Paste this code into your website. The badge shows your score and opens your page when tapped.",
+      "style": "Badge style",
+      "full": "Full",
+      "small": "Small",
+      "code": "Code",
+      "copy": "Copy code",
+      "copied": "Code copied",
+      "preview": "Preview",
+      "off": "Turn on your public page first for the badge to show."
+    }
+  },
+  "reply": {
+    "title": "Your public reply",
+    "hint": "The customer published this comment on Satis Score. Your reply shows under it for everyone.",
+    "label": "Write your reply",
+    "save": "Publish reply",
+    "update": "Update reply",
+    "remove": "Delete reply",
+    "saved": "Your reply is published.",
+    "removed": "Your reply is deleted.",
+    "published": "Published on Satis Score",
+    "view": "See it on your page"
+  }
+}

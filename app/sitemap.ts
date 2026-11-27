@@ -7,6 +7,8 @@ import { allPosts } from "@/modules/blog";
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages: { path: string; lastModified?: string; priority: number }[] = [
     { path: "/", priority: 1 },
+    { path: "/pricing", priority: 0.9 },
+    { path: "/score", priority: 0.9 },
     { path: "/book", priority: 0.8 },
     { path: "/blog", lastModified: allPosts()[0]?.date, priority: 0.8 },
     ...allPosts().map((post) => ({ path: `/blog/${post.slug}`, lastModified: post.date, priority: 0.6 })),

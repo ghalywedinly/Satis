@@ -20,6 +20,7 @@ import {
 import { CouponTicket } from "@/modules/coupons/components/coupon-ticket";
 import { discountAmount, type Coupon } from "@/modules/coupons/definition";
 import { submitSurveyResponse, type SubmitResult } from "../public-actions";
+import { PublishConsent } from "./publish-consent";
 import { RatingScale } from "./rating-scale";
 import { themeVars } from "../color";
 import { SurveyLogoImage } from "./survey-logo";
@@ -66,6 +67,7 @@ export function SurveyForm({
   const [error, setError] = useState<Exclude<SubmitResult, { ok: true }>["error"] | null>(null);
   const [done, setDone] = useState(false);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
+  const [canPublish, setCanPublish] = useState(false);
   const [pending, startTransition] = useTransition();
   const [submissionId] = useState(() => crypto.randomUUID());
   const honeypot = useRef<HTMLInputElement>(null);
@@ -118,6 +120,7 @@ export function SurveyForm({
       });
       if ("ok" in result) {
         setCoupon(result.coupon ?? null);
+        setCanPublish(!!result.canPublish);
         setDone(true);
       }
       else {
@@ -171,6 +174,19 @@ export function SurveyForm({
                 keep: labels.couponKeep,
                 copy: labels.couponCopy,
                 copied: labels.couponCopied,
+              }}
+            />
+          )}
+          {canPublish && mode.kind === "live" && (
+            <PublishConsent
+              submissionId={submissionId}
+              labels={{
+                title: labels.publishTitle,
+                body: labels.publishBody,
+                name: labels.publishName,
+                button: labels.publishButton,
+                done: labels.publishDone,
+                error: labels.publishError,
               }}
             />
           )}
