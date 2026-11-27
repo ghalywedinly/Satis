@@ -7,7 +7,7 @@ const BOT = "66,88 8,88 37.7,62 95.7,62";
 /** The wordmark is part of the logo (a brand asset), not translatable UI copy. */
 const WORDMARK = { en: "Satis", ar: "ساتيس" } as const;
 
-export type MarkTone = "ink" | "ink-ultra" | "ultra" | "sand" | "sand-zest" | "white" | "white-zest" | "zest";
+export type MarkTone = "ink" | "ink-ultra" | "ultra" | "sand" | "sand-zest" | "white" | "white-zest" | "zest" | "zest-ink";
 
 /** band/mid colour the mark; word (if set) colours the wordmark instead of band. */
 const TONES: Record<MarkTone, { band: string; mid: string; word?: string }> = {
@@ -20,6 +20,8 @@ const TONES: Record<MarkTone, { band: string; mid: string; word?: string }> = {
   "white-zest": { band: "#FFFFFF", mid: "#FFCF28" },
   /** On Ink: all-Zest mark, white wordmark (identity handoff). */
   zest: { band: "#FFCF28", mid: "#FFCF28", word: "#FFFFFF" },
+  /** On white: all-Zest mark, Ink wordmark. */
+  "zest-ink": { band: "#FFCF28", mid: "#FFCF28", word: "#0B0D12" },
 };
 
 /** The Satis "sliced fold" S. Three slices; the middle slice may carry an accent. Aspect 90:84. */

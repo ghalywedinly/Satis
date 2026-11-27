@@ -1,0 +1,219 @@
+{
+  "metaTitle": "Pricing",
+  "metaDescription": "Satis plans for visits, online stores and apps. Start free and pay for what grows with you.",
+  "badge": "Start free, no card needed",
+  "title": "Pricing that grows <hl>with you.</hl>",
+  "body": "Choose your kind of business, then pay for what grows with you: locations, orders or users.",
+  "segmentsLabel": "Kind of business",
+  "segments": {
+    "visits": {
+      "name": "Visits",
+      "sub": "Restaurants, cafés, clinics, shops"
+    },
+    "orders": {
+      "name": "Online stores",
+      "sub": "Rating after delivery"
+    },
+    "apps": {
+      "name": "Apps and software",
+      "sub": "Inside your app"
+    }
+  },
+  "billing": {
+    "label": "Pay yearly",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "2 months free",
+    "perMonth": "per month",
+    "yearlyNote": "Billed yearly: {total} instead of {full}",
+    "custom": "Custom",
+    "from": "From",
+    "amount": "<small>SAR</small> <big>{amount}</big> <small>/ month</small>"
+  },
+  "popular": "Most popular",
+  "includesAll": "Everything in {plan}, plus:",
+  "includes": "Includes:",
+  "branches": {
+    "label": "Locations",
+    "less": "One fewer location",
+    "more": "One more location"
+  },
+  "cta": {
+    "free": "Start free",
+    "paid": "Create account",
+    "contact": "Book a meeting"
+  },
+  "vat": "Prices in Saudi riyals, excluding VAT.",
+  "compare": {
+    "title": "Compare plans",
+    "feature": "Feature",
+    "yes": "Included",
+    "no": "Not included",
+    "unlimited": "Unlimited"
+  },
+  "plans": {
+    "visits": {
+      "free": {
+        "name": "Free",
+        "for": "Try Satis",
+        "note": "1 location · 50 ratings a month"
+      },
+      "starter": {
+        "name": "Starter",
+        "for": "For one location",
+        "note": "1 location"
+      },
+      "growth": {
+        "name": "Growth",
+        "for": "For several locations",
+        "note": "{base} for the first 3 locations, {extra} for each extra one"
+      },
+      "top": {
+        "name": "Chains",
+        "for": "10 or more locations",
+        "note": "Based on your locations"
+      }
+    },
+    "orders": {
+      "free": {
+        "name": "Free",
+        "for": "Try Satis",
+        "note": "Up to 50 orders a month"
+      },
+      "starter": {
+        "name": "Starter",
+        "for": "For small stores",
+        "note": "Up to 300 orders a month"
+      },
+      "growth": {
+        "name": "Growth",
+        "for": "For busy stores",
+        "note": "Up to 2,000 orders a month"
+      },
+      "top": {
+        "name": "Large stores",
+        "for": "More than 2,000 orders",
+        "note": "Based on your order volume"
+      }
+    },
+    "apps": {
+      "free": {
+        "name": "Free",
+        "for": "Try Satis",
+        "note": "Up to 100 active users"
+      },
+      "starter": {
+        "name": "Starter",
+        "for": "For early products",
+        "note": "Up to 1,000 monthly active users"
+      },
+      "growth": {
+        "name": "Growth",
+        "for": "For growing products",
+        "note": "Up to 10,000 monthly active users"
+      },
+      "top": {
+        "name": "Enterprise",
+        "for": "For large companies",
+        "note": "Based on your needs"
+      }
+    }
+  },
+  "features": {
+    "publicPage": "A page on Satis Score",
+    "seal": "The Satis seal for your site and location",
+    "oneQr": "One QR code",
+    "basicDashboard": "Basic dashboard",
+    "unlimitedRatings": "Unlimited ratings",
+    "qrEverywhere": "QR codes for tables and receipts",
+    "inbox": "Feedback inbox and tags",
+    "fullDashboard": "Full dashboard",
+    "team3": "3 team members",
+    "team5": "5 team members",
+    "whatsapp": "WhatsApp message after the bill",
+    "rewards": "Rewards and coupons for customers",
+    "ai": "Satis notes with AI",
+    "unlimitedTeam": "Unlimited surveys and team",
+    "hideBrand": "Hide the Satis logo on surveys",
+    "pos": "Point-of-sale connection",
+    "receiptQr": "A unique QR code on every receipt",
+    "roles": "Custom roles per location",
+    "manager": "Dedicated account manager",
+    "badge": "The Satis badge for your store",
+    "afterDelivery": "Rating request after delivery",
+    "productReviews": "Product reviews on your store",
+    "badgeProducts": "Satis badge on product pages",
+    "inboxReply": "Feedback inbox and replies",
+    "photos": "Photo reviews",
+    "carriers": "Shipping company comparison",
+    "returns": "Returns and their reasons",
+    "whatsappOrders": "Rating requests on WhatsApp",
+    "storeConnect": "Store platform and shipping connections",
+    "multiStore": "Several stores and brands",
+    "widget": "In-app widget",
+    "nps": "NPS question",
+    "featureFeedback": "Feedback on specific features",
+    "support": "Support ratings",
+    "bilingual": "Surveys in Arabic and English",
+    "atRisk": "Accounts and revenue at risk",
+    "tools": "Connect your work tools",
+    "targeting": "Precise survey targeting",
+    "sso": "Single sign-on",
+    "dpa": "Data processing agreement",
+    "dedicated": "Dedicated support"
+  },
+  "rows": {
+    "branches": "Locations",
+    "ratings": "Ratings a month",
+    "orders": "Orders a month",
+    "users": "Monthly active users",
+    "team": "Team members",
+    "from3": "From 3",
+    "tenPlus": "10 or more"
+  },
+  "extras": {
+    "title": "Add-ons when you need them",
+    "whatsapp": {
+      "title": "WhatsApp message packs",
+      "body": "Rating messages on WhatsApp are billed by use, close to WhatsApp's own cost.",
+      "price": "By number of messages"
+    },
+    "bundle": {
+      "title": "Two businesses, one account",
+      "body": "Have locations and an online store? Keep them in one account and one dashboard.",
+      "price": "{percent} off the second"
+    },
+    "branch": {
+      "title": "Extra locations",
+      "body": "Add a new location to Growth and it shows up in your comparison right away.",
+      "price": "{price} per location a month"
+    }
+  },
+  "founders": {
+    "title": "Founders offer: {price} a month, for life",
+    "body": "For the first 100 businesses on the Visits Starter plan. The price stays the same for as long as you stay subscribed.",
+    "cta": "Book a meeting"
+  },
+  "faq": {
+    "title": "Before you subscribe",
+    "eyebrow": "Billing questions",
+    "items": {
+      "card": {
+        "q": "Do I need a card to start?",
+        "a": "No. Create your account, start free and choose a plan when you're ready."
+      },
+      "change": {
+        "q": "Can I change plans later?",
+        "a": "Yes, upgrade or downgrade whenever you like."
+      },
+      "limit": {
+        "q": "What if I go over my orders or users?",
+        "a": "Nothing stops. We'll let you know, and if it keeps happening we'll suggest the right plan."
+      },
+      "vat": {
+        "q": "Do prices include VAT?",
+        "a": "No. VAT is added and you get a tax invoice."
+      }
+    }
+  }
+}

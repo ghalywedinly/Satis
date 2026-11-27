@@ -67,7 +67,9 @@
     "comment4": "Friendly staff and a calm place"
   },
   "industries": {
-    "title": "Built for the places your customers visit"
+    "title": "Built for the places your customers visit",
+    "services": "Service centres",
+    "more": "And dental clinics, hotels, gyms and more."
   },
   "how": {
     "eyebrow": "How it works",
@@ -149,7 +151,12 @@
   "showcase": {
     "eyebrow": "Dashboard",
     "title": "See how customers feel, location by location",
-    "body": "The numbers that matter on one screen: how many customers answered, how happy they are, and which location needs you today."
+    "body": "The numbers that matter on one screen: how many customers answered, how happy they are, and which location needs you today.",
+    "score": "Satis Score",
+    "outOf": "out of 5",
+    "ratings": "From {count} ratings this month",
+    "compare": "Location comparison",
+    "comments": "Comments"
   },
   "pricing": {
     "eyebrow": "Pricing",
@@ -216,5 +223,32 @@
     "noCard": "Free 30-minute call",
     "fast": "Set up in minutes",
     "bilingual": "Arabic and English"
+  },
+  "hero": {
+    "card": "Satis Score",
+    "cardStore": "Noura Café"
+  },
+  "plans": {
+    "eyebrow": "Pricing",
+    "title": "Clear pricing for every kind of business",
+    "body": "Start free, then pay for what grows with you: locations, orders or users.",
+    "from": "From",
+    "perMonth": "per month",
+    "cta": "See all plans",
+    "founders": "Founders offer: {price} a month for life, for the first 100 businesses.",
+    "groups": {
+      "visits": {
+        "name": "Visits",
+        "unit": "per location"
+      },
+      "orders": {
+        "name": "Online stores",
+        "unit": "up to 300 orders"
+      },
+      "apps": {
+        "name": "Apps and software",
+        "unit": "up to 1,000 users"
+      }
+    }
   }
 }

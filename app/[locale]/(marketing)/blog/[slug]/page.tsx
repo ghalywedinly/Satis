@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { SiteFooter } from "@/components/marketing/sections";
+import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { formatCount } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";

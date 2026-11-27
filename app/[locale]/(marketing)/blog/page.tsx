@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Search } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { SliceHighlight } from "@/components/brand/slice";
-import { SiteFooter } from "@/components/marketing/sections";
+import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { Button } from "@/components/ui/button";
 import { formatCount } from "@/lib/i18n/format";

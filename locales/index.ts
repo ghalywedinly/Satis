@@ -28,6 +28,7 @@ const load = {
     admin: (await import("./ar/admin.json")).default,
     booking: (await import("./ar/booking.json")).default,
     blog: (await import("./ar/blog.json")).default,
+    pricing: (await import("./ar/pricing.json")).default,
   }),
   en: async () => ({
     common: (await import("./en/common.json")).default,
@@ -55,6 +56,7 @@ const load = {
     admin: (await import("./en/admin.json")).default,
     booking: (await import("./en/booking.json")).default,
     blog: (await import("./en/blog.json")).default,
+    pricing: (await import("./en/pricing.json")).default,
   }),
 } satisfies Record<Locale, () => Promise<unknown>>;
 
