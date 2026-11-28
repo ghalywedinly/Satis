@@ -29,6 +29,7 @@ function SectionTitle({ eyebrow, title, body, className }: { eyebrow?: string; t
 
 export function Hero() {
   const t = useTranslations("home");
+  const m = useTranslations("home.mock");
   const locale = useLocale() as Locale;
   const points = ["noApp", "bilingual", "private", "fast"] as const;
   return (
@@ -64,34 +65,54 @@ export function Hero() {
           </ul>
         </div>
 
-        <div aria-hidden className="relative min-h-[420px] sm:min-h-[560px]">
-          <div className="absolute start-1/2 -bottom-24 size-[min(460px,90vw)] -translate-x-1/2 rounded-full bg-zest rtl:translate-x-1/2" />
-          <SatisSeal ring className="absolute start-[8%] top-10 hidden size-28 sm:block" />
+        {/* The solution in one picture: the customer rates on their phone, the team sees it land. */}
+        <div aria-hidden className="relative min-h-[600px] overflow-hidden sm:min-h-[560px]">
           <Image
-            src="/characters/shopper.png"
+            src="/characters/associate.png"
             alt=""
-            width={1212}
-            height={1298}
+            width={1177}
+            height={1337}
             priority
-            sizes="(min-width: 1024px) 420px, 70vw"
-            className="absolute start-1/2 -bottom-10 h-auto w-[min(420px,72vw)] -translate-x-[62%] drop-shadow-[18px_18px_0_#F5B800] rtl:translate-x-[62%]"
+            sizes="(min-width: 1024px) 380px, 70vw"
+            className="absolute -end-12 bottom-0 h-auto w-[min(380px,78vw)] drop-shadow-[16px_16px_0_#0B0D12] ltr:-scale-x-100"
           />
-          <Image
-            src="/characters/young-customer.png"
-            alt=""
-            width={1024}
-            height={1536}
-            priority
-            sizes="(min-width: 1024px) 330px, 55vw"
-            className="absolute start-1/2 -bottom-36 h-auto w-[min(330px,55vw)] translate-x-[2%] drop-shadow-[18px_18px_0_#F5B800] rtl:-translate-x-[2%]"
-          />
-          <div className="absolute end-5 top-12 flex items-center gap-2.5 rounded-full bg-white py-1.5 ps-1.5 pe-4 text-ink motion-safe:animate-float">
-            <SatisSeal className="size-10" />
-            <span className="font-display text-2xl font-extrabold tabular">{one(locale, 4.7)}</span>
-            <span className="flex flex-col text-xs leading-tight">
-              <span className="font-bold">{t("hero.card")}</span>
-              <span>{t("hero.cardStore")}</span>
+
+          {/* Customer side: the survey on a phone */}
+          <div className="absolute start-5 top-8 z-10 flex w-[218px] -rotate-3 flex-col gap-3.5 rounded-[30px] border-[5px] border-ink bg-white p-4 text-ink shadow-[12px_12px_0_#FFCF28] sm:start-[8%] sm:w-[236px]">
+            <span className="mx-auto h-1.5 w-12 rounded-full bg-ink-100" />
+            <span className="flex items-center gap-2 text-xs font-semibold text-ink-500">
+              <span className="flex size-6 items-center justify-center rounded-[7px] bg-zest font-display text-[13px] font-extrabold text-ink">{t("hero.cardStore").slice(0, 1)}</span>
+              {m("rateVisit")}
             </span>
+            <span className="text-[17px] leading-snug font-bold">{m("question")}</span>
+            <StarBlocks score={4} size="md" />
+            <span className="rounded-[10px] bg-ultramarine py-2.5 text-center text-sm font-semibold text-white">{m("send")}</span>
+          </div>
+
+          {/* Team side: the response lands and the score moves */}
+          <div className="absolute start-16 bottom-8 z-10 flex w-[236px] flex-col gap-3 sm:start-[22%] sm:bottom-12 sm:w-[260px]">
+            <div className="flex items-center gap-3 rounded-[20px] bg-white p-3.5 text-ink motion-safe:animate-float">
+              <SatisSeal className="size-11 shrink-0" />
+              <span className="flex flex-col leading-tight">
+                <span className="text-xs text-ink-500">{t("hero.card")}</span>
+                <span className="flex items-baseline gap-1.5">
+                  <span className="font-display text-[28px] font-extrabold tabular">{one(locale, 4.7)}</span>
+                  <span className="rounded-sm bg-mint-50 px-1.5 py-0.5 text-xs font-bold text-mint-700">
+                    {"▲ "}
+                    {one(locale, 0.2)}
+                  </span>
+                </span>
+              </span>
+            </div>
+            <div className="flex flex-col gap-1.5 rounded-[20px] bg-white p-3.5 text-ink">
+              <span className="flex items-center gap-2 text-xs text-ink-500">
+                <span className="size-2 rounded-full bg-mint" />
+                <span className="flex-1 font-semibold text-ink">{m("newResponse")}</span>
+                {m("justNow")}
+              </span>
+              <span className="text-sm font-semibold">{`«${m("comment1")}»`}</span>
+              <span className="text-xs text-ink-500">{m("locationB")}</span>
+            </div>
           </div>
         </div>
       </div>
