@@ -22,7 +22,6 @@
     "searchPlaceholder": "Search for a café, store, clinic…",
     "search": "Search",
     "stats": "<b>{ratings}</b> verified ratings from customers in {cities} cities",
-    "live": "Top rated right now",
     "quick": "Quick browse by category",
     "categoriesTitle": "Browse by category",
     "all": "All",
@@ -66,7 +65,8 @@
       "body": "Collect verified ratings from WhatsApp, the till and your website, answer them in one place, and show the Satis seal next to the buy button.",
       "primary": "Add your brand for free",
       "secondary": "Book a demo"
-    }
+    },
+    "sceneAlt": "A café in Riyadh: a customer rates his visit on his phone, the barista serves his coffee, and the manager follows the ratings on a tablet."
   },
   "profile": {
     "notFoundTitle": "This page isn't available",
