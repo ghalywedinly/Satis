@@ -16,7 +16,7 @@ export function SliceHighlight({
 }) {
   const tones = {
     zest: "bg-zest text-ink",
-    ink: "bg-ink text-sand",
+    ink: "bg-ink text-white",
     ultra: "bg-ultramarine text-white",
     ember: "bg-ember text-ink",
   } as const;

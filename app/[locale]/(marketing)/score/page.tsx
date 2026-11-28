@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, Search, Smartphone, ToggleRight, X } from "lucide-react";
+import { ArrowRight, Search, Smartphone, Star, ToggleRight, X } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { BurgerObject, CarObject, ClinicObject, CupObject, ScissorsObject, ShoppingBagObject } from "@/components/brand/objects";
 import { SatisSeal } from "@/components/brand/seal";
+import { OutlinedPill, SliceHighlight } from "@/components/brand/slice";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Button } from "@/components/ui/button";
 import { formatCount } from "@/lib/i18n/format";
@@ -37,6 +38,10 @@ const TILES: { type: BusinessType; bg: string; Obj: (p: { className?: string }) 
   { type: "other", bg: "bg-ink-50", Obj: CarObject },
 ];
 
+const QUICK: BusinessType[] = ["cafe", "restaurant", "retail", "clinic", "beauty"];
+// The leaderboard cards sit slightly askew, like cards pinned to a board; straight on small screens.
+const TILT = ["lg:-rotate-2", "lg:ms-10 lg:rotate-1", "lg:ms-4 lg:-rotate-1"];
+
 export default async function ScoreDirectoryPage({ params, searchParams }: PageProps<"/[locale]/score">) {
   const locale = await resolveLocale(params);
   const sp = await searchParams;
@@ -49,6 +54,7 @@ export default async function ScoreDirectoryPage({ params, searchParams }: PageP
   ]);
   const results = directory?.results ?? [];
   const featured = !query && !type ? results.find((r) => r.score !== null) : undefined;
+  const leaders = results.filter((r) => r.score !== null).slice(0, 3);
   const filtered = !!query || !!type;
   const listTitle = query ? t("directory.resultsTitle", { query }) : type ? types(type) : t("directory.topTitle");
   const meta = (r: (typeof results)[number]) =>
@@ -58,17 +64,19 @@ export default async function ScoreDirectoryPage({ params, searchParams }: PageP
     <div className="flex min-h-dvh flex-col bg-white">
       <ScoreHeader />
       <main id="content" className="flex-1">
-        {/* Hero */}
-        <section className="px-3 pt-4 sm:px-6 sm:pt-6">
-          <div className="mx-auto grid max-w-[1240px] overflow-hidden rounded-[32px] bg-ink text-white sm:rounded-[40px] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-            <div className="flex flex-col gap-6 px-6 py-12 sm:px-14 sm:py-16">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full bg-zest py-1.5 ps-1.5 pe-3.5 text-[13px] font-semibold text-ink">
-                <SatisSeal className="size-[22px] [&_polygon:first-child]:fill-ink [&_g]:fill-zest" />
+        {/* Hero: a search-first band on Mint, with the brands customers rate highest right now */}
+        <section className="relative overflow-hidden bg-mint text-ink">
+          <div className={cn(WRAP, "relative grid gap-12 pt-12 pb-14 sm:pt-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-8 lg:pt-20 lg:pb-24")}>
+            <div className="relative z-10 flex flex-col gap-6">
+              <OutlinedPill className="self-start">
+                <SatisSeal className="size-[22px]" />
                 {t("directory.badge")}
-              </span>
-              <h1 className="text-[clamp(38px,5.5vw,60px)] leading-[1.3] font-bold">{t.rich("directory.title", { br: () => <br /> })}</h1>
-              <p className="max-w-[46ch] text-lg leading-[1.85] text-ink-200">{t("directory.body")}</p>
-              <form action="" role="search" className="flex items-center gap-2 rounded-full bg-white p-1.5 ps-4 text-ink">
+              </OutlinedPill>
+              <h1 className="text-[clamp(38px,5.5vw,64px)] leading-[1.4] font-bold">
+                {t.rich("directory.title", { hl: (chunks) => <SliceHighlight tone="ink" className="mt-2 px-[0.25em] font-extrabold">{chunks}</SliceHighlight> })}
+              </h1>
+              <p className="max-w-[46ch] text-lg leading-[1.85]">{t("directory.body")}</p>
+              <form action="" role="search" className="flex items-center gap-2 rounded-full border-[3px] border-ink bg-white p-1.5 ps-4 shadow-[6px_6px_0_var(--color-ink)] rtl:shadow-[-6px_6px_0_var(--color-ink)]">
                 <Search aria-hidden strokeWidth={1.75} className="size-5 shrink-0 text-ink-500" />
                 <label htmlFor="score-q" className="sr-only">
                   {t("directory.searchLabel")}
@@ -87,46 +95,71 @@ export default async function ScoreDirectoryPage({ params, searchParams }: PageP
                   {t("directory.search")}
                 </Button>
               </form>
+              <nav aria-label={t("directory.quick")}>
+                <ul className="flex flex-wrap gap-2">
+                  {QUICK.map((q) => (
+                    <li key={q}>
+                      <Link
+                        href={`/score?type=${q}#top`}
+                        className="inline-flex h-9 items-center rounded-full border-2 border-ink px-4 text-sm font-semibold outline-none transition-colors duration-[140ms] hover:bg-ink hover:text-white focus-visible:shadow-focus"
+                      >
+                        {types(q)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
               {directory && directory.ratings > 0 && (
-                <p className="text-sm text-ink-200">
+                <p className="text-sm">
                   {t.rich("directory.stats", {
                     ratings: formatCount(locale, directory.ratings),
                     cities: formatCount(locale, Math.max(directory.cities, 1)),
-                    b: (chunks) => <b className="font-display text-base font-extrabold text-white tabular">{chunks}</b>,
+                    b: (chunks) => <b className="font-display text-base font-extrabold tabular">{chunks}</b>,
                   })}
                 </p>
               )}
             </div>
-            <div aria-hidden className="relative min-h-[360px] sm:min-h-[460px]">
-              <div className="absolute start-1/2 -bottom-28 size-[min(440px,90vw)] -translate-x-1/2 rounded-full bg-zest rtl:translate-x-1/2" />
-              <SatisSeal ring className="absolute start-[10%] top-10 hidden size-24 sm:block" />
-              <Image
-                src="/characters/shopper.png"
-                alt=""
-                width={1212}
-                height={1298}
-                priority
-                sizes="(min-width: 1024px) 380px, 70vw"
-                className="absolute start-1/2 -bottom-8 h-auto w-[min(380px,68vw)] -translate-x-[64%] drop-shadow-[16px_16px_0_#F5B800] rtl:translate-x-[64%]"
-              />
-              <Image
-                src="/characters/young-customer.png"
-                alt=""
-                width={1024}
-                height={1536}
-                priority
-                sizes="(min-width: 1024px) 290px, 52vw"
-                className="absolute start-1/2 -bottom-32 h-auto w-[min(290px,52vw)] translate-x-[4%] drop-shadow-[16px_16px_0_#F5B800] rtl:-translate-x-[4%]"
-              />
-              {featured && (
-                <ScorePill
-                  name={featured.name}
-                  score={featured.score}
-                  satisfied={featured.satisfied}
-                  className="absolute end-5 top-8 hidden motion-safe:animate-float sm:inline-flex"
-                />
+
+            <div className="relative lg:min-h-[480px]">
+              {leaders.length > 0 ? (
+                <div className="relative z-10 flex max-w-[440px] flex-col gap-4">
+                  <p id="live-heading" className="text-sm font-bold">{t("directory.live")}</p>
+                  <ol aria-labelledby="live-heading" className="flex flex-col gap-4">
+                    {leaders.map((r, i) => (
+                      <li key={r.slug} className={cn("transition-transform duration-[200ms] ease-[var(--ease-standard)]", TILT[i])}>
+                        <Link
+                          href={`/score/${r.slug}`}
+                          className="flex items-center gap-4 rounded-[24px] border-[3px] border-ink bg-white p-4 shadow-[6px_6px_0_var(--color-ink)] outline-none transition-transform duration-[140ms] hover:-translate-y-0.5 focus-visible:shadow-focus active:translate-y-px rtl:shadow-[-6px_6px_0_var(--color-ink)]"
+                        >
+                          <span className="w-6 text-center font-display text-2xl font-extrabold tabular">{formatCount(locale, i + 1)}</span>
+                          <BrandAvatar name={r.name} className="size-12 text-xl" />
+                          <span className="flex min-w-0 flex-1 flex-col">
+                            <span className="truncate text-[17px] font-bold">{r.name}</span>
+                            <span className="truncate text-[13px] text-ink-500">{[types(r.type), ...r.cities.slice(0, 1)].join(" · ")}</span>
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <span className="font-display text-2xl font-extrabold tabular">{oneDecimal(r.score!)}</span>
+                            <Star aria-hidden strokeWidth={0} className="size-4 fill-zest" />
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ) : (
+                <SatisSeal ring className="relative z-10 mx-auto size-40" />
               )}
             </div>
+            <Image
+              src="/characters/associate.png"
+              alt=""
+              aria-hidden
+              width={1177}
+              height={1337}
+              priority
+              sizes="380px"
+              className="absolute -end-10 bottom-0 hidden h-auto w-[380px] drop-shadow-[18px_18px_0_var(--color-ink)] lg:block ltr:-scale-x-100"
+            />
           </div>
         </section>
 
