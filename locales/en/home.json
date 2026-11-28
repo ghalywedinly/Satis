@@ -14,7 +14,9 @@
     "logIn": "Log in",
     "start": "Book a meeting",
     "home": "Satis home",
-    "score": "Satis Score"
+    "score": "Satis Score",
+    "benefits": "Benefits",
+    "cases": "Examples"
   },
   "mock": {
     "store": "Nora Café · Riyadh",
@@ -66,11 +68,6 @@
     "coupon": "{amount} off your next visit",
     "insight": "Customers mentioned slow service 18 times this week at Tahlia, mostly in the evening.",
     "comment4": "Friendly staff and a calm place"
-  },
-  "industries": {
-    "title": "Built for the places your customers visit",
-    "services": "Service centres",
-    "more": "And dental clinics, hotels, gyms and more."
   },
   "how": {
     "eyebrow": "How it works",
@@ -148,16 +145,6 @@
       "private": "No personal data",
       "fast": "Under a minute"
     }
-  },
-  "showcase": {
-    "eyebrow": "Dashboard",
-    "title": "See how customers feel, location by location",
-    "body": "The numbers that matter on one screen: how many customers answered, how happy they are, and which location needs you today.",
-    "score": "Satis Score",
-    "outOf": "out of 5",
-    "ratings": "From {count} ratings this month",
-    "compare": "Location comparison",
-    "comments": "Comments"
   },
   "pricing": {
     "eyebrow": "Pricing",
@@ -251,5 +238,164 @@
         "unit": "up to 1,000 users"
       }
     }
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "title": "Most unhappy customers don't complain. They just leave.",
+    "body": "You know your sales to the riyal, but not why a customer didn't come back last week. Problems reach you late: in a bad map review, or in a branch that slipped without anyone noticing.",
+    "journey": {
+      "visit": {
+        "title": "A visit that missed the mark",
+        "body": "A long wait at the peak hour, and the order arrived cold."
+      },
+      "silent": {
+        "title": "They pay and leave without a word",
+        "body": "At the till they say: “All good, thanks.”"
+      },
+      "gone": {
+        "title": "Then they don't come back",
+        "body": "One star on the map, a word to friends, or a visit to your competitor."
+      }
+    },
+    "wait": "{minutes} min wait",
+    "fine": "All good, thanks",
+    "review": "Slow service, long wait. Won't be back.",
+    "pains": {
+      "late": {
+        "title": "You hear about problems late",
+        "body": "After they've become a public review everyone reads."
+      },
+      "blind": {
+        "title": "You can't tell which branch is slipping",
+        "body": "Every branch looks fine, until its sales drop."
+      },
+      "guess": {
+        "title": "Your decisions rest on guesses",
+        "body": "You change the menu or the team without knowing what customers really think."
+      }
+    },
+    "mapReview": "Map review"
+  },
+  "solution": {
+    "eyebrow": "The solution",
+    "title": "Satis gives every customer ten seconds to speak up, and gives you the full picture.",
+    "body": "A QR code on the table or the receipt, a short survey on the phone, and one dashboard for every branch. You know about a problem the same day, before it becomes a public review.",
+    "without": "Without Satis",
+    "with": "With Satis",
+    "rows": {
+      "when": {
+        "without": "You learn about problems from a map review",
+        "with": "A low rating reaches you within the hour"
+      },
+      "who": {
+        "without": "You hear from the few who write reviews",
+        "with": "You hear from many customers, in seconds"
+      },
+      "where": {
+        "without": "Every branch looks the same",
+        "with": "You see which branch needs you today, and why"
+      },
+      "change": {
+        "without": "Improvements based on guesses",
+        "with": "You measure the effect of every change"
+      },
+      "angry": {
+        "without": "An angry customer goes to your competitor",
+        "with": "You reply and win them back with a coupon"
+      }
+    }
+  },
+  "benefits": {
+    "eyebrow": "What you get",
+    "title": "Value you see in weeks, not years",
+    "body": "Satis isn't just a survey. It's a daily way to know your customers, fix what bothers them, and earn the trust of new ones.",
+    "items": {
+      "catch": {
+        "title": "Catch problems before they become public reviews",
+        "body": "An instant alert for every low rating, so you reach the customer while they're still nearby."
+      },
+      "branch": {
+        "title": "Know which branch needs you today",
+        "body": "Compare branches side by side and know where to start."
+      },
+      "winback": {
+        "title": "Win back unhappy customers",
+        "body": "Send them a discount coupon and welcome them on their next visit."
+      },
+      "prove": {
+        "title": "Measure the effect of every change",
+        "body": "Added staff at the peak hour? Watch the wait rating climb week after week."
+      },
+      "grow": {
+        "title": "Turn happy customers into new ones",
+        "body": "Show the Satis badge on your website and let your real rating convince new visitors."
+      },
+      "time": {
+        "title": "Save hours of reading",
+        "body": "A smart summary tells you what keeps coming up in comments, and what to fix first."
+      }
+    },
+    "alert": "Low rating",
+    "minutesAgo": "{count} min ago",
+    "before": "Before",
+    "after": "After",
+    "waitScore": "Wait time rating",
+    "summary": "This week's summary"
+  },
+  "cases": {
+    "eyebrow": "Examples",
+    "title": "How Satis solves real problems",
+    "note": "Illustrative examples of how Satis is used. Names and numbers are for illustration.",
+    "problem": "The problem",
+    "found": "What Satis showed",
+    "action": "What they did",
+    "result": "Satis Score",
+    "weeks": "in {count} weeks",
+    "items": {
+      "cafe": {
+        "name": "A café with three branches in Riyadh",
+        "problem": "Evening sales at the Olaya branch were falling, and no one knew why.",
+        "found": "The wait time rating dropped between 7 and 10 pm, and “long queue” kept coming up in comments.",
+        "quote": "Long queue and my order was late",
+        "action": "They added a barista at the peak hour and turned on pre-ordering."
+      },
+      "clinic": {
+        "name": "A dental clinic in Jeddah",
+        "problem": "New patients weren't booking their follow-up visit.",
+        "found": "Patients rated the dentist highly, but reception and explaining costs scored lowest.",
+        "quote": "I only understood the cost when paying",
+        "action": "They trained the reception team and added a clear cost sheet before treatment."
+      },
+      "retail": {
+        "name": "A fashion store with five branches",
+        "problem": "The Dammam branch sold less than the others, with the same stock.",
+        "found": "Dammam customers mentioned fitting rooms and missing sizes more than any other branch.",
+        "quote": "My size wasn't available",
+        "action": "They moved stock by each branch's demand and added two fitting rooms."
+      }
+    }
+  },
+  "badge": {
+    "eyebrow": "The Satis badge",
+    "title": "The yellow seal tells new customers: this number is real.",
+    "body": "Once your business has {min} verified ratings, your score appears on your public Satis Score page, with a badge you place on your website next to the buy button.",
+    "points": {
+      "verified": {
+        "title": "Only from real customers",
+        "body": "The survey is sent after a visit or a purchase, not to just anyone."
+      },
+      "live": {
+        "title": "Updates on its own",
+        "body": "The number changes with every new rating."
+      },
+      "locked": {
+        "title": "Can't be edited",
+        "body": "Neither you nor we can change the number or delete a rating."
+      }
+    },
+    "cta": "Browse Satis Score",
+    "product": "Specialty coffee · Ethiopia",
+    "addToCart": "Add to cart",
+    "store": "Nora Café"
   }
 }

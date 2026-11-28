@@ -1,16 +1,16 @@
 import Image from "next/image";
 import { ArrowLeft, BarChart3, Check, ClipboardList, Inbox, MapPin, QrCode, Sparkles, Ticket, UsersRound, type LucideIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { BurgerObject, CarObject, ClinicObject, CupObject, ScissorsObject, ShoppingBagObject } from "@/components/brand/objects";
 import { SatisMark } from "@/components/brand/satis-mark";
 import { SatisSeal } from "@/components/brand/seal";
 import { StarBlocks } from "@/components/brand/star-blocks";
 import { Button } from "@/components/ui/button";
-import { formatCount, formatNumber, formatPercent, formatSar } from "@/lib/i18n/format";
+import { formatCount, formatNumber, formatSar } from "@/lib/i18n/format";
 import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils";
 import { FOUNDERS_PRICE, PLANS } from "./plans";
+import { quote } from "./story";
 
 const WRAP = "mx-auto w-full max-w-[1240px] px-4 sm:px-6";
 const one = (locale: Locale, v: number) => formatNumber(locale, v, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
@@ -110,43 +110,12 @@ export function Hero() {
                 <span className="flex-1 font-semibold text-ink">{m("newResponse")}</span>
                 {m("justNow")}
               </span>
-              <span className="text-sm font-semibold">{`«${m("comment1")}»`}</span>
+              <span className="text-sm font-semibold">{quote(locale, m("comment1"))}</span>
               <span className="text-xs text-ink-500">{m("locationB")}</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  );
-}
-
-/* ───────── Kinds of business ───────── */
-
-export function Industries() {
-  const t = useTranslations("home.industries");
-  const types = useTranslations("organization.businessTypes");
-  const tiles = [
-    { label: types("cafe"), bg: "bg-zest", Obj: CupObject },
-    { label: types("restaurant"), bg: "bg-ember", Obj: BurgerObject },
-    { label: types("retail"), bg: "bg-mint", Obj: ShoppingBagObject },
-    { label: types("clinic"), bg: "bg-ultramarine", Obj: ClinicObject },
-    { label: types("beauty"), bg: "bg-ink", Obj: ScissorsObject },
-    { label: t("services"), bg: "bg-ink-50", Obj: CarObject },
-  ];
-  return (
-    <section className={cn(WRAP, "flex flex-col gap-8 pt-24 pb-10")}>
-      <SectionTitle title={t("title")} />
-      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-6">
-        {tiles.map(({ label, bg, Obj }) => (
-          <li key={label} className="group flex flex-col gap-3.5">
-            <span className={cn("flex aspect-square items-center justify-center rounded-[28px] transition-transform duration-[200ms] ease-[var(--ease-standard)] motion-safe:group-hover:-translate-y-1.5", bg)}>
-              <Obj className="size-[62%] transition-transform duration-[320ms] ease-[var(--ease-standard)] motion-safe:group-hover:scale-105 motion-safe:group-hover:-rotate-6" />
-            </span>
-            <span className="text-[17px] font-bold">{label}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="text-ink-500">{t("more")}</p>
     </section>
   );
 }
@@ -242,71 +211,6 @@ export function CustomerFlow({ qrSvg }: { qrSvg: string }) {
 
 /* ───────── Dashboard preview ───────── */
 
-export function Showcase() {
-  const t = useTranslations("home");
-  const m = useTranslations("home.mock");
-  const locale = useLocale() as Locale;
-  const branches = [
-    { name: m("locationB"), score: 4.8 },
-    { name: m("locationA"), score: 4.6 },
-    { name: m("locationC"), score: 4.1 },
-  ];
-  const kpis = [
-    { label: m("csat"), value: formatPercent(locale, 0.924), delta: formatNumber(locale, 1.2) },
-    { label: m("responses"), value: formatCount(locale, 1962), delta: formatPercent(locale, 0.18, 0) },
-    { label: m("nps"), value: formatNumber(locale, 48, { signDisplay: "exceptZero" }), delta: formatCount(locale, 6) },
-    { label: t("showcase.comments"), value: formatCount(locale, 514), delta: formatPercent(locale, 0.09, 0) },
-  ];
-  return (
-    <section className={cn(WRAP, "flex flex-col gap-9 pt-24")}>
-      <div className="flex flex-wrap items-end gap-6">
-        <SectionTitle eyebrow={t("showcase.eyebrow")} title={t("showcase.title")} className="flex-[1_1_440px]" />
-        <p className="flex-[1_1_340px] text-[17px] leading-[1.85] text-ink-500">{t("showcase.body")}</p>
-      </div>
-      <div aria-hidden className="grid gap-4 rounded-[32px] bg-ink-50 p-4 sm:p-7 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
-        <div className="flex items-center gap-6 rounded-[22px] bg-ink p-6 text-white">
-          <div className="flex flex-1 flex-col gap-2.5">
-            <span className="text-[13px] font-bold text-zest">{t("showcase.score")}</span>
-            <span className="flex items-baseline gap-1.5">
-              <span className="font-display text-6xl leading-[0.95] font-extrabold tabular">{one(locale, 4.7)}</span>
-              <span className="text-ink-400">{t("showcase.outOf")}</span>
-            </span>
-            <StarBlocks score={4.7} onInk />
-            <span className="text-[13px] text-ink-300">{t("showcase.ratings", { count: formatCount(locale, 1962) })}</span>
-          </div>
-          <SatisSeal className="hidden size-28 sm:block" />
-        </div>
-        <div className="flex flex-col gap-2.5 rounded-[22px] border border-ink-100 bg-white p-5">
-          <span className="text-[15px] font-bold">{t("showcase.compare")}</span>
-          {branches.map((b) => (
-            <div key={b.name} className="grid grid-cols-[minmax(0,1fr)_5.5rem_2rem] items-center gap-2.5 border-t border-ink-50 py-2">
-              <span className="truncate text-[13px] font-semibold">{b.name}</span>
-              <span className="h-1.5 overflow-hidden rounded-full bg-ink-50">
-                <span className={cn("block h-full rounded-full", b.score >= 4.5 ? "bg-mint" : "bg-zest")} style={{ width: `${(b.score / 5) * 100}%` }} />
-              </span>
-              <span className="text-end font-display font-extrabold tabular">{one(locale, b.score)}</span>
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-4">
-          {kpis.map((k) => (
-            <div key={k.label} className="flex flex-col gap-1.5 rounded-card border border-ink-100 bg-white px-4 py-4">
-              <span className="flex items-center gap-2 text-[13px] text-ink-500">
-                <span className="flex-1 truncate">{k.label}</span>
-                <span className="rounded-sm bg-mint-50 px-1.5 py-0.5 text-xs font-bold whitespace-nowrap text-mint-700">
-                  <span aria-hidden>{"▲ "}</span>
-                  {k.delta}
-                </span>
-              </span>
-              <span className="font-display text-3xl font-extrabold tabular">{k.value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ───────── Features ───────── */
 
 const FEATURES: { key: string; Icon: LucideIcon }[] = [
@@ -375,11 +279,11 @@ export function PlansTeaser() {
           <span className="rounded-full bg-ink/10 px-3.5 py-2 text-sm font-semibold">{t("founders", { price: formatSar(locale, FOUNDERS_PRICE * 100) })}</span>
         </div>
         <Image
-          src="/characters/associate.png"
+          src="/characters/man-thobe.png"
           alt=""
-          width={1177}
-          height={1337}
-          sizes="320px"
+          width={1211}
+          height={1299}
+          sizes="340px"
           className="pointer-events-none absolute -end-6 -bottom-12 hidden h-[360px] w-auto drop-shadow-[14px_14px_0_#0B0D12] lg:block"
         />
       </div>

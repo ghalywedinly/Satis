@@ -1,4 +1,5 @@
-import { CustomerFlow, Faq, Features, FinalCta, Hero, HowItWorks, Industries, PlansTeaser, Showcase } from "@/components/marketing/home";
+import { CustomerFlow, Faq, Features, FinalCta, Hero, HowItWorks, PlansTeaser } from "@/components/marketing/home";
+import { BadgeStory, Benefits, CaseStudies, Problem, Solution } from "@/components/marketing/story";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { publicEnv } from "@/lib/env/public";
@@ -16,10 +17,13 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <SiteHeader />
       <main id="content" className="flex-1">
         <Hero />
-        <Industries />
+        <Problem />
+        <Solution />
         <HowItWorks />
         <CustomerFlow qrSvg={qr} />
-        <Showcase />
+        <Benefits />
+        <CaseStudies />
+        <BadgeStory />
         <Features />
         <PlansTeaser />
         <Faq />

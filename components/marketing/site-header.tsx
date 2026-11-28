@@ -25,7 +25,8 @@ export function SiteHeader() {
   // Section links point at the home page so they also work from other pages.
   const links = [
     { href: "/#how", label: t("how") },
-    { href: "/#features", label: t("features") },
+    { href: "/#benefits", label: t("benefits") },
+    { href: "/#cases", label: t("cases") },
     { href: "/pricing", label: t("pricing") },
     { href: "/#faq", label: t("faq") },
     { href: "/blog", label: t("blog") },
